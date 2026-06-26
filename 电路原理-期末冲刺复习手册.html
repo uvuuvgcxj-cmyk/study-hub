@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电路原理 · 期末冲刺复习手册 v2.0</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --bg:#1a1a2e; --card:#232347; --card2:#2a2a52; --border:#3a3a6a;
+  --text:#e0e0f0; --muted:#8a8aaa; --blue:#4A9EFF; --green:#4ECB71;
+  --amber:#F5A623; --red:#F05454; --purple:#7C6FF0; --cyan:#4ECDC4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.8;padding-top:64px}
+.navbar{position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--border);z-index:1000;display:flex;gap:4px;padding:8px 12px;overflow-x:auto;white-space:nowrap}
+.nav-btn{padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px;border:1px solid transparent;color:var(--muted);transition:all .2s}
+.nav-btn:hover{color:var(--text);background:var(--card2)}
+.nav-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.page{display:none;max-width:960px;margin:0 auto;padding:20px}
+.page.active{display:block}
+h1{font-size:24px;margin:16px 0 8px;color:var(--blue)}
+h2{font-size:20px;margin:24px 0 10px;color:var(--green);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:16px;margin:16px 0 8px;color:var(--amber)}
+h4{font-size:14px;margin:12px 0 6px;color:var(--cyan)}
+p{margin:6px 0}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:16px}
+.tip-card{background:var(--card2);border-left:4px solid var(--blue);border-radius:8px;padding:12px 16px;margin:12px 0}
+.tip-card.warn{border-left-color:var(--red)}
+.tip-card.amber{border-left-color:var(--amber)}
+.tip-card.success{border-left-color:var(--green)}
+.highlight{color:var(--red);font-weight:600}
+.highlight-blue{color:var(--blue);font-weight:600}
+.highlight-green{color:var(--green);font-weight:600}
+.circuit-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:16px;margin:14px 0;text-align:center;overflow-x:auto}
+.circuit-box svg{max-width:100%;height:auto}
+.circuit-caption{color:var(--muted);font-size:12px;margin-top:8px}
+.example-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;margin:14px 0;overflow:hidden}
+.ex-header{background:var(--purple);color:#fff;padding:8px 14px;font-size:14px;font-weight:600}
+.ex-body{padding:14px 16px}
+.ex-solution{background:#1e1e3a;border-radius:8px;padding:12px 14px;margin-top:10px}
+.sol-label{color:var(--green);font-weight:600;margin-bottom:6px}
+.formula-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.formula-table th{background:var(--card2);color:var(--blue);padding:8px 10px;border:1px solid var(--border);text-align:left}
+.formula-table td{padding:8px 10px;border:1px solid var(--border)}
+.formula-table tr.hot td{background:rgba(240,84,84,.12)}
+.quiz-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius,10px);margin:10px 0;overflow:hidden}
+.quiz-header{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none}
+.quiz-header:hover{background:var(--card2)}
+.q-num{background:var(--purple);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.q-text{flex:1;font-size:14px}
+.q-toggle{color:var(--muted);transition:transform .3s}
+.quiz-item.open .q-toggle{transform:rotate(180deg)}
+.quiz-body{display:none;padding:14px 16px;border-top:1px solid var(--border)}
+.quiz-item.open .quiz-body{display:block}
+.quiz-options{list-style:none;margin:8px 0}
+.quiz-opt{padding:8px 12px;margin:4px 0;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
+.quiz-opt:hover{background:var(--card2)}
+.quiz-opt.correct{background:rgba(78,203,113,.2);border-color:var(--green)}
+.quiz-opt.wrong{background:rgba(240,84,84,.2);border-color:var(--red)}
+.quiz-answer{background:#1e1e3a;border-radius:8px;padding:12px 14px;margin:10px 0;font-size:13px}
+.ans-label{color:var(--green);font-weight:600}
+.mastery-btns{display:flex;gap:8px;margin-top:10px}
+.mastery-btn{padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;border:1px solid var(--border);background:var(--card2);color:var(--text);transition:all .2s}
+.mastery-btn:hover{border-color:var(--blue)}
+.mastery-btn.active-mastered{background:rgba(78,203,113,.25);border-color:var(--green)}
+.mastery-btn.active-review{background:rgba(245,166,35,.25);border-color:var(--amber)}
+.filter-btn{padding:6px 16px;border-radius:20px;cursor:pointer;font-size:13px;border:1px solid var(--border);background:var(--card2);color:var(--muted);margin:4px}
+.filter-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.progress-bar{background:var(--card2);border-radius:10px;height:20px;overflow:hidden;margin:12px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .5s;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.task-item{padding:6px 0;display:flex;align-items:flex-start;gap:8px}
+.task-item input[type="checkbox"]{margin-top:5px;accent-color:var(--green)}
+.weight-card{display:inline-block;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 18px;margin:6px;text-align:center}
+.weight-card .pct{font-size:22px;font-weight:700}
+.weight-card .lbl{font-size:12px;color:var(--muted)}
+.day-header{font-size:16px;color:var(--amber);margin:20px 0 8px;font-weight:600}
+@media(max-width:680px){
+  .page{padding:12px}
+  h1{font-size:20px} h2{font-size:17px}
+  .nav-btn{padding:6px 10px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+<button class="nav-btn active" onclick="showPage('page-plan',this)">📅 计划</button>
+<button class="nav-btn" onclick="showPage('page-day1',this)">⚡ Day1</button>
+<button class="nav-btn" onclick="showPage('page-day2',this)">🌊 Day2</button>
+<button class="nav-btn" onclick="showPage('page-day3',this)">🔧 Day3</button>
+<button class="nav-btn" onclick="showPage('page-formula',this)">📋 公式</button>
+<button class="nav-btn" onclick="showPage('page-tips',this)">💡 锦囊</button>
+<button class="nav-btn" onclick="showPage('page-quiz',this)">✅ 自测</button>
+</div>
+
+<!-- ============ 页面1: 三天计划 ============ -->
+<div class="page active" id="page-plan">
+<h1>📅 三天冲刺计划 — 电路原理期末</h1>
+<p class="subtitle">按分值权重分配时间，Day1 最重、Day3 最难</p>
+
+<div style="text-align:center;margin:16px 0">
+<div class="weight-card"><div class="pct" style="color:var(--red)">35%</div><div class="lbl">直流+动态<br>（Day1）</div></div>
+<div class="weight-card"><div class="pct" style="color:var(--amber)">35%</div><div class="lbl">正弦+三相<br>（Day2）</div></div>
+<div class="weight-card"><div class="pct" style="color:var(--purple)">20%</div><div class="lbl">受控源+运放<br>（Day3）</div></div>
+<div class="weight-card"><div class="pct" style="color:var(--green)">10%</div><div class="lbl">二端口+综合</div></div>
+</div>
+
+<div class="day-header">🔵 Day 1 — 直流电路 + 动态电路（35%分值）</div>
+<div class="task-item"><input type="checkbox"><span>复习节点电压法：自电导/互电导概念，列 KCL 方程（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>复习网孔电流法：自电阻/互电阻，超网孔处理电流源（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>叠加定理：独立源分别作用，受控源保留，功率不可叠加（20min）</span></div>
+<div class="task-item"><input type="checkbox"><span>戴维南/诺顿等效：开路电压、等效电阻、含受控源的外加电源法（40min）</span></div>
+<div class="task-item"><input type="checkbox"><span>Y-Δ 变换公式及对称特例（15min）</span></div>
+<div class="task-item"><input type="checkbox"><span>换路定则 + 三要素法：RC/RL 一阶电路全响应（40min）</span></div>
+<div class="task-item"><input type="checkbox"><span>完成 Day1 自测题 q1–q13（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>回顾错题，查漏补缺（15min）</span></div>
+
+<div class="day-header">🟡 Day 2 — 正弦稳态 + 耦合电感 + 三相电路（35%分值）</div>
+<div class="task-item"><input type="checkbox"><span>正弦量与相量转换：有效值、初相、相量图（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>阻抗/导纳：R/L/C 的阻抗，串并联化简（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>功率计算：有功/无功/视在/复功率/功率因数（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>最大功率传输定理（共轭匹配）（15min）</span></div>
+<div class="task-item"><input type="checkbox"><span>耦合电感：同名端、互感电压方向、去耦等效（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>理想变压器：变压/变流/变阻公式（20min）</span></div>
+<div class="task-item"><input type="checkbox"><span>三相电路：Y/Δ 连接，线/相电压电流关系，三相功率（40min）</span></div>
+<div class="task-item"><input type="checkbox"><span>完成 Day2 自测题 q14–q27（30min）</span></div>
+
+<div class="day-header">🟣 Day 3 — 受控源 + 运放 + 二端口（20%+10%分值）</div>
+<div class="task-item"><input type="checkbox"><span>四种受控源：VCVS/VCCS/CCVS/CCCS，菱形符号识别（20min）</span></div>
+<div class="task-item"><input type="checkbox"><span>含受控源的电路分析：节点法/网孔法补充控制量方程（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>含受控源的戴维南等效：外加电源法求 R_th（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>理想运放：虚短虚断，反相/同相比例/加法器/跟随器（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>二端口网络：Z/Y/T 参数定义、互易/对称条件（20min）</span></div>
+<div class="task-item"><input type="checkbox"><span>综合计算题冲刺（20min）</span></div>
+<div class="task-item"><input type="checkbox"><span>完成 Day3 自测题 q28–q40（30min）</span></div>
+<div class="task-item"><input type="checkbox"><span>全部公式速查页过一遍（15min）</span></div>
+<div class="task-item"><input type="checkbox"><span>回顾全部错题，考前最终自检（15min）</span></div>
+</div>
+
+<!-- ============ 页面2: Day1 知识点 ============ -->
+<div class="page" id="page-day1">
+<h1>⚡ Day 1 — 直流电路 + 动态电路</h1>
+<p class="subtitle">电路分析的两大基石：基尔霍夫定律 + 等效变换</p>
+
+<h2>一、节点电压法</h2>
+<h3>核心思想</h3>
+<p>选择一个参考节点（通常接地），对其余 $n-1$ 个节点列 KCL 方程。每个节点电压即为该节点相对参考点的电位。<span class="highlight">适用于节点少、支路多的电路。</span></p>
+<div class="tip-card">
+<p><span class="highlight-blue">标准步骤（四步法）：</span></p>
+<p>① 选参考节点（通常选下方公共节点），标注其余节点电压 $V_1, V_2, \ldots$</p>
+<p>② 对每个非参考节点列 KCL：$\sum \frac{V_i - V_j}{R_{ij}} = \sum I_{source}$（流出 = 注入）</p>
+<p>③ 整理为矩阵形式：$G_{11}V_1 + G_{12}V_2 + \cdots = I_{S11}$</p>
+<p>④ 解线性方程组求各节点电压，再由节点电压求支路电流</p>
+</div>
+
+<h3>关键概念</h3>
+<p><strong>自电导 $G_{ii}$：</strong>与节点 $i$ 直接相连的所有支路电导之和，恒为正。</p>
+<p><strong>互电导 $G_{ij}$：</strong>节点 $i$ 与 $j$ 之间的公共电导，取负值。若两节点无直接连接，互电导为零。</p>
+<p><strong>等效电流源 $I_{Sii}$：</strong>流入节点 $i$ 的独立电流源代数和（流入为正，流出为负）。电压源需先做电源等效变换或用超节点法。</p>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><line x1="80" y1="40" x2="320" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="250" x2="320" y2="250" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="40" x2="80" y2="72" stroke="#9090a8" stroke-width="2.5"/><circle cx="80" cy="90" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="75" y="87" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="74" y="103" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="57" y="95" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="80" y1="108" x2="80" y2="170" stroke="#9090a8" stroke-width="2.5"/><polyline points="80,170 88,175 72,180 88,185 72,190 88,195 72,200 88,205 72,210 88,215 80,220" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="95" y="200" fill="#F5A623" font-size="14" font-weight="bold">R₁</text><line x1="80" y1="220" x2="80" y2="250" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="40" x2="200" y2="170" stroke="#9090a8" stroke-width="2.5"/><polyline points="200,170 208,175 192,180 208,185 192,190 208,195 192,200 208,205 192,210 208,215 200,220" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="215" y="200" fill="#F5A623" font-size="14" font-weight="bold">R₂</text><line x1="200" y1="220" x2="200" y2="250" stroke="#9090a8" stroke-width="2.5"/><line x1="320" y1="40" x2="320" y2="72" stroke="#9090a8" stroke-width="2.5"/><circle cx="320" cy="90" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="315" y="87" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="314" y="103" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="297" y="95" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="320" y1="108" x2="320" y2="170" stroke="#9090a8" stroke-width="2.5"/><polyline points="320,170 328,175 312,180 328,185 312,190 328,195 312,200 328,205 312,210 328,215 320,220" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="335" y="200" fill="#F5A623" font-size="14" font-weight="bold">R₃</text><line x1="320" y1="220" x2="320" y2="250" stroke="#9090a8" stroke-width="2.5"/><circle cx="80" cy="40" r="4" fill="#aaa"/><circle cx="200" cy="40" r="4" fill="#aaa"/><circle cx="320" cy="40" r="4" fill="#aaa"/><circle cx="80" cy="250" r="4" fill="#aaa"/><circle cx="200" cy="250" r="4" fill="#aaa"/><circle cx="320" cy="250" r="4" fill="#aaa"/><text x="188" y="32" fill="#4A9EFF" font-size="16" font-weight="bold">V₁</text><line x1="200" y1="250" x2="200" y2="256" stroke="#888" stroke-width="2.5"/><line x1="188" y1="256" x2="212" y2="256" stroke="#888" stroke-width="2.5"/><line x1="192" y1="261" x2="208" y2="261" stroke="#888" stroke-width="2"/><line x1="196" y1="266" x2="204" y2="266" stroke="#888" stroke-width="2"/><text x="88" y="155" fill="#7C6FF0" font-size="10" font-weight="bold">(V₁−Vs₁)/R₁</text><text x="208" y="155" fill="#7C6FF0" font-size="10" font-weight="bold">V₁/R₂</text><text x="278" y="155" fill="#7C6FF0" font-size="10" font-weight="bold">(V₁−Vs₂)/R₃</text><text x="155" y="285" fill="#888" font-size="11" font-weight="bold">参考节点 (GND)</text></svg>
+<div class="circuit-caption">图1.1 节点电压法示例 — 选底边为参考节点，只需列1个KCL方程</div>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：节点电压法求各支路电流</div>
+<div class="ex-body">
+<p>如上图，$R_1=2\Omega$, $R_2=4\Omega$, $R_3=2\Omega$, $V_{S1}=12V$, $V_{S2}=6V$，求节点电压 $V_1$ 及各支路电流。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>第一步：列节点1的KCL方程（流出=0）</strong></p>
+<p>$$\frac{V_1 - V_{S1}}{R_1} + \frac{V_1 - 0}{R_2} + \frac{V_1 - V_{S2}}{R_3} = 0$$</p>
+<p><strong>第二步：代入数值</strong></p>
+<p>$$\frac{V_1 - 12}{2} + \frac{V_1}{4} + \frac{V_1 - 6}{2} = 0$$</p>
+<p><strong>第三步：通分（乘以4）</strong></p>
+<p>$$2(V_1-12) + V_1 + 2(V_1-6) = 0$$</p>
+<p>$$2V_1 - 24 + V_1 + 2V_1 - 12 = 0$$</p>
+<p><strong>第四步：求解</strong></p>
+<p>$$5V_1 = 36 \Rightarrow \boxed{V_1 = 7.2V}$$</p>
+<p><strong>第五步：求各支路电流</strong></p>
+<p>$I_1 = \frac{V_1 - V_{S1}}{R_1} = \frac{7.2 - 12}{2} = -2.4A$（负号表示实际方向向上）</p>
+<p>$I_2 = \frac{V_1}{R_2} = \frac{7.2}{4} = 1.8A$（向下）</p>
+<p>$I_3 = \frac{V_1 - V_{S2}}{R_3} = \frac{7.2 - 6}{2} = 0.6A$（向下）</p>
+<p><strong>验证KCL：</strong> $-I_1 = I_2 + I_3 \Rightarrow 2.4 = 1.8 + 0.6 = 2.4$ ✓</p>
+</div>
+</div>
+</div>
+
+<h2>二、网孔电流法</h2>
+<h3>核心思想</h3>
+<p>对每个独立网孔设定顺时针网孔电流，沿网孔列 KVL 方程。<span class="highlight">适用于网孔少、节点多的电路。</span>与节点电压法互补——哪个变量少就用哪个。</p>
+<div class="tip-card">
+<p><span class="highlight-blue">标准步骤（四步法）：</span></p>
+<p>① 设定各网孔电流方向（通常都选顺时针）</p>
+<p>② 对每个网孔列 KVL：$\sum R_{ii} I_i - \sum R_{ij} I_j = \sum V_{source}$</p>
+<p>③ 自电阻 $R_{ii}$ = 该网孔所有电阻之和（正）；互电阻 $R_{ij}$ = 相邻网孔共享电阻（负）</p>
+<p>④ 电压源沿网孔电流方向为正（电压升为正），解方程组</p>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg"><defs><marker id="mk12a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#7C6FF0"/></marker><marker id="mk12b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4ECDC4"/></marker></defs><line x1="60" y1="40" x2="380" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="40" x2="60" y2="240" stroke="#9090a8" stroke-width="2.5"/><line x1="380" y1="40" x2="380" y2="240" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="240" x2="380" y2="240" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="40" x2="220" y2="240" stroke="#9090a8" stroke-width="2.5"/><polyline points="100,40 106,32 112,48 118,32 124,48 130,32 136,48 142,32 148,48 154,32 160,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="115" y="32" fill="#F5A623" font-size="14" font-weight="bold">R₁</text><polyline points="280,40 286,32 292,48 298,32 304,48 310,32 316,48 322,32 328,48 334,32 340,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="295" y="32" fill="#F5A623" font-size="14" font-weight="bold">R₂</text><polyline points="220,100 228,107 212,114 228,121 212,128 228,135 212,142 228,149 212,156 228,163 220,170" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="230" y="140" fill="#F5A623" font-size="14" font-weight="bold">R₃</text><polyline points="100,240 106,232 112,248 118,232 124,248 130,232 136,248 142,232 148,248 154,232 160,240" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="115" y="232" fill="#F5A623" font-size="14" font-weight="bold">R₄</text><polyline points="280,240 286,232 292,248 298,232 304,248 310,232 316,248 322,232 328,248 334,232 340,240" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="295" y="232" fill="#F5A623" font-size="14" font-weight="bold">R₅</text><line x1="60" y1="120" x2="60" y2="140" stroke="#9090a8" stroke-width="2.5"/><circle cx="60" cy="158" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="55" y="155" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="54" y="171" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="37" y="163" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="60" y1="176" x2="60" y2="200" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="120" x2="60" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="380" y1="120" x2="380" y2="140" stroke="#9090a8" stroke-width="2.5"/><circle cx="380" cy="158" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="375" y="155" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="374" y="171" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="357" y="163" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="380" y1="176" x2="380" y2="200" stroke="#9090a8" stroke-width="2.5"/><line x1="380" y1="120" x2="380" y2="40" stroke="#9090a8" stroke-width="2.5"/><circle cx="60" cy="40" r="4" fill="#aaa"/><circle cx="220" cy="40" r="4" fill="#aaa"/><circle cx="380" cy="40" r="4" fill="#aaa"/><circle cx="60" cy="240" r="4" fill="#aaa"/><circle cx="220" cy="240" r="4" fill="#aaa"/><circle cx="380" cy="240" r="4" fill="#aaa"/><circle cx="100" cy="40" r="4" fill="#aaa"/><circle cx="160" cy="40" r="4" fill="#aaa"/><circle cx="280" cy="40" r="4" fill="#aaa"/><circle cx="340" cy="40" r="4" fill="#aaa"/><circle cx="100" cy="240" r="4" fill="#aaa"/><circle cx="160" cy="240" r="4" fill="#aaa"/><circle cx="280" cy="240" r="4" fill="#aaa"/><circle cx="340" cy="240" r="4" fill="#aaa"/><circle cx="220" cy="100" r="4" fill="#aaa"/><circle cx="220" cy="170" r="4" fill="#aaa"/><text x="130" y="150" fill="#7C6FF0" font-size="16" font-weight="bold">I₁</text><text x="300" y="150" fill="#4ECDC4" font-size="16" font-weight="bold">I₂</text><path d="M 80 60 L 200 60 L 200 220 L 80 220 Z" fill="none" stroke="#7C6FF0" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#mk12a)"/><path d="M 240 60 L 360 60 L 360 220 L 240 220 Z" fill="none" stroke="#4ECDC4" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#mk12b)"/></svg>
+<div class="circuit-caption">图1.2 网孔电流法 — 两个网孔电流 I₁（紫）和 I₂（青），R₃ 为公共电阻</div>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：网孔电流法求各支路电流</div>
+<div class="ex-body">
+<p>如上图，$R_1=4\Omega$, $R_2=2\Omega$, $R_3=4\Omega$, $R_4=2\Omega$, $R_5=4\Omega$, $V_{S1}=20V$, $V_{S2}=10V$，求网孔电流 $I_1, I_2$。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>网孔1（左，I₁ 顺时针）：</strong></p>
+<p>自电阻：$R_{11} = R_1 + R_3 + R_4 = 4+4+2 = 10\Omega$</p>
+<p>互电阻：$R_{12} = -R_3 = -4\Omega$（R₃ 为共享）</p>
+<p>$$10I_1 - 4I_2 = V_{S1} = 20 \quad \cdots(1)$$</p>
+<p><strong>网孔2（右，I₂ 顺时针）：</strong></p>
+<p>自电阻：$R_{22} = R_2 + R_3 + R_5 = 2+4+4 = 10\Omega$</p>
+<p>互电阻：$R_{21} = -R_3 = -4\Omega$</p>
+<p>$$-4I_1 + 10I_2 = -V_{S2} = -10 \quad \cdots(2)$$</p>
+<p><strong>注意 Vs₂ 方向：</strong>I₂ 顺时针经过 Vs₂ 时从+到−，是电压降，所以取负。</p>
+<p><strong>联立求解：</strong>由(1)得 $I_1 = 2 + 0.4I_2$，代入(2)：</p>
+<p>$$-4(2+0.4I_2) + 10I_2 = -10$$</p>
+<p>$$-8 - 1.6I_2 + 10I_2 = -10 \Rightarrow 8.4I_2 = -2$$</p>
+<p>$$\boxed{I_2 \approx -0.238A, \quad I_1 = 2 + 0.4(-0.238) \approx 1.905A}$$</p>
+<p><strong>R₃ 支路电流：</strong> $I_{R3} = I_1 - I_2 = 1.905 - (-0.238) = 2.143A$（向下）</p>
+</div>
+</div>
+</div>
+
+<div class="tip-card warn">
+<p><span class="highlight">⚠️ 含电流源支路的处理（超网孔法）：</span></p>
+<p>如果电流源 $I_S$ 位于两个网孔的公共支路上，不要对这两个网孔分别列KVL，而是：</p>
+<p>① 把两个网孔合并为一个"超网孔"（去掉电流源支路）</p>
+<p>② 对超网孔列一个KVL方程</p>
+<p>③ 补充约束方程：$I_2 - I_1 = I_S$（或 $I_1 - I_2 = I_S$，取决于方向）</p>
+<p>④ 两个方程两个未知数，求解</p>
+</div>
+
+<h2>三、叠加定理</h2>
+<h3>核心思想</h3>
+<p>线性电路中，多个独立源共同作用时的响应 = 每个独立源<span class="highlight">单独作用</span>时响应的代数和。这是线性电路最基本的性质。</p>
+
+<div class="circuit-box">
+<svg viewBox="0 0 420 290" xmlns="http://www.w3.org/2000/svg"><text x="30" y="18" fill="#4A9EFF" font-size="12" font-weight="bold">原电路（两源共同作用）</text><line x1="40" y1="40" x2="160" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="40" x2="40" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="40" x2="160" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="100" x2="160" y2="100" stroke="#9090a8" stroke-width="2.5"/><polyline points="65,40 70,32 75,48 80,32 85,48 90,32 95,48 100,32 105,48 110,32 115,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="75" y="32" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="115,40 119,32 123,48 127,32 131,48 135,32 139,48 143,32 147,48 151,32 155,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="135" y="32" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="40" y1="55" x2="40" y2="85" stroke="#9090a8" stroke-width="2.5"/><circle cx="40" cy="70" r="12" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="35" y="67" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="34" y="83" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="23" y="75" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="40" y1="55" x2="40" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="55" x2="160" y2="85" stroke="#9090a8" stroke-width="2.5"/><circle cx="160" cy="70" r="12" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="155" y="67" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="154" y="83" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="143" y="75" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="160" y1="55" x2="160" y2="40" stroke="#9090a8" stroke-width="2.5"/><text x="185" y="70" fill="#7C6FF0" font-size="20" font-weight="bold">→</text><text x="215" y="18" fill="#4ECB71" font-size="12" font-weight="bold">Vs₁ 单独作用</text><line x1="225" y1="40" x2="345" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="225" y1="40" x2="225" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="345" y1="40" x2="345" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="225" y1="100" x2="345" y2="100" stroke="#9090a8" stroke-width="2.5"/><polyline points="250,40 255,32 260,48 265,32 270,48 275,32 280,48 285,32 290,48 295,32 300,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="260" y="32" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="300,40 304,32 308,48 312,32 316,48 320,32 324,48 328,32 332,48 336,32 340,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="320" y="32" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="225" y1="55" x2="225" y2="85" stroke="#9090a8" stroke-width="2.5"/><circle cx="225" cy="70" r="12" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="220" y="67" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="219" y="83" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="208" y="75" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="225" y1="55" x2="225" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="345" y1="58" x2="345" y2="82" stroke="#9090a8" stroke-width="2.5"/><text x="353" y="72" fill="#4ECDC4" font-size="9" font-weight="bold">短路</text><text x="30" y="148" fill="#F5A623" font-size="12" font-weight="bold">Vs₂ 单独作用</text><line x1="40" y1="170" x2="160" y2="170" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="170" x2="40" y2="230" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="170" x2="160" y2="230" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="230" x2="160" y2="230" stroke="#9090a8" stroke-width="2.5"/><polyline points="65,170 70,162 75,178 80,162 85,178 90,162 95,178 100,162 105,178 110,162 115,170" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="75" y="162" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="115,170 119,162 123,178 127,162 131,178 135,162 139,178 143,162 147,178 151,162 155,170" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="135" y="162" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="40" y1="188" x2="40" y2="212" stroke="#9090a8" stroke-width="2.5"/><text x="15" y="202" fill="#4ECDC4" font-size="9" font-weight="bold">短路</text><line x1="160" y1="185" x2="160" y2="215" stroke="#9090a8" stroke-width="2.5"/><circle cx="160" cy="200" r="12" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="155" y="197" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="154" y="213" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="143" y="205" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="160" y1="185" x2="160" y2="170" stroke="#9090a8" stroke-width="2.5"/><text x="185" y="200" fill="#7C6FF0" font-size="20" font-weight="bold">→</text><text x="215" y="148" fill="#4A9EFF" font-size="12" font-weight="bold">叠加结果</text><text x="225" y="185" fill="#4A9EFF" font-size="13" font-weight="bold">I = I' + I''</text><text x="225" y="205" fill="#4A9EFF" font-size="13" font-weight="bold">U = U' + U''</text><text x="225" y="225" fill="#F05454" font-size="12" font-weight="bold">功率不能叠加！</text><text x="80" y="275" fill="#6a6a7a" font-size="10" font-weight="bold">电压源不作用→短路，电流源不作用→开路</text></svg>
+<div class="circuit-caption">图1.3 叠加定理分解 — 左：原电路 / 右上：Vs₁单独(Vs₂短路) / 左下：Vs₂单独(Vs₁短路)</div>
+</div>
+
+<div class="tip-card warn">
+<p><span class="highlight">⚠️ 叠加定理四大规则：</span></p>
+<p>① 电压源不作用 → <span class="highlight">短路</span>（$V_S = 0$，用导线代替）</p>
+<p>② 电流源不作用 → <span class="highlight">开路</span>（$I_S = 0$，断开）</p>
+<p>③ <span class="highlight">受控源不能单独作用</span>，但每次都要保留在电路中（它不是激励）</p>
+<p>④ 叠加只适用于电压和电流，<span class="highlight">不适用于功率</span>（$P=I^2R$ 是平方关系，$(I_1+I_2)^2 \neq I_1^2 + I_2^2$）</p>
+</div>
+
+<h2>四、戴维南定理与诺顿定理</h2>
+<h3>戴维南等效</h3>
+<p>任何线性含源二端网络都可以等效为一个<span class="highlight-blue">电压源 $V_{th}$ 串联电阻 $R_{th}$</span>。</p>
+<div class="tip-card">
+<p><span class="highlight-blue">戴维南三步法：</span></p>
+<p><strong>第一步：</strong>求开路电压 $V_{oc} = V_{th}$ —— 负载开路，用节点法/网孔法/叠加法求端口电压</p>
+<p><strong>第二步：</strong>求等效电阻 $R_{th}$</p>
+<p>　• 无受控源：独立源置零后，从端口看进去的串并联等效电阻</p>
+<p>　• <span class="highlight">有受控源：外加电源法</span>（端口加 $V_0$，独立源置零但保留受控源，求 $I_0$，$R_{th}=V_0/I_0$）</p>
+<p>　　或开路短路法：$R_{th} = V_{oc}/I_{sc}$</p>
+<p><strong>第三步：</strong>画等效电路：$V_{th}$ 串联 $R_{th}$，接上负载 $R_L$</p>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg"><text x="40" y="20" fill="#4A9EFF" font-size="12" font-weight="bold">含源二端网络</text><rect x="25" y="35" width="130" height="120" rx="8" fill="none" stroke="#7C6FF0" stroke-width="2" stroke-dasharray="5,3"/><text x="55" y="90" fill="#7C6FF0" font-size="14" font-weight="bold">线性网络</text><text x="65" y="110" fill="#7C6FF0" font-size="12" font-weight="bold">含独立源</text><line x1="155" y1="70" x2="200" y2="70" stroke="#9090a8" stroke-width="2.5"/><line x1="155" y1="130" x2="200" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="200" cy="70" r="4" fill="#aaa"/><circle cx="200" cy="130" r="4" fill="#aaa"/><text x="205" y="68" fill="#F05454" font-size="14" font-weight="bold">a</text><text x="205" y="138" fill="#F05454" font-size="14" font-weight="bold">b</text><text x="220" y="100" fill="#4ECB71" font-size="24" font-weight="bold">≡</text><text x="290" y="20" fill="#4ECB71" font-size="12" font-weight="bold">戴维南等效</text><line x1="280" y1="70" x2="280" y2="52" stroke="#9090a8" stroke-width="2.5"/><circle cx="280" cy="70" r="16" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="275" y="67" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="274" y="83" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="250" y="74" fill="#F05454" font-size="12" font-weight="bold">V_th</text><line x1="280" y1="86" x2="280" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="280" y1="100" x2="310" y2="100" stroke="#9090a8" stroke-width="2.5"/><polyline points="310,100 316,92 322,108 328,92 334,108 340,92 346,108 352,92 358,108 364,92 370,100" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="325" y="92" fill="#F5A623" font-size="14" font-weight="bold">R_th</text><line x1="370" y1="100" x2="400" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="280" y1="100" x2="280" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="280" y1="130" x2="400" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="400" cy="100" r="4" fill="#aaa"/><circle cx="400" cy="130" r="4" fill="#aaa"/><text x="405" y="98" fill="#F05454" font-size="14" font-weight="bold">a</text><text x="405" y="138" fill="#F05454" font-size="14" font-weight="bold">b</text><line x1="265" y1="70" x2="280" y2="70" stroke="#9090a8" stroke-width="2.5"/></svg>
+<div class="circuit-caption">图1.4 戴维南等效 — 任何线性含源网络都可化简为 V_th 串 R_th</div>
+</div>
+
+<h3>诺顿等效</h3>
+<p>任何线性含源二端网络也可以等效为一个<span class="highlight-green">电流源 $I_N$ 并联电阻 $R_N$</span>。诺顿定理与戴维南定理是<span class="highlight">对偶关系</span>。</p>
+<p>转换关系：$I_N = I_{sc} = V_{th}/R_{th}$，$R_N = R_{th}$（等效电阻相同）。</p>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><defs><marker id="mkN5" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#F05454"/></marker></defs><text x="80" y="18" fill="#4ECB71" font-size="12" font-weight="bold">诺顿等效</text><circle cx="100" cy="55" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><line x1="100" y1="45" x2="100" y2="65" stroke="#F05454" stroke-width="2" marker-end="url(#mkN5)"/><text x="68" y="60" fill="#F05454" font-size="13" font-weight="bold">I_N</text><line x1="100" y1="37" x2="100" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="30" x2="220" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="30" x2="160" y2="55" stroke="#9090a8" stroke-width="2.5"/><polyline points="160,55 168,60 152,65 168,70 152,75 168,80 152,85 168,90 152,95 168,100 160,105" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="175" y="85" fill="#F5A623" font-size="14" font-weight="bold">R_N</text><line x1="160" y1="105" x2="160" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="100" y1="73" x2="100" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="130" x2="220" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="30" x2="280" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="130" x2="280" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="220" cy="30" r="4" fill="#aaa"/><circle cx="220" cy="130" r="4" fill="#aaa"/><circle cx="280" cy="30" r="4" fill="#aaa"/><circle cx="280" cy="130" r="4" fill="#aaa"/><text x="285" y="28" fill="#F05454" font-size="14" font-weight="bold">a</text><text x="285" y="138" fill="#F05454" font-size="14" font-weight="bold">b</text><text x="50" y="165" fill="#4A9EFF" font-size="11" font-weight="bold">戴维南 ↔ 诺顿 对偶:</text><text x="50" y="183" fill="#e0e0f0" font-size="11" font-weight="bold">V_th = I_N × R_N    R_th = R_N</text><text x="220" y="183" fill="#e0e0f0" font-size="11" font-weight="bold">I_N = V_th / R_th = I_sc</text></svg>
+<div class="circuit-caption">图1.5 诺顿等效 — 电流源 I_N 并联 R_N，与戴维南互为对偶</div>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：戴维南等效求负载最大功率</div>
+<div class="ex-body">
+<p>电路中 $V_S=10V$, $R_1=4\Omega$, $R_2=6\Omega$，负载 $R_L$ 接在 $R_1$ 两端。求 $R_L$ 获得最大功率时的值及最大功率。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 求开路电压 $V_{oc}$（去掉 $R_L$）：</strong></p>
+<p>开路时 $R_1$ 和 $R_2$ 串联分压：</p>
+<p>$$V_{oc} = V_S \times \frac{R_1}{R_1+R_2} = 10 \times \frac{4}{4+6} = 4V = V_{th}$$</p>
+<p><strong>② 求等效电阻 $R_{th}$（电压源短路）：</strong></p>
+<p>从端口看进去，$R_1$ 和 $R_2$ 并联：</p>
+<p>$$R_{th} = R_1 \parallel R_2 = \frac{4 \times 6}{4+6} = 2.4\Omega$$</p>
+<p><strong>③ 最大功率传输条件：</strong> $R_L = R_{th} = 2.4\Omega$</p>
+<p>$$P_{max} = \frac{V_{th}^2}{4R_{th}} = \frac{4^2}{4 \times 2.4} = \frac{16}{9.6} \approx 1.67W$$</p>
+</div>
+</div>
+</div>
+
+<h2>五、动态电路（一阶 RC / RL）</h2>
+<h3>换路定则</h3>
+<p>换路瞬间（$t=0$），<span class="highlight">电容电压和电感电流不能突变</span>（能量连续性）：</p>
+<p>$$u_C(0_+) = u_C(0_-), \quad i_L(0_+) = i_L(0_-)$$</p>
+<div class="tip-card warn">
+<p><span class="highlight">注意：</span>虽然 $u_C$ 和 $i_L$ 不能突变，但电容电流 $i_C$ 和电感电压 $u_L$ <span class="highlight">可以突变</span>！</p>
+<p>因为 $i_C = C\frac{du_C}{dt}$，$u_L = L\frac{di_L}{dt}$，它们取决于变化率而非瞬时值。</p>
+</div>
+
+<h3>三要素法（<span class="highlight">必考重点</span>）</h3>
+<p>一阶电路任意变量 $f(t)$ 的全响应：</p>
+<p>$$\boxed{f(t) = f(\infty) + [f(0_+) - f(\infty)]e^{-t/\tau}}$$</p>
+<div class="tip-card">
+<p><span class="highlight-blue">三要素详解：</span></p>
+<p><strong>① $f(0_+)$ — 初始值：</strong>由换路定则确定 $u_C(0_+)$ 或 $i_L(0_+)$，再画 0+ 等效电路（电容用电压源 $u_C(0_+)$ 替代，电感用电流源 $i_L(0_+)$ 替代）求其他变量</p>
+<p><strong>② $f(\infty)$ — 稳态值：</strong>换路后电路达到新稳态（$t\to\infty$），此时<span class="highlight-blue">电容开路、电感短路</span></p>
+<p><strong>③ $\tau$ — 时间常数：</strong></p>
+<p>　• RC电路：$\tau = R_{eq}C$</p>
+<p>　• RL电路：$\tau = L/R_{eq}$</p>
+<p>　• $R_{eq}$ 是从储能元件两端看进去的等效电阻（独立源置零后）</p>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 440 230" xmlns="http://www.w3.org/2000/svg"><text x="30" y="18" fill="#4A9EFF" font-size="12" font-weight="bold">RC 充电电路</text><line x1="40" y1="50" x2="100" y2="50" stroke="#9090a8" stroke-width="2.5"/><line x1="100" y1="50" x2="125" y2="38" stroke="#F5A623" stroke-width="2.5"/><circle cx="100" cy="50" r="4" fill="#aaa"/><text x="103" y="35" fill="#F5A623" font-size="10" font-weight="bold">t=0</text><line x1="125" y1="38" x2="170" y2="38" stroke="#9090a8" stroke-width="2.5"/><line x1="170" y1="38" x2="170" y2="60" stroke="#9090a8" stroke-width="2.5"/><polyline points="170,60 178,65 162,70 178,75 162,80 178,85 162,90 178,95 162,100 178,105 170,110" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="185" y="90" fill="#F5A623" font-size="14" font-weight="bold">R</text><line x1="170" y1="110" x2="170" y2="125" stroke="#9090a8" stroke-width="2.5"/><line x1="155" y1="137" x2="185" y2="137" stroke="#4A9EFF" stroke-width="3"/><line x1="155" y1="147" x2="185" y2="147" stroke="#4A9EFF" stroke-width="3"/><text x="195" y="148" fill="#4A9EFF" font-size="13" font-weight="bold">C</text><line x1="170" y1="160" x2="170" y2="190" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="50" x2="40" y2="105" stroke="#9090a8" stroke-width="2.5"/><circle cx="40" cy="120" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="35" y="117" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="34" y="133" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="17" y="125" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="40" y1="135" x2="40" y2="190" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="190" x2="170" y2="190" stroke="#9090a8" stroke-width="2.5"/><circle cx="40" cy="50" r="4" fill="#aaa"/><circle cx="40" cy="190" r="4" fill="#aaa"/><circle cx="170" cy="190" r="4" fill="#aaa"/><line x1="105" y1="190" x2="105" y2="196" stroke="#888" stroke-width="2.5"/><line x1="93" y1="196" x2="117" y2="196" stroke="#888" stroke-width="2.5"/><line x1="97" y1="201" x2="113" y2="201" stroke="#888" stroke-width="2"/><line x1="101" y1="206" x2="109" y2="206" stroke="#888" stroke-width="2"/><text x="250" y="18" fill="#4A9EFF" font-size="12" font-weight="bold">RL 电路</text><line x1="260" y1="50" x2="320" y2="50" stroke="#9090a8" stroke-width="2.5"/><line x1="320" y1="50" x2="345" y2="38" stroke="#F5A623" stroke-width="2.5"/><circle cx="320" cy="50" r="4" fill="#aaa"/><text x="323" y="35" fill="#F5A623" font-size="10" font-weight="bold">t=0</text><line x1="345" y1="38" x2="390" y2="38" stroke="#9090a8" stroke-width="2.5"/><line x1="390" y1="38" x2="390" y2="60" stroke="#9090a8" stroke-width="2.5"/><polyline points="390,60 398,65 382,70 398,75 382,80 398,85 382,90 398,95 382,100 398,105 390,110" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="405" y="90" fill="#F5A623" font-size="14" font-weight="bold">R</text><line x1="390" y1="110" x2="390" y2="120" stroke="#9090a8" stroke-width="2.5"/><path d="M 380 126.25 Q 390 113.75 400 126.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 380 138.25 Q 390 125.75 400 138.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 380 151.25 Q 390 138.75 400 151.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 380 164.25 Q 390 151.75 400 164.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="405" y="150" fill="#4ECB71" font-size="13" font-weight="bold">L</text><line x1="390" y1="170" x2="390" y2="190" stroke="#9090a8" stroke-width="2.5"/><line x1="260" y1="50" x2="260" y2="105" stroke="#9090a8" stroke-width="2.5"/><circle cx="260" cy="120" r="18" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="255" y="117" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="254" y="133" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="237" y="125" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="260" y1="135" x2="260" y2="190" stroke="#9090a8" stroke-width="2.5"/><line x1="260" y1="190" x2="390" y2="190" stroke="#9090a8" stroke-width="2.5"/><circle cx="260" cy="50" r="4" fill="#aaa"/><circle cx="260" cy="190" r="4" fill="#aaa"/><circle cx="390" cy="190" r="4" fill="#aaa"/><line x1="325" y1="190" x2="325" y2="196" stroke="#888" stroke-width="2.5"/><line x1="313" y1="196" x2="337" y2="196" stroke="#888" stroke-width="2.5"/><line x1="317" y1="201" x2="333" y2="201" stroke="#888" stroke-width="2"/><line x1="321" y1="206" x2="329" y2="206" stroke="#888" stroke-width="2"/></svg>
+<div class="circuit-caption">图1.6 RC充电电路（左）与 RL 电路（右）— 开关 t=0 闭合后用三要素法分析</div>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg"><text x="20" y="18" fill="#4A9EFF" font-size="12" font-weight="bold">三要素法响应曲线</text><line x1="50" y1="40" x2="50" y2="150" stroke="#6a6a7a" stroke-width="1.5"/><line x1="50" y1="150" x2="370" y2="150" stroke="#6a6a7a" stroke-width="1.5"/><text x="30" y="45" fill="#6a6a7a" font-size="11" font-weight="bold">f(t)</text><text x="360" y="165" fill="#6a6a7a" font-size="11" font-weight="bold">t</text><text x="30" y="155" fill="#6a6a7a" font-size="10" font-weight="bold">0</text><line x1="45" y1="140" x2="55" y2="140" stroke="#6a6a7a" stroke-width="1"/><text x="15" y="144" fill="#F05454" font-size="10" font-weight="bold">f(0₊)</text><line x1="45" y1="60" x2="55" y2="60" stroke="#6a6a7a" stroke-width="1"/><text x="15" y="64" fill="#4ECB71" font-size="10" font-weight="bold">f(∞)</text><line x1="50" y1="60" x2="370" y2="60" stroke="#4ECB71" stroke-width="1" stroke-dasharray="4,3"/><path d="M 50 140 Q 80 110 120 85 Q 180 68 280 62 Q 340 60 370 60" fill="none" stroke="#4A9EFF" stroke-width="2.5"/><text x="150" y="100" fill="#4A9EFF" font-size="11" font-weight="bold">零状态响应（充电）</text><path d="M 50 60 Q 80 90 120 115 Q 180 132 280 138 Q 340 140 370 140" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="150" y="128" fill="#F5A623" font-size="11" font-weight="bold">零输入响应（放电）</text><line x1="120" y1="40" x2="120" y2="150" stroke="#7C6FF0" stroke-width="1" stroke-dasharray="3,2"/><text x="100" y="35" fill="#7C6FF0" font-size="11" font-weight="bold">τ</text><text x="85" y="165" fill="#7C6FF0" font-size="10" font-weight="bold">t=τ 时完成63.2%</text></svg>
+<div class="circuit-caption">图1.7 三要素法响应曲线 — 蓝色为零状态（充电），橙色为零输入（放电），τ处完成63.2%</div>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：RC电路全响应（三要素法）</div>
+<div class="ex-body">
+<p>如图1.6左，$V_S=10V$, $R=5\Omega$, $C=0.2F$，电容初始电压 $u_C(0_-)=2V$，$t=0$ 时开关闭合。求 $u_C(t)$ 并画出响应曲线。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 初始值：</strong>由换路定则 $u_C(0_+) = u_C(0_-) = 2V$</p>
+<p><strong>② 稳态值：</strong>稳态时电容开路（直流稳态无电流），$u_C(\infty) = V_S = 10V$</p>
+<p><strong>③ 时间常数：</strong>$\tau = RC = 5 \times 0.2 = 1s$</p>
+<p><strong>④ 代入三要素公式：</strong></p>
+<p>$$u_C(t) = 10 + [2 - 10]e^{-t/1} = \boxed{10 - 8e^{-t} \, V \quad (t \geq 0)}$$</p>
+<p><strong>⑤ 分解验证：</strong></p>
+<p>零输入响应：$u_C^{(zi)} = 2e^{-t} V$（仅由初始储能引起）</p>
+<p>零状态响应：$u_C^{(zs)} = 10(1-e^{-t}) V$（仅由电源引起）</p>
+<p>全响应 = 零输入 + 零状态 = $2e^{-t} + 10 - 10e^{-t} = 10 - 8e^{-t}$ ✓</p>
+<p><strong>⑥ 验证端点：</strong> $t=0$ 时 $u_C=10-8=2V$ ✓，$t\to\infty$ 时 $u_C\to 10V$ ✓</p>
+</div>
+</div>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：RL电路零状态响应</div>
+<div class="ex-body">
+<p>如图1.6右，$V_S=12V$, $R=3\Omega$, $L=0.6H$，$i_L(0_-)=0A$，$t=0$ 时开关闭合。求 $i_L(t)$ 和 $u_L(t)$。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 初始值：</strong>$i_L(0_+) = i_L(0_-) = 0A$</p>
+<p><strong>② 稳态值：</strong>稳态时电感短路，$i_L(\infty) = V_S/R = 12/3 = 4A$</p>
+<p><strong>③ 时间常数：</strong>$\tau = L/R = 0.6/3 = 0.2s$</p>
+<p><strong>④ $i_L(t)$：</strong></p>
+<p>$$i_L(t) = 4 + [0 - 4]e^{-t/0.2} = 4(1 - e^{-5t}) \, A \quad (t \geq 0)$$</p>
+<p><strong>⑤ $u_L(t)$（利用 $u_L = L\frac{di_L}{dt}$）：</strong></p>
+<p>$$u_L(t) = 0.6 \times 4 \times 5 e^{-5t} = 12e^{-5t} \, V \quad (t \geq 0)$$</p>
+<p><strong>⑥ 验证：</strong> $t=0$ 时 $u_L=12V=V_S$ ✓（电感相当于开路），$t\to\infty$ 时 $u_L\to 0$ ✓（电感短路）</p>
+</div>
+</div>
+</div>
+
+<div class="tip-card amber">
+<p><span style="color:var(--amber);font-weight:600">💡 考场必记口诀：</span></p>
+<p>• <strong>电容稳态 = 开路</strong>（直流稳态无电流通过电容）</p>
+<p>• <strong>电感稳态 = 短路</strong>（直流稳态无电压降在电感上）</p>
+<p>• <strong>0+ 等效电路：</strong>电容 → 电压源 $u_C(0_+)$，电感 → 电流源 $i_L(0_+)$</p>
+<p>• <strong>求 $R_{eq}$ 时：</strong>独立源置零（电压源短路、电流源开路），从储能元件两端看进去</p>
+</div>
+</div>
+
+<!-- ============ 页面3: Day2 知识点 ============ -->
+<div class="page" id="page-day2">
+<h1>🌊 Day 2 — 正弦稳态 + 耦合电感 + 三相电路</h1>
+<p class="subtitle">相量法是核心工具，三相电路必考大题</p>
+
+<h2>一、相量法基础</h2>
+<h3>正弦量与相量的转换</h3>
+<p>正弦电压 $u(t) = U_m\cos(\omega t + \varphi)$ 对应的有效值相量为：</p>
+<p>$$\dot{U} = U\angle\varphi = U e^{j\varphi}$$</p>
+<p>其中 $U = U_m / \sqrt{2}$ 为有效值，$\varphi$ 为初相，$\omega = 2\pi f$ 为角频率。</p>
+<div class="tip-card">
+<p><span class="highlight-blue">相量法的本质：</span>把时域的微分/积分运算转化为复数域的乘除运算。</p>
+<p>• 微分：$\frac{di}{dt} \to j\omega \dot{I}$（乘以 $j\omega$）</p>
+<p>• 积分：$\int i\,dt \to \frac{\dot{I}}{j\omega}$（除以 $j\omega$）</p>
+<p>• KCL/KVL 在相量域形式不变：$\sum \dot{I} = 0$，$\sum \dot{U} = 0$</p>
+</div>
+
+<h3>阻抗与导纳</h3>
+<table class="formula-table">
+<tr><th>元件</th><th>阻抗 $Z$</th><th>导纳 $Y=1/Z$</th><th>电压电流相位关系</th></tr>
+<tr><td>电阻 R</td><td>$R$</td><td>$1/R = G$</td><td>同相（φ=0）</td></tr>
+<tr><td>电感 L</td><td>$j\omega L$</td><td>$1/(j\omega L)$</td><td>电压超前电流 90°</td></tr>
+<tr><td>电容 C</td><td>$1/(j\omega C)$</td><td>$j\omega C$</td><td>电压滞后电流 90°</td></tr>
+<tr class="hot"><td>串联总阻抗</td><td colspan="3">$Z = Z_1 + Z_2 + \cdots = R + jX$</td></tr>
+<tr class="hot"><td>并联总导纳</td><td colspan="3">$Y = Y_1 + Y_2 + \cdots = G + jB$</td></tr>
+</table>
+<p>阻抗的一般形式：$Z = R + jX$，其中 $R$ 为电阻，$X$ 为电抗。$|Z| = \sqrt{R^2+X^2}$，$\varphi = \arctan(X/R)$。</p>
+<p><span class="highlight">判别：</span>$X > 0$ 感性（电压超前电流）；$X < 0$ 容性（电压滞后电流）；$X = 0$ 阻性（谐振）。</p>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 230" xmlns="http://www.w3.org/2000/svg"><defs><marker id="mkP1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4A9EFF"/></marker><marker id="mkP2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4ECB71"/></marker></defs><line x1="200" y1="200" x2="200" y2="20" stroke="#3a3a4a" stroke-width="1"/><line x1="30" y1="110" x2="380" y2="110" stroke="#3a3a4a" stroke-width="1"/><text x="382" y="114" fill="#6a6a7a" font-size="11" font-weight="bold">Re</text><text x="205" y="18" fill="#6a6a7a" font-size="11" font-weight="bold">Im</text><line x1="200" y1="110" x2="330" y2="110" stroke="#4A9EFF" stroke-width="2.5" marker-end="url(#mkP1)"/><text x="305" y="102" fill="#4A9EFF" font-size="14" font-weight="bold">U̇</text><line x1="200" y1="110" x2="290" y2="160" stroke="#4ECB71" stroke-width="2.5" marker-end="url(#mkP2)"/><text x="265" y="168" fill="#4ECB71" font-size="14" font-weight="bold">İ</text><path d="M 245 110 A 45 45 0 0 1 228 135" fill="none" stroke="#F5A623" stroke-width="1.5"/><text x="238" y="128" fill="#F5A623" font-size="13" font-weight="bold">φ</text><line x1="200" y1="110" x2="270" y2="110" stroke="#4ECB71" stroke-width="1.5" stroke-dasharray="3,2"/><text x="225" y="102" fill="#4ECB71" font-size="10" font-weight="bold">U_R</text><line x1="270" y1="110" x2="290" y2="160" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="3,2"/><text x="265" y="145" fill="#F5A623" font-size="10" font-weight="bold">U_X</text><text x="40" y="205" fill="#a0a0b0" font-size="11" font-weight="bold">感性负载：İ 滞后 U̇ 角度 φ = arctan(X/R)</text><text x="40" y="220" fill="#6a6a7a" font-size="10" font-weight="bold">阻抗角 φ 即功率因数角，cosφ 为功率因数</text></svg>
+<div class="circuit-caption">图2.1 感性负载相量图 — U̇ 分解为 U_R（同相分量）和 U_X（正交分量）</div>
+</div>
+
+<h2>二、功率计算（<span class="highlight">必考</span>）</h2>
+<table class="formula-table">
+<tr><th>功率类型</th><th>公式</th><th>单位</th><th>物理意义</th></tr>
+<tr class="hot"><td>有功功率 P</td><td>$P = UI\cos\varphi = I^2R$</td><td>W (瓦)</td><td>实际消耗的功率</td></tr>
+<tr><td>无功功率 Q</td><td>$Q = UI\sin\varphi = I^2X$</td><td>var (乏)</td><td>与电源交换的功率</td></tr>
+<tr><td>视在功率 S</td><td>$S = UI = \sqrt{P^2+Q^2}$</td><td>V·A</td><td>总额定容量</td></tr>
+<tr class="hot"><td>功率因数</td><td>$\cos\varphi = P/S = P/(UI)$</td><td>—</td><td>有功占比，越接近1越好</td></tr>
+<tr><td>复功率</td><td>$\tilde{S} = \dot{U}\dot{I}^* = P + jQ$</td><td>V·A</td><td>功率的复数表示</td></tr>
+</table>
+
+<div class="circuit-box">
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><marker id="mkPT1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4ECB71"/></marker><marker id="mkPT2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#F5A623"/></marker><marker id="mkPT3" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4A9EFF"/></marker></defs><line x1="40" y1="130" x2="220" y2="130" stroke="#4ECB71" stroke-width="2.5" marker-end="url(#mkPT1)"/><text x="90" y="148" fill="#4ECB71" font-size="13" font-weight="bold">P = UI cosφ</text><line x1="220" y1="130" x2="220" y2="40" stroke="#F5A623" stroke-width="2.5" marker-end="url(#mkPT2)"/><text x="230" y="90" fill="#F5A623" font-size="13" font-weight="bold">Q = UI sinφ</text><line x1="40" y1="130" x2="220" y2="40" stroke="#4A9EFF" stroke-width="2.5" marker-end="url(#mkPT3)"/><text x="90" y="75" fill="#4A9EFF" font-size="13" font-weight="bold">S = UI</text><text x="55" y="125" fill="#F05454" font-size="13" font-weight="bold">φ</text><path d="M 70 130 A 30 30 0 0 0 66 118" fill="none" stroke="#F05454" stroke-width="1.5"/><text x="245" y="130" fill="#6a6a7a" font-size="10" font-weight="bold">cosφ = P/S</text><text x="245" y="145" fill="#6a6a7a" font-size="10" font-weight="bold">tanφ = Q/P</text></svg>
+<div class="circuit-caption">图2.2 功率三角形 — P(有功)、Q(无功)、S(视在) 构成直角三角形</div>
+</div>
+
+<h3>最大功率传输定理</h3>
+<p>正弦稳态下，负载获得最大功率的条件是<span class="highlight">共轭匹配</span>：</p>
+<p>$$Z_L = Z_{th}^* \quad \text{即 } R_L = R_{th}, \; X_L = -X_{th}$$</p>
+<p>最大功率：$P_{max} = \frac{|\dot{V}_{th}|^2}{4R_{th}}$</p>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：正弦稳态功率计算</div>
+<div class="ex-body">
+<p>已知 $\dot{U} = 100\angle 0° V$，$Z = 6 + j8\,\Omega$。求 $I, P, Q, S, \cos\varphi$。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 求电流：</strong></p>
+<p>$$\dot{I} = \frac{\dot{U}}{Z} = \frac{100\angle 0°}{6+j8} = \frac{100\angle 0°}{10\angle 53.13°} = 10\angle(-53.13°) A$$</p>
+<p><strong>② 阻抗角：</strong>$\varphi = \arctan(8/6) = 53.13°$</p>
+<p><strong>③ 有功功率：</strong>$P = UI\cos\varphi = 100 \times 10 \times \cos 53.13° = 1000 \times 0.6 = 600W$</p>
+<p>验证：$P = I^2R = 100 \times 6 = 600W$ ✓</p>
+<p><strong>④ 无功功率：</strong>$Q = UI\sin\varphi = 100 \times 10 \times \sin 53.13° = 1000 \times 0.8 = 800\text{var}$</p>
+<p><strong>⑤ 视在功率：</strong>$S = UI = 100 \times 10 = 1000\text{V·A}$</p>
+<p>验证：$S = \sqrt{P^2+Q^2} = \sqrt{600^2+800^2} = \sqrt{360000+640000} = \sqrt{1000000} = 1000$ ✓</p>
+<p><strong>⑥ 功率因数：</strong>$\cos\varphi = 0.6$（滞后，感性）</p>
+</div>
+</div>
+</div>
+
+<h2>三、耦合电感与变压器</h2>
+<h3>互感与同名端</h3>
+<p>两个耦合线圈，电流从同名端流入时，互感电压与自感电压<span class="highlight">同号</span>。</p>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="60" x2="80" y2="60" stroke="#9090a8" stroke-width="2.5"/><path d="M 80 60 Q 85.0 50 90.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 90 60 Q 95.0 50 100.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 100 60 Q 105.0 50 110.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 110 60 Q 115.0 50 120.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="90" y="42" fill="#4ECB71" font-size="13" font-weight="bold">L₁</text><line x1="120" y1="60" x2="170" y2="60" stroke="#9090a8" stroke-width="2.5"/><circle cx="80" cy="52" r="4" fill="#F05454"/><text x="72" y="42" fill="#F05454" font-size="16" font-weight="bold">•</text><text x="30" y="55" fill="#4A9EFF" font-size="12" font-weight="bold">i₁</text><line x1="230" y1="60" x2="280" y2="60" stroke="#9090a8" stroke-width="2.5"/><path d="M 280 60 Q 285.0 50 290.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 290 60 Q 295.0 50 300.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 300 60 Q 305.0 50 310.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 310 60 Q 315.0 50 320.0 60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="290" y="42" fill="#F5A623" font-size="13" font-weight="bold">L₂</text><line x1="320" y1="60" x2="370" y2="60" stroke="#9090a8" stroke-width="2.5"/><circle cx="280" cy="52" r="4" fill="#F05454"/><text x="272" y="42" fill="#F05454" font-size="16" font-weight="bold">•</text><text x="340" y="55" fill="#4A9EFF" font-size="12" font-weight="bold">i₂</text><line x1="110" y1="72" x2="290" y2="72" stroke="#7C6FF0" stroke-width="1.5" stroke-dasharray="4,3"/><text x="175" y="88" fill="#7C6FF0" font-size="13" font-weight="bold">M（互感）</text><line x1="30" y1="60" x2="30" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="170" y1="60" x2="170" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="230" y1="60" x2="230" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="370" y1="60" x2="370" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="130" x2="170" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="230" y1="130" x2="370" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="60" r="4" fill="#aaa"/><circle cx="170" cy="60" r="4" fill="#aaa"/><circle cx="230" cy="60" r="4" fill="#aaa"/><circle cx="370" cy="60" r="4" fill="#aaa"/><text x="40" y="160" fill="#4ECB71" font-size="11" font-weight="bold">u₁ = L₁(di₁/dt) + M(di₂/dt)</text><text x="40" y="178" fill="#F5A623" font-size="11" font-weight="bold">u₂ = L₂(di₂/dt) + M(di₁/dt)</text><text x="40" y="198" fill="#6a6a7a" font-size="10" font-weight="bold">同名端流入 → 互感电压为正（同号）</text></svg>
+<div class="circuit-caption">图2.3 耦合电感 — 电流均从同名端(•)流入，互感M取正号</div>
+</div>
+
+<div class="tip-card warn">
+<p><span class="highlight">⚠️ 同名端判定规则：</span></p>
+<p>• 电流从同名端流入 → 互感电压在同名端为正（同号）</p>
+<p>• 电流从异名端流入 → 互感电压取负号</p>
+<p>• 耦合系数 $k = M/\sqrt{L_1 L_2}$，$0 \le k \le 1$。$k=1$ 为全耦合（理想变压器）</p>
+</div>
+
+<h3>理想变压器</h3>
+<p>全耦合（$k=1$）、无损耗、自感无穷大的变压器。变比 $n = N_1/N_2$。</p>
+<p>$$\frac{u_1}{u_2} = n, \quad \frac{i_1}{i_2} = \frac{1}{n}, \quad Z_{in} = n^2 Z_L$$</p>
+<p>即：电压比等于匝数比，电流比等于匝数反比，从原边看进去的阻抗等于副边负载乘 $n^2$。</p>
+
+<h2>四、三相电路（<span class="highlight">必考大题</span>）</h2>
+<h3>Y型连接（星型）</h3>
+<div class="circuit-box">
+<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg"><line x1="170" y1="130" x2="170" y2="190" stroke="#9090a8" stroke-width="2.5"/><line x1="170" y1="130" x2="80" y2="70" stroke="#9090a8" stroke-width="2.5"/><line x1="170" y1="130" x2="260" y2="70" stroke="#9090a8" stroke-width="2.5"/><line x1="170" y1="130" x2="170" y2="40" stroke="#9090a8" stroke-width="2.5"/><circle cx="80" cy="50" r="16" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="74" y="55" fill="#F05454" font-size="14" font-weight="bold">~</text><text x="55" y="25" fill="#F05454" font-size="14" font-weight="bold">A</text><circle cx="170" cy="30" r="16" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="164" y="35" fill="#F05454" font-size="14" font-weight="bold">~</text><text x="158" y="15" fill="#F05454" font-size="14" font-weight="bold">B</text><circle cx="260" cy="50" r="16" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="254" y="55" fill="#F05454" font-size="14" font-weight="bold">~</text><text x="270" y="25" fill="#F05454" font-size="14" font-weight="bold">C</text><polyline points="100,85 104,77 107,93 110,77 114,93 118,77 121,93 124,77 128,93 132,77 135,85" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="105" y="78" fill="#F5A623" font-size="12" font-weight="bold">Z_A</text><polyline points="170,65 178,68 162,71 178,74 162,77 178,80 162,83 178,86 162,89 178,92 170,95" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="178" y="82" fill="#F5A623" font-size="12" font-weight="bold">Z_B</text><polyline points="205,85 209,77 212,93 215,77 219,93 223,77 226,93 229,77 233,93 237,77 240,85" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="225" y="78" fill="#F5A623" font-size="12" font-weight="bold">Z_C</text><circle cx="170" cy="130" r="4" fill="#aaa"/><circle cx="170" cy="190" r="4" fill="#aaa"/><text x="155" y="205" fill="#a0a0b0" font-size="14" font-weight="bold">N</text><line x1="170" y1="190" x2="170" y2="196" stroke="#888" stroke-width="2.5"/><line x1="158" y1="196" x2="182" y2="196" stroke="#888" stroke-width="2.5"/><line x1="162" y1="201" x2="178" y2="201" stroke="#888" stroke-width="2"/><line x1="166" y1="206" x2="174" y2="206" stroke="#888" stroke-width="2"/><text x="90" y="40" fill="#4ECB71" font-size="10" font-weight="bold">U_AN</text><text x="180" y="55" fill="#4ECB71" font-size="10" font-weight="bold">U_BN</text><text x="240" y="40" fill="#4ECB71" font-size="10" font-weight="bold">U_CN</text><line x1="80" y1="34" x2="170" y2="34" stroke="#4A9EFF" stroke-width="1" stroke-dasharray="3,2"/><text x="95" y="28" fill="#4A9EFF" font-size="11" font-weight="bold">U_AB (线电压)</text><text x="80" y="240" fill="#6a6a7a" font-size="11" font-weight="bold">线电压 = √3 × 相电压，线电流 = 相电流</text></svg>
+<div class="circuit-caption">图2.4 Y型连接 — 线电压 = √3 × 相电压，线电流 = 相电流</div>
+</div>
+
+<h3>Δ型连接（三角形）</h3>
+<div class="circuit-box">
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"><line x1="80" y1="40" x2="280" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="40" x2="180" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="280" y1="40" x2="180" y2="180" stroke="#9090a8" stroke-width="2.5"/><polyline points="130,40 140,32 150,48 160,32 170,48 180,32 190,48 200,32 210,48 220,32 230,40" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="160" y="32" fill="#F5A623" font-size="13" font-weight="bold">Z_ab</text><polyline points="100,60 108,70 92,80 108,90 92,100 108,110 92,120 108,130 92,140 108,150 100,160" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="75" y="115" fill="#F5A623" font-size="12" font-weight="bold">Z_ca</text><polyline points="260,60 268,70 252,80 268,90 252,100 268,110 252,120 268,130 252,140 268,150 260,160" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="270" y="115" fill="#F5A623" font-size="12" font-weight="bold">Z_bc</text><circle cx="80" cy="40" r="4" fill="#aaa"/><circle cx="280" cy="40" r="4" fill="#aaa"/><circle cx="180" cy="180" r="4" fill="#aaa"/><text x="60" y="33" fill="#F05454" font-size="14" font-weight="bold">A</text><text x="288" y="33" fill="#F05454" font-size="14" font-weight="bold">B</text><text x="185" y="200" fill="#F05454" font-size="14" font-weight="bold">C</text><defs><marker id="mkD1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4A9EFF"/></marker></defs><line x1="80" y1="40" x2="55" y2="20" stroke="#4A9EFF" stroke-width="1.5" marker-end="url(#mkD1)"/><text x="25" y="18" fill="#4A9EFF" font-size="11" font-weight="bold">I_A</text><text x="195" y="115" fill="#4ECB71" font-size="10" font-weight="bold">I_ab</text><text x="80" y="225" fill="#6a6a7a" font-size="11" font-weight="bold">线电压 = 相电压，线电流 = √3 × 相电流</text></svg>
+<div class="circuit-caption">图2.5 Δ型连接 — 线电压 = 相电压，线电流 = √3 × 相电流</div>
+</div>
+
+<table class="formula-table">
+<tr><th>关系</th><th>Y型连接</th><th>Δ型连接</th></tr>
+<tr class="hot"><td>线电压 vs 相电压</td><td>$U_l = \sqrt{3}\,U_p$</td><td>$U_l = U_p$</td></tr>
+<tr class="hot"><td>线电流 vs 相电流</td><td>$I_l = I_p$</td><td>$I_l = \sqrt{3}\,I_p$</td></tr>
+<tr class="hot"><td>线电压相位</td><td>超前相电压 30°</td><td>同相</td></tr>
+<tr><td>对称三相功率</td><td colspan="2">$P = \sqrt{3}\,U_l I_l \cos\varphi$</td></tr>
+<tr><td>无功功率</td><td colspan="2">$Q = \sqrt{3}\,U_l I_l \sin\varphi$</td></tr>
+<tr><td>视在功率</td><td colspan="2">$S = \sqrt{3}\,U_l I_l$</td></tr>
+</table>
+
+<div class="tip-card warn">
+<p><span class="highlight">⚠️ 三相功率最常犯的错：</span></p>
+<p>① 公式 $P=\sqrt{3}U_lI_l\cos\varphi$ 中，<span class="highlight">千万不要漏掉 $\sqrt{3}$</span></p>
+<p>② $\varphi$ 是<span class="highlight">每相负载的阻抗角</span>（相电压与相电流的相位差），不是线电压与线电流的相位差</p>
+<p>③ 对称三相电路只需分析一相，利用单相电路求解，再乘以3</p>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：对称三相Y型电路功率计算</div>
+<div class="ex-body">
+<p>对称三相Y型负载，每相 $Z = 8 + j6\,\Omega$，线电压 $U_l = 380V$。求线电流、有功功率、无功功率、功率因数。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 相电压：</strong></p>
+<p>$$U_p = \frac{U_l}{\sqrt{3}} = \frac{380}{\sqrt{3}} = 220V$$</p>
+<p><strong>② 阻抗模与阻抗角：</strong></p>
+<p>$$|Z| = \sqrt{8^2+6^2} = 10\Omega, \quad \varphi = \arctan\frac{6}{8} = 36.87°$$</p>
+<p><strong>③ 相电流 = 线电流（Y型 $I_l = I_p$）：</strong></p>
+<p>$$I_l = I_p = \frac{U_p}{|Z|} = \frac{220}{10} = 22A$$</p>
+<p><strong>④ 功率因数：</strong></p>
+<p>$$\cos\varphi = \frac{R}{|Z|} = \frac{8}{10} = 0.8 \text{（滞后）}$$</p>
+<p><strong>⑤ 有功功率：</strong></p>
+<p>$$P = \sqrt{3}U_lI_l\cos\varphi = \sqrt{3} \times 380 \times 22 \times 0.8 \approx 11584W \approx 11.58kW$$</p>
+<p>验证：$P = 3 \times I_p^2 \times R = 3 \times 22^2 \times 8 = 3 \times 484 \times 8 = 11616W$ ✓（微小误差为计算取整）</p>
+<p><strong>⑥ 无功功率：</strong></p>
+<p>$$Q = \sqrt{3}U_lI_l\sin\varphi = \sqrt{3} \times 380 \times 22 \times 0.6 \approx 8688\text{var} \approx 8.69k\text{var}$$</p>
+</div>
+</div>
+</div>
+
+<h3>Y-Δ 变换</h3>
+<p>Y→Δ：$R_{12} = \frac{R_1R_2 + R_2R_3 + R_3R_1}{R_3}$</p>
+<p>Δ→Y：$R_1 = \frac{R_{12}R_{31}}{R_{12} + R_{23} + R_{31}}$</p>
+<p><span class="highlight-blue">对称特例：</span>当三个电阻相等时，$R_\Delta = 3R_Y$。</p>
+
+<div class="tip-card amber">
+<p><span style="color:var(--amber);font-weight:600">💡 考场提示：</span>三相电路大题的一般流程：①判断连接方式(Y/Δ) → ②求相电压/相电流 → ③利用对称性只算一相 → ④乘以3或用 $\sqrt{3}$ 公式求总量。如果是不对称三相，必须每相单独计算。</p>
+</div>
+</div>
+
+<!-- ============ 页面4: Day3 知识点 ============ -->
+<div class="page" id="page-day3">
+<h1>🔧 Day 3 — 受控源 + 运放 + 二端口网络</h1>
+<p class="subtitle">受控源处理是核心难点，运放虚短虚断要熟练</p>
+
+<h2>一、受控源分析</h2>
+<h3>四种受控源类型</h3>
+<table class="formula-table">
+<tr><th>类型</th><th>全称</th><th>控制量→被控量</th><th>系数</th><th>符号</th></tr>
+<tr><td>VCVS</td><td>电压控制电压源</td><td>$u_1 \to u_2$</td><td>$\mu$（无量纲）</td><td>菱形+±</td></tr>
+<tr><td>VCCS</td><td>电压控制电流源</td><td>$u_1 \to i_2$</td><td>$g_m$（S）</td><td>菱形+箭头</td></tr>
+<tr><td>CCVS</td><td>电流控制电压源</td><td>$i_1 \to u_2$</td><td>$r_m$（Ω）</td><td>菱形+±</td></tr>
+<tr><td>CCCS</td><td>电流控制电流源</td><td>$i_1 \to i_2$</td><td>$\beta$（无量纲）</td><td>菱形+箭头</td></tr>
+</table>
+
+<div class="circuit-box">
+<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg"><text x="15" y="18" fill="#4A9EFF" font-size="11" font-weight="bold">VCVS: u₂ = μu₁</text><line x1="20" y1="40" x2="55" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="20" y1="40" x2="20" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="20" y1="80" x2="55" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="5" y="64" fill="#a0a0b0" font-size="10" font-weight="bold">u₁</text><polygon points="95,50 75,60 95,70 115,60" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="82" y="56" fill="#F05454" font-size="10" font-weight="bold">+</text><text x="80" y="68" fill="#F05454" font-size="8" font-weight="bold">μu₁</text><line x1="55" y1="60" x2="75" y2="60" stroke="#9090a8" stroke-width="2.5"/><line x1="115" y1="60" x2="150" y2="60" stroke="#9090a8" stroke-width="2.5"/><line x1="150" y1="40" x2="150" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="55" y1="40" x2="150" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="55" y1="80" x2="150" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="155" y="64" fill="#a0a0b0" font-size="10" font-weight="bold">u₂</text><text x="215" y="18" fill="#4ECB71" font-size="11" font-weight="bold">VCCS: i₂ = gₘu₁</text><line x1="220" y1="40" x2="255" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="40" x2="220" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="80" x2="255" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="205" y="64" fill="#a0a0b0" font-size="10" font-weight="bold">u₁</text><polygon points="295,50 275,60 295,70 315,60" fill="none" stroke="#4ECB71" stroke-width="2.5"/><line x1="285" y1="50" x2="285" y2="70" stroke="#9090a8" stroke-width="2.5"/><text x="270" y="68" fill="#4ECB71" font-size="8" font-weight="bold">gₘu₁</text><line x1="315" y1="60" x2="350" y2="60" stroke="#9090a8" stroke-width="2.5"/><line x1="350" y1="40" x2="350" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="255" y1="40" x2="350" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="255" y1="80" x2="350" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="355" y="64" fill="#a0a0b0" font-size="10" font-weight="bold">i₂</text><text x="15" y="118" fill="#F5A623" font-size="11" font-weight="bold">CCVS: u₂ = rₘi₁</text><line x1="20" y1="140" x2="55" y2="140" stroke="#9090a8" stroke-width="2.5"/><text x="5" y="144" fill="#a0a0b0" font-size="10" font-weight="bold">i₁</text><polygon points="95,150 75,160 95,170 115,160" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="82" y="156" fill="#F5A623" font-size="10" font-weight="bold">+</text><text x="72" y="168" fill="#F5A623" font-size="8" font-weight="bold">rₘi₁</text><line x1="55" y1="160" x2="75" y2="160" stroke="#9090a8" stroke-width="2.5"/><line x1="115" y1="160" x2="150" y2="160" stroke="#9090a8" stroke-width="2.5"/><line x1="150" y1="140" x2="150" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="20" y1="180" x2="55" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="55" y1="140" x2="55" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="55" y1="180" x2="150" y2="180" stroke="#9090a8" stroke-width="2.5"/><text x="155" y="164" fill="#a0a0b0" font-size="10" font-weight="bold">u₂</text><text x="215" y="118" fill="#7C6FF0" font-size="11" font-weight="bold">CCCS: i₂ = βi₁</text><line x1="220" y1="140" x2="255" y2="140" stroke="#9090a8" stroke-width="2.5"/><text x="205" y="144" fill="#a0a0b0" font-size="10" font-weight="bold">i₁</text><polygon points="295,150 275,160 295,170 315,160" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><line x1="285" y1="150" x2="285" y2="170" stroke="#9090a8" stroke-width="2.5"/><text x="272" y="168" fill="#7C6FF0" font-size="8" font-weight="bold">βi₁</text><line x1="315" y1="160" x2="350" y2="160" stroke="#9090a8" stroke-width="2.5"/><line x1="350" y1="140" x2="350" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="180" x2="255" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="255" y1="140" x2="255" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="255" y1="180" x2="350" y2="180" stroke="#9090a8" stroke-width="2.5"/><text x="355" y="164" fill="#a0a0b0" font-size="10" font-weight="bold">i₂</text><text x="80" y="225" fill="#6a6a7a" font-size="10" font-weight="bold">菱形 = 受控源（区别于圆形独立源）</text><text x="80" y="242" fill="#6a6a7a" font-size="10" font-weight="bold">电压源标 ±，电流源标箭头方向</text></svg>
+<div class="circuit-caption">图3.1 四种受控源 — 菱形符号区别于圆形独立源，必须标注控制量</div>
+</div>
+
+<div class="tip-card warn">
+<p><span class="highlight">⚠️ 受控源处理四大规则：</span></p>
+<p>① 受控源<span class="highlight">不能置零</span>（不能像独立源那样短路/开路），叠加定理和求 $R_{th}$ 时始终保留</p>
+<p>② 叠加定理中，受控源不单独作用，但每次独立源单独作用时都保留</p>
+<p>③ 求戴维南 $R_{th}$ 时，含受控源必须用<span class="highlight">外加电源法</span>（端口加 $V_0$，独立源置零但受控源保留，求 $I_0$，$R_{th}=V_0/I_0$）</p>
+<p>④ 节点法/网孔法中，受控源先当作独立源列方程，再<span class="highlight">补充控制量方程</span>（将控制量用节点电压或网孔电流表示）</p>
+</div>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：含受控源的戴维南等效</div>
+<div class="ex-body">
+<p>电路含 $V_S=10V$, $R_1=2\Omega$, $R_2=3\Omega$，CCVS：$u = 2i_1$（$i_1$ 为流过 $R_1$ 的电流），端口为 $a$-$b$。求戴维南等效。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 求 $V_{oc}$（开路时 $i_{ab}=0$）：</strong></p>
+<p>开路时回路：$V_S \to R_1 \to R_2 \to$ 回，$i_1 = \frac{V_S}{R_1+R_2} = \frac{10}{5} = 2A$</p>
+<p>$V_{oc} = V_S - i_1 R_1 - 2i_1 = 10 - 4 - 4 = 2V$</p>
+<p><strong>② 求 $R_{th}$（外加电源法）：</strong></p>
+<p>独立源置零（$V_S$ 短路），端口加 $V_0=1V$，受控源保留：</p>
+<p>$R_1, R_2$ 并联：$R_{12} = \frac{2\times3}{5} = 1.2\Omega$</p>
+<p>$i_1 = I_0 \times \frac{R_2}{R_1+R_2} = 0.6I_0$</p>
+<p>列KVL：$V_0 = I_0 \times 1.2 + 2 \times 0.6I_0 = 1.2I_0 + 1.2I_0 = 2.4I_0$</p>
+<p>$R_{th} = V_0/I_0 = 2.4\Omega$</p>
+<p><strong>③ 等效电路：</strong> $V_{th} = 2V$ 串联 $R_{th} = 2.4\Omega$</p>
+</div>
+</div>
+</div>
+
+<h2>二、理想运算放大器</h2>
+<h3>两条黄金规则</h3>
+<div class="tip-card success">
+<p><span class="highlight-green">规则一（虚短）：</span> $V_+ = V_-$（同相端电压 = 反相端电压）</p>
+<p><span class="highlight-green">规则二（虚断）：</span> $I_+ = I_- = 0$（输入端电流为零，不从运放输入端取电流）</p>
+<p><strong>前提：</strong>运放工作在线性区（有负反馈，开环增益极大）</p>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg"><text x="20" y="18" fill="#4A9EFF" font-size="12" font-weight="bold">反相比例放大器</text><polygon points="160,55 160,145 240,100" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><text x="145" y="65" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="145" y="135" fill="#4A9EFF" font-size="14" font-weight="bold">+</text><line x1="30" y1="65" x2="50" y2="65" stroke="#9090a8" stroke-width="2.5"/><polyline points="50,65 55,57 60,73 65,57 70,73 75,57 80,73 85,57 90,73 95,57 100,65" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="65" y="57" fill="#F5A623" font-size="14" font-weight="bold">R₁</text><line x1="100" y1="65" x2="160" y2="65" stroke="#9090a8" stroke-width="2.5"/><text x="10" y="70" fill="#a0a0b0" font-size="11" font-weight="bold">u_in</text><line x1="160" y1="65" x2="160" y2="35" stroke="#9090a8" stroke-width="2.5"/><polyline points="160,35 168,27 176,43 184,27 192,43 200,27 208,43 216,27 224,43 232,27 240,35" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="185" y="27" fill="#F5A623" font-size="14" font-weight="bold">Rf</text><line x1="240" y1="35" x2="240" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="135" x2="120" y2="135" stroke="#9090a8" stroke-width="2.5"/><line x1="120" y1="135" x2="120" y2="141" stroke="#888" stroke-width="2.5"/><line x1="108" y1="141" x2="132" y2="141" stroke="#888" stroke-width="2.5"/><line x1="112" y1="146" x2="128" y2="146" stroke="#888" stroke-width="2"/><line x1="116" y1="151" x2="124" y2="151" stroke="#888" stroke-width="2"/><line x1="240" y1="100" x2="330" y2="100" stroke="#9090a8" stroke-width="2.5"/><text x="305" y="92" fill="#4ECB71" font-size="12" font-weight="bold">u_out</text><circle cx="160" cy="65" r="4" fill="#aaa"/><circle cx="240" cy="100" r="4" fill="#aaa"/><text x="50" y="175" fill="#7C6FF0" font-size="11" font-weight="bold">u_out = -(Rf/R₁) × u_in</text></svg>
+<div class="circuit-caption">图3.2 反相比例运放 — 输入信号从反相端(−)输入，同相端(+)接地</div>
+</div>
+
+<div class="circuit-box">
+<svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg"><text x="20" y="18" fill="#4ECB71" font-size="12" font-weight="bold">同相比例放大器</text><polygon points="170,55 170,145 250,100" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><text x="155" y="65" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="155" y="135" fill="#4A9EFF" font-size="14" font-weight="bold">+</text><line x1="30" y1="135" x2="170" y2="135" stroke="#9090a8" stroke-width="2.5"/><text x="10" y="130" fill="#a0a0b0" font-size="11" font-weight="bold">u_in</text><line x1="170" y1="65" x2="120" y2="65" stroke="#9090a8" stroke-width="2.5"/><polyline points="70,65 75,57 80,73 85,57 90,73 95,57 100,73 105,57 110,73 115,57 120,65" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="80" y="57" fill="#F5A623" font-size="14" font-weight="bold">R₁</text><line x1="70" y1="65" x2="70" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="70" y1="80" x2="70" y2="86" stroke="#888" stroke-width="2.5"/><line x1="58" y1="86" x2="82" y2="86" stroke="#888" stroke-width="2.5"/><line x1="62" y1="91" x2="78" y2="91" stroke="#888" stroke-width="2"/><line x1="66" y1="96" x2="74" y2="96" stroke="#888" stroke-width="2"/><line x1="170" y1="65" x2="170" y2="35" stroke="#9090a8" stroke-width="2.5"/><polyline points="170,35 178,27 186,43 194,27 202,43 210,27 218,43 226,27 234,43 242,27 250,35" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="195" y="27" fill="#F5A623" font-size="14" font-weight="bold">Rf</text><line x1="250" y1="35" x2="250" y2="100" stroke="#9090a8" stroke-width="2.5"/><line x1="250" y1="100" x2="340" y2="100" stroke="#9090a8" stroke-width="2.5"/><text x="315" y="92" fill="#4ECB71" font-size="12" font-weight="bold">u_out</text><circle cx="170" cy="65" r="4" fill="#aaa"/><circle cx="250" cy="100" r="4" fill="#aaa"/><circle cx="170" cy="135" r="4" fill="#aaa"/><text x="50" y="175" fill="#7C6FF0" font-size="11" font-weight="bold">u_out = (1 + Rf/R₁) × u_in</text></svg>
+<div class="circuit-caption">图3.3 同相比例运放 — 输入信号从同相端(+)输入，反相端通过R₁接地</div>
+</div>
+
+<h3>常见运放电路公式</h3>
+<table class="formula-table">
+<tr><th>电路类型</th><th>输出公式</th><th>特点</th></tr>
+<tr class="hot"><td>反相比例</td><td>$u_o = -\frac{R_f}{R_1} u_{in}$</td><td>输入阻抗 = $R_1$，输出反相</td></tr>
+<tr class="hot"><td>同相比例</td><td>$u_o = \left(1 + \frac{R_f}{R_1}\right) u_{in}$</td><td>输入阻抗无穷大，输出同相</td></tr>
+<tr><td>反相加法器</td><td>$u_o = -R_f\left(\frac{u_1}{R_1} + \frac{u_2}{R_2}\right)$</td><td>多路输入求和</td></tr>
+<tr><td>电压跟随器</td><td>$u_o = u_{in}$</td><td>$R_f=0$, $R_1=\infty$，阻抗变换</td></tr>
+<tr><td>积分器</td><td>$u_o = -\frac{1}{RC}\int u_{in}\,dt$</td><td>$R_f$ 换成 $C$</td></tr>
+<tr><td>差动放大器</td><td>$u_o = \frac{R_f}{R_1}(u_2 - u_1)$</td><td>两输入相减</td></tr>
+</table>
+
+<div class="example-box">
+<div class="ex-header">📝 真题详解：反相比例运放分析</div>
+<div class="ex-body">
+<p>反相比例运放，$R_1=10k\Omega$, $R_f=100k\Omega$, $u_{in}=0.2V$。求 $u_o$ 和输入阻抗 $R_{in}$。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答（虚短虚断法）</div>
+<p><strong>虚断：</strong> $I_- = 0$，所以流过 $R_1$ 的电流 = 流过 $R_f$ 的电流</p>
+<p><strong>虚短：</strong> $V_- = V_+ = 0V$（同相端接地，反相端虚地）</p>
+<p>$$\frac{u_{in} - V_-}{R_1} = \frac{V_- - u_o}{R_f}$$</p>
+<p>$$\frac{u_{in} - 0}{R_1} = \frac{0 - u_o}{R_f}$$</p>
+<p>$$u_o = -\frac{R_f}{R_1} u_{in} = -\frac{100k}{10k} \times 0.2 = \boxed{-2V}$$</p>
+<p><strong>输入阻抗：</strong> $R_{in} = R_1 = 10k\Omega$（因为虚地，输入端看到的就是 $R_1$ 到地）</p>
+<p><strong>增益：</strong> $A_v = -R_f/R_1 = -10$（负号表示反相，放大10倍）</p>
+</div>
+</div>
+</div>
+
+<h2>三、二端口网络</h2>
+
+<div class="circuit-box">
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><rect x="80" y="40" width="240" height="120" rx="10" fill="none" stroke="#7C6FF0" stroke-width="2"/><text x="170" y="105" fill="#7C6FF0" font-size="14" font-weight="bold">二端口网络</text><text x="190" y="125" fill="#7C6FF0" font-size="12" font-weight="bold">N</text><line x1="30" y1="65" x2="80" y2="65" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="135" x2="80" y2="135" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="4" fill="#aaa"/><circle cx="30" cy="135" r="4" fill="#aaa"/><text x="10" y="60" fill="#F05454" font-size="13" font-weight="bold">V₁</text><text x="45" y="75" fill="#4A9EFF" font-size="11" font-weight="bold">I₁→</text><text x="55" y="55" fill="#a0a0b0" font-size="11" font-weight="bold">1</text><text x="55" y="155" fill="#a0a0b0" font-size="11" font-weight="bold">1'</text><line x1="320" y1="65" x2="370" y2="65" stroke="#9090a8" stroke-width="2.5"/><line x1="320" y1="135" x2="370" y2="135" stroke="#9090a8" stroke-width="2.5"/><circle cx="370" cy="65" r="4" fill="#aaa"/><circle cx="370" cy="135" r="4" fill="#aaa"/><text x="375" y="60" fill="#F05454" font-size="13" font-weight="bold">V₂</text><text x="335" y="75" fill="#4A9EFF" font-size="11" font-weight="bold">I₂→</text><text x="335" y="55" fill="#a0a0b0" font-size="11" font-weight="bold">2</text><text x="335" y="155" fill="#a0a0b0" font-size="11" font-weight="bold">2'</text></svg>
+<div class="circuit-caption">图3.4 二端口网络 — 两个端口各有电压V和电流I，共4个变量</div>
+</div>
+
+<h3>Z参数（开路阻抗参数）</h3>
+<p>以电流为自变量，电压为因变量（端口开路测）：</p>
+<p>$$\begin{cases} V_1 = Z_{11}I_1 + Z_{12}I_2 \\ V_2 = Z_{21}I_1 + Z_{22}I_2 \end{cases}$$</p>
+<p>测定：$Z_{11} = \left.\frac{V_1}{I_1}\right|_{I_2=0}$（端口2开路），$Z_{12} = \left.\frac{V_1}{I_2}\right|_{I_1=0}$</p>
+
+<h3>Y参数（短路导纳参数）</h3>
+<p>$$\begin{cases} I_1 = Y_{11}V_1 + Y_{12}V_2 \\ I_2 = Y_{21}V_1 + Y_{22}V_2 \end{cases}$$</p>
+<p>测定：端口短路，$Y_{11} = \left.\frac{I_1}{V_1}\right|_{V_2=0}$</p>
+
+<h3>T参数（传输参数）</h3>
+<p>$$\begin{cases} V_1 = AV_2 + BI_2 \\ I_1 = CV_2 + DI_2 \end{cases}$$</p>
+
+<table class="formula-table">
+<tr><th>参数</th><th>互易条件</th><th>对称条件</th><th>测定方法</th></tr>
+<tr><td>Z参数</td><td>$Z_{12} = Z_{21}$</td><td>$Z_{11} = Z_{22}$</td><td>开路</td></tr>
+<tr><td>Y参数</td><td>$Y_{12} = Y_{21}$</td><td>$Y_{11} = Y_{22}$</td><td>短路</td></tr>
+<tr><td>T参数</td><td>$AD - BC = 1$</td><td>$A = D$</td><td>开/短路</td></tr>
+</table>
+
+<div class="tip-card amber">
+<p><span style="color:var(--amber);font-weight:600">💡 考试提示：</span>二端口网络是补充了解内容，非考试重点。掌握 Z/Y/T 参数定义、互易条件和对称条件即可。重点放在前面的直流和正弦稳态。</p>
+</div>
+
+<h2>四、综合计算冲刺</h2>
+<div class="example-box">
+<div class="ex-header">📝 综合题：含受控源的正弦稳态分析</div>
+<div class="ex-body">
+<p>正弦电路中 $\dot{U}_S = 10\angle 0° V$，$R=4\Omega$，$X_L=3\Omega$，VCCS：$\dot{I}_c = 2\dot{U}_1$（$\dot{U}_1$ 为 $R$ 两端电压），VCCS 与 $R$ 并联后串 $X_L$ 接 $\dot{U}_S$。求总电流 $\dot{I}$ 和功率因数。</p>
+<div class="ex-solution">
+<div class="sol-label">✅ 完整解答</div>
+<p><strong>① 设总电流 $\dot{I}$（流过 $X_L$ 的电流）：</strong></p>
+<p>$\dot{U}_1 = \dot{I} \times (R \parallel \text{VCCS支路})$</p>
+<p>VCCS电流：$\dot{I}_c = 2\dot{U}_1 = 2 \times 4\dot{I}_R$（$\dot{I}_R$ 为流过 $R$ 的电流）</p>
+<p><strong>② KCL 在节点上：</strong></p>
+<p>$\dot{I} = \dot{I}_R + \dot{I}_c = \dot{I}_R + 2 \times 4\dot{I}_R = \dot{I}_R + 8\dot{I}_R = 9\dot{I}_R$</p>
+<p>所以 $\dot{I}_R = \dot{I}/9$，$\dot{U}_1 = R \times \dot{I}_R = 4\dot{I}/9$</p>
+<p><strong>③ 等效阻抗：</strong></p>
+<p>$\dot{U}_{\text{并联}} = \dot{U}_1 = \frac{4}{9}\dot{I}$，所以 $Z_{\text{并联}} = 4/9 \,\Omega$</p>
+<p>$Z_{total} = Z_{\text{并联}} + jX_L = \frac{4}{9} + j3 \,\Omega$</p>
+<p><strong>④ 求总电流：</strong></p>
+<p>$$\dot{I} = \frac{\dot{U}_S}{Z_{total}} = \frac{10\angle 0°}{0.444 + j3} = \frac{10}{3.033\angle 81.6°} = 3.30\angle(-81.6°) A$$</p>
+<p><strong>⑤ 功率因数：</strong>$\cos\varphi = \cos 81.6° \approx 0.146$（非常低，因为受控源使等效电阻极小）</p>
+</div>
+</div>
+</div>
+
+<div class="tip-card amber">
+<p><span style="color:var(--amber);font-weight:600">💡 综合题策略：</span>遇到含受控源+正弦稳态的综合题，先用相量法将所有量转为复数，再按直流电路的方法（节点/网孔）列方程，最后补充受控源控制量方程。计算时注意复数运算的准确性。</p>
+</div>
+</div>
+
+<!-- ============ 页面5: 公式速查 ============ -->
+<div class="page" id="page-formula">
+<h1>📋 公式速查表</h1>
+<p class="subtitle">红色行 = 高频考点，必须背熟</p>
+
+<h3>直流电路</h3>
+<table class="formula-table">
+<tr><th>名称</th><th>公式</th><th>备注</th></tr>
+<tr class="hot"><td>欧姆定律</td><td>$U = IR$</td><td>基础</td></tr>
+<tr><td>分压公式</td><td>$U_k = U \frac{R_k}{R_1+R_2+\cdots}$</td><td>串联</td></tr>
+<tr><td>分流公式</td><td>$I_k = I \frac{1/R_k}{1/R_1+1/R_2+\cdots}$</td><td>并联</td></tr>
+<tr><td>串联总电阻</td><td>$R = R_1+R_2+\cdots$</td><td>—</td></tr>
+<tr><td>并联总电阻</td><td>$\frac{1}{R} = \frac{1}{R_1}+\frac{1}{R_2}+\cdots$</td><td>两电阻：$R=\frac{R_1R_2}{R_1+R_2}$</td></tr>
+<tr class="hot"><td>KCL</td><td>$\sum I_{in} = \sum I_{out}$</td><td>节点电流</td></tr>
+<tr class="hot"><td>KVL</td><td>$\sum U = 0$</td><td>回路电压</td></tr>
+<tr><td>功率</td><td>$P = UI = I^2R = U^2/R$</td><td>吸收功率</td></tr>
+<tr class="hot"><td>节点方程</td><td>$G_{11}V_1+G_{12}V_2+\cdots=I_{S11}$</td><td>自电导正、互电导负</td></tr>
+<tr class="hot"><td>网孔方程</td><td>$R_{11}I_1+R_{12}I_2+\cdots=V_{S11}$</td><td>自电阻正、互电阻负</td></tr>
+<tr class="hot"><td>Y→Δ</td><td>$R_{12}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_3}$</td><td>对称：$R_\Delta=3R_Y$</td></tr>
+<tr class="hot"><td>Δ→Y</td><td>$R_1=\frac{R_{12}R_{31}}{R_{12}+R_{23}+R_{31}}$</td><td>—</td></tr>
+<tr class="hot"><td>最大功率传输</td><td>$R_L=R_{th}$, $P_{max}=\frac{V_{th}^2}{4R_{th}}$</td><td>直流</td></tr>
+</table>
+
+<h3>动态电路</h3>
+<table class="formula-table">
+<tr><th>名称</th><th>公式</th><th>备注</th></tr>
+<tr class="hot"><td>换路定则</td><td>$u_C(0_+)=u_C(0_-)$, $i_L(0_+)=i_L(0_-)$</td><td>不能突变</td></tr>
+<tr class="hot"><td>三要素法</td><td>$f(t)=f(\infty)+[f(0_+)-f(\infty)]e^{-t/\tau}$</td><td>必考</td></tr>
+<tr><td>RC时间常数</td><td>$\tau = R_{eq}C$</td><td>$R_{eq}$从C两端看</td></tr>
+<tr><td>RL时间常数</td><td>$\tau = L/R_{eq}$</td><td>$R_{eq}$从L两端看</td></tr>
+<tr><td>稳态电容</td><td>开路（直流稳态）</td><td>$i_C=0$</td></tr>
+<tr><td>稳态电感</td><td>短路（直流稳态）</td><td>$u_L=0$</td></tr>
+</table>
+
+<h3>正弦稳态</h3>
+<table class="formula-table">
+<tr><th>名称</th><th>公式</th><th>备注</th></tr>
+<tr class="hot"><td>有效值</td><td>$U=U_m/\sqrt{2}$</td><td>—</td></tr>
+<tr><td>阻抗(R)</td><td>$Z_R = R$</td><td>同相</td></tr>
+<tr><td>阻抗(L)</td><td>$Z_L = j\omega L$</td><td>电压超前90°</td></tr>
+<tr><td>阻抗(C)</td><td>$Z_C = 1/(j\omega C)$</td><td>电压滞后90°</td></tr>
+<tr class="hot"><td>阻抗角</td><td>$\varphi = \arctan(X/R)$</td><td>感性>0, 容性<0</td></tr>
+<tr class="hot"><td>有功功率</td><td>$P=UI\cos\varphi=I^2R$</td><td>W</td></tr>
+<tr><td>无功功率</td><td>$Q=UI\sin\varphi=I^2X$</td><td>var</td></tr>
+<tr><td>视在功率</td><td>$S=UI=\sqrt{P^2+Q^2}$</td><td>V·A</td></tr>
+<tr class="hot"><td>功率因数</td><td>$\cos\varphi=P/S$</td><td>越接近1越好</td></tr>
+<tr><td>复功率</td><td>$\tilde{S}=\dot{U}\dot{I}^*=P+jQ$</td><td>—</td></tr>
+<tr class="hot"><td>共轭匹配</td><td>$Z_L=Z_{th}^*$, $P_{max}=\frac{|V_{th}|^2}{4R_{th}}$</td><td>正弦</td></tr>
+</table>
+
+<h3>三相电路</h3>
+<table class="formula-table">
+<tr><th>名称</th><th>Y型</th><th>Δ型</th></tr>
+<tr class="hot"><td>线/相电压</td><td>$U_l=\sqrt{3}U_p$</td><td>$U_l=U_p$</td></tr>
+<tr class="hot"><td>线/相电流</td><td>$I_l=I_p$</td><td>$I_l=\sqrt{3}I_p$</td></tr>
+<tr class="hot"><td>三相功率</td><td colspan="2">$P=\sqrt{3}U_lI_l\cos\varphi$</td></tr>
+<tr><td>无功</td><td colspan="2">$Q=\sqrt{3}U_lI_l\sin\varphi$</td></tr>
+<tr><td>视在</td><td colspan="2">$S=\sqrt{3}U_lI_l$</td></tr>
+</table>
+
+<h3>受控源与运放</h3>
+<table class="formula-table">
+<tr><th>名称</th><th>公式</th><th>备注</th></tr>
+<tr><td>VCVS</td><td>$u_2=\mu u_1$</td><td>无量纲</td></tr>
+<tr><td>VCCS</td><td>$i_2=g_m u_1$</td><td>S</td></tr>
+<tr><td>CCVS</td><td>$u_2=r_m i_1$</td><td>Ω</td></tr>
+<tr><td>CCCS</td><td>$i_2=\beta i_1$</td><td>无量纲</td></tr>
+<tr class="hot"><td>虚短</td><td>$V_+=V_-$</td><td>线性区</td></tr>
+<tr class="hot"><td>虚断</td><td>$I_+=I_-=0$</td><td>输入不取流</td></tr>
+<tr class="hot"><td>反相比例</td><td>$u_o=-(R_f/R_1)u_{in}$</td><td>—</td></tr>
+<tr class="hot"><td>同相比例</td><td>$u_o=(1+R_f/R_1)u_{in}$</td><td>—</td></tr>
+<tr><td>加法器</td><td>$u_o=-R_f(\frac{u_1}{R_1}+\frac{u_2}{R_2})$</td><td>—</td></tr>
+<tr><td>跟随器</td><td>$u_o=u_{in}$</td><td>阻抗变换</td></tr>
+</table>
+
+<h3>二端口网络</h3>
+<table class="formula-table">
+<tr><th>参数</th><th>方程</th><th>互易条件</th><th>对称条件</th></tr>
+<tr><td>Z参数</td><td>$V_1=Z_{11}I_1+Z_{12}I_2$</td><td>$Z_{12}=Z_{21}$</td><td>$Z_{11}=Z_{22}$</td></tr>
+<tr><td>Y参数</td><td>$I_1=Y_{11}V_1+Y_{12}V_2$</td><td>$Y_{12}=Y_{21}$</td><td>$Y_{11}=Y_{22}$</td></tr>
+<tr><td>T参数</td><td>$V_1=AV_2+BI_2$</td><td>$AD-BC=1$</td><td>$A=D$</td></tr>
+</table>
+</div>
+
+<!-- ============ 页面6: 解题锦囊 ============ -->
+<div class="page" id="page-tips">
+<h1>💡 解题锦囊</h1>
+<p class="subtitle">考场实战策略，避开常见失分陷阱</p>
+
+<h2>考场技巧 Top 5</h2>
+<div class="tip-card success">
+<p><strong>① 先看题型再动手</strong> — 拿到卷子花2分钟扫一遍所有题，判断每题属于哪个模块（直流/动态/正弦/三相/运放），优先做自己最擅长的。</p>
+<p><strong>② 节点法 vs 网孔法选择</strong> — 节点少用节点法，网孔少用网孔法。一般节点数 < 网孔数 → 节点法更快。</p>
+<p><strong>③ 三要素法万能模板</strong> — 动态电路题直接套三要素公式，先写公式再算三个量，不要跳步。画 0+ 等效电路是关键一步。</p>
+<p><strong>④ 正弦稳态先转相量</strong> — 所有正弦题第一步都是转相量，画相量图辅助理解。功率题先求 $|Z|$ 和 $\varphi$，再套功率公式。</p>
+<p><strong>⑤ 三相电路只算一相</strong> — 对称三相电路利用对称性只分析A相，最后乘3或用 $\sqrt{3}$ 公式。不要三相全算！</p>
+</div>
+
+<h2>常见失分点（6大陷阱）</h2>
+<div class="tip-card warn">
+<p><span class="highlight">① 叠加定理算功率</span> — 功率是平方关系，不能叠加！$P=(I_1+I_2)^2R \neq I_1^2R+I_2^2R$</p>
+<p><span class="highlight">② 三相功率漏 √3</span> — $P=\sqrt{3}U_lI_l\cos\varphi$，公式中的 $\sqrt{3}$ 最容易忘！</p>
+<p><span class="highlight">③ 受控源置零</span> — 受控源永远不能置零！叠加定理和求 $R_{th}$ 时都要保留。</p>
+<p><span class="highlight">④ 功率因数角搞错</span> — $\varphi$ 是相电压与相电流的相位差（每相阻抗角），不是线电压与线电流的相位差。</p>
+<p><span class="highlight">⑤ 换路定则用错对象</span> — $u_C$ 和 $i_L$ 不能突变，但 $i_C$ 和 $u_L$ 可以突变！0+ 等效电路中电容→电压源、电感→电流源。</p>
+<p><span class="highlight">⑥ 运放虚短条件忽略</span> — 虚短前提是线性区（有负反馈）。如果没有负反馈，不能使用虚短！</p>
+</div>
+
+<h2>题型识别速查表</h2>
+<table class="formula-table">
+<tr><th>题目特征</th><th>考点</th><th>首选方法</th></tr>
+<tr><td>多个电源 + 求某支路电流</td><td>叠加定理/节点法</td><td>叠加（2源）或节点法（多源）</td></tr>
+<tr><td>含受控源 + 求端口等效</td><td>戴维南等效</td><td>外加电源法求 $R_{th}$</td></tr>
+<tr><td>开关 + 电容/电感 + 求 $u_C(t)$</td><td>动态电路</td><td>三要素法</td></tr>
+<tr><td>正弦电源 + 求 $I, P, \cos\varphi$</td><td>正弦稳态</td><td>相量法 → 阻抗 → 功率</td></tr>
+<tr><td>三相电源 + Y/Δ + 求功率</td><td>三相电路</td><td>对称→单相→×3</td></tr>
+<tr><td>运放 + 求输出电压</td><td>运放分析</td><td>虚短虚断</td></tr>
+<tr><td>二端口 + 求参数</td><td>二端口</td><td>按定义开/短路测试</td></tr>
+</table>
+
+<h2>考场时间分配建议（120分钟）</h2>
+<table class="formula-table">
+<tr><th>阶段</th><th>时间</th><th>内容</th></tr>
+<tr><td>通读全卷</td><td>3分钟</td><td>标记每题所属模块和难度</td></tr>
+<tr><td>第一轮：易题</td><td>50分钟</td><td>选择题+简单计算，先拿基础分</td></tr>
+<tr><td>第二轮：难题</td><td>50分钟</td><td>大题（三相、动态、受控源）</td></tr>
+<tr><td>检查</td><td>17分钟</td><td>验算关键步骤，检查 $\sqrt{3}$ 和符号</td></tr>
+</table>
+</div>
+
+<!-- ============ 页面7: 互动自测 ============ -->
+<div class="page" id="page-quiz">
+<h1>✅ 互动自测 — 40题</h1>
+<p class="subtitle">点击题目展开答案，计算题配有电路图。掌握度自动保存。</p>
+
+<div style="margin:12px 0">
+<button class="filter-btn active" onclick="filterQuiz('all',this)">全部 40题</button>
+<button class="filter-btn" onclick="filterQuiz('day1',this)">Day1 直流+动态</button>
+<button class="filter-btn" onclick="filterQuiz('day2',this)">Day2 正弦+三相</button>
+<button class="filter-btn" onclick="filterQuiz('day3',this)">Day3 受控源+运放</button>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%">0% 已掌握</div></div>
+
+<h3>📘 Day1：直流电路 + 动态电路</h3>
+
+<div class="quiz-item" data-day="day1" data-qid="q1">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">1</span><span class="q-text">节点电压法中，参考节点的电位为（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 1V</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 0V</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 任意值</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 电源电压</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>参考节点（接地节点）的电位定义为 0V，其余节点电压均相对于参考节点而言。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q1','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q1','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q2">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">2</span><span class="q-text">两个电阻 $R_1=6\Omega$ 和 $R_2=3\Omega$ 串联接在 18V 电源上，$R_2$ 两端电压为（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 12V</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 6V</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 9V</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 18V</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>分压公式：$U_2 = U \times \frac{R_2}{R_1+R_2} = 18 \times \frac{3}{6+3} = 6V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q2','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q2','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q3">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">3</span><span class="q-text">叠加定理适用于（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 电压、电流和功率</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 仅电压和电流</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 仅功率</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 非线性电路</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>功率是平方关系，不能叠加。$P = (I_1+I_2)^2 R \neq I_1^2R + I_2^2R$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q3','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q3','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q4">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">4</span><span class="q-text">应用叠加定理时，不作用的电压源应____，电流源应____。受控源____。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. 短路，开路，始终保留</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. 开路，短路，置零</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 短路，短路，保留</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 开路，开路，短路</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>电压源不作用→短路，电流源不作用→开路。受控源不能置零，始终保留。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q4','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q4','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q5">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">5</span><span class="q-text">含受控源电路求 $R_{th}$，应使用（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 串并联化简</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. Y-Δ变换</li><li class="quiz-opt" onclick="markAnswer(this,true)">C. 外加电源法或开路短路法</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 叠加定理</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：C</span><br>含受控源时不能简单串并联，必须用外加电源法（$R_{th}=V_0/I_0$）或开路短路法（$R_{th}=V_{oc}/I_{sc}$）。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q5','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q5','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q6">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">6</span><span class="q-text">换路瞬间不能突变的是（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 电容电压和电容电流</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 电容电压和电感电流</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 电感电压和电容电流</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 所有电压和电流</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>$u_C$ 和 $i_L$ 不能突变（能量连续），但 $i_C$ 和 $u_L$ 可以突变。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q6','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q6','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q7">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">7</span><span class="q-text">RC电路 $R=2k\Omega$, $C=5\mu F$，$\tau$ = （ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. 10ms</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. 1ms</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 100ms</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 0.01ms</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>$\tau = RC = 2000 \times 5 \times 10^{-6} = 10ms$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q7','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q7','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q8">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">8</span><span class="q-text">三要素法中 $f(\infty)$ 是换路后稳态值，稳态时电容____，电感____</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 短路，开路</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 开路，短路</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 开路，开路</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 短路，短路</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>直流稳态：电容开路（无电流），电感短路（无电压）。口诀：容开感短。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q8','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q8','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q9">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">9</span><span class="q-text">【计算题·配图】用节点电压法求 $V_1$ 和各支路电流。$R_1=2\Omega$, $R_2=4\Omega$, $R_3=2\Omega$, $V_{S1}=12V$, $V_{S2}=6V$</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"><line x1="60" y1="35" x2="300" y2="35" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="200" x2="300" y2="200" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="35" x2="60" y2="62" stroke="#9090a8" stroke-width="2.5"/><circle cx="60" cy="80" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="55" y="77" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="54" y="93" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="40" y="85" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="60" y1="95" x2="60" y2="140" stroke="#9090a8" stroke-width="2.5"/><polyline points="60,140 68,145 52,150 68,155 52,160 68,165 52,170 68,175 52,180 68,185 60,190" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="75" y="170" fill="#F5A623" font-size="14" font-weight="bold">R₁</text><line x1="60" y1="190" x2="60" y2="200" stroke="#9090a8" stroke-width="2.5"/><line x1="180" y1="35" x2="180" y2="140" stroke="#9090a8" stroke-width="2.5"/><polyline points="180,140 188,145 172,150 188,155 172,160 188,165 172,170 188,175 172,180 188,185 180,190" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="195" y="170" fill="#F5A623" font-size="14" font-weight="bold">R₂</text><line x1="180" y1="190" x2="180" y2="200" stroke="#9090a8" stroke-width="2.5"/><line x1="300" y1="35" x2="300" y2="62" stroke="#9090a8" stroke-width="2.5"/><circle cx="300" cy="80" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="295" y="77" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="294" y="93" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="280" y="85" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="300" y1="95" x2="300" y2="140" stroke="#9090a8" stroke-width="2.5"/><polyline points="300,140 308,145 292,150 308,155 292,160 308,165 292,170 308,175 292,180 308,185 300,190" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="315" y="170" fill="#F5A623" font-size="14" font-weight="bold">R₃</text><line x1="300" y1="190" x2="300" y2="200" stroke="#9090a8" stroke-width="2.5"/><circle cx="60" cy="35" r="4" fill="#aaa"/><circle cx="180" cy="35" r="4" fill="#aaa"/><circle cx="300" cy="35" r="4" fill="#aaa"/><circle cx="60" cy="200" r="4" fill="#aaa"/><circle cx="180" cy="200" r="4" fill="#aaa"/><circle cx="300" cy="200" r="4" fill="#aaa"/><text x="168" y="27" fill="#4A9EFF" font-size="15" font-weight="bold">V₁</text><line x1="180" y1="200" x2="180" y2="206" stroke="#888" stroke-width="2.5"/><line x1="168" y1="206" x2="192" y2="206" stroke="#888" stroke-width="2.5"/><line x1="172" y1="211" x2="188" y2="211" stroke="#888" stroke-width="2"/><line x1="176" y1="216" x2="184" y2="216" stroke="#888" stroke-width="2"/></svg>
+<div class="circuit-caption">q9 节点电压法电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>$\frac{V_1-12}{2}+\frac{V_1}{4}+\frac{V_1-6}{2}=0$ → $5V_1=36$ → $V_1=7.2V$<br>$I_1=-2.4A$(向上), $I_2=1.8A$(向下), $I_3=0.6A$(向下) 验证: $2.4=1.8+0.6$ ✓</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q9','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q9','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q10">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">10</span><span class="q-text">【计算题·配图】RC电路 $V_S=6V$, $R=3\Omega$, $C=1F$，$u_C(0_-)=0V$，$t=0$闭合开关。求 $u_C(t)$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="40" x2="80" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="40" x2="105" y2="28" stroke="#F5A623" stroke-width="2.5"/><circle cx="80" cy="40" r="4" fill="#aaa"/><text x="83" y="25" fill="#F5A623" font-size="10" font-weight="bold">t=0</text><line x1="105" y1="28" x2="160" y2="28" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="28" x2="160" y2="50" stroke="#9090a8" stroke-width="2.5"/><polyline points="160,50 168,55 152,60 168,65 152,70 168,75 152,80 168,85 152,90 168,95 160,100" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="175" y="80" fill="#F5A623" font-size="14" font-weight="bold">R</text><line x1="160" y1="100" x2="160" y2="115" stroke="#9090a8" stroke-width="2.5"/><line x1="145" y1="130" x2="175" y2="130" stroke="#4A9EFF" stroke-width="3"/><line x1="145" y1="140" x2="175" y2="140" stroke="#4A9EFF" stroke-width="3"/><text x="185" y="138" fill="#4A9EFF" font-size="13" font-weight="bold">C</text><line x1="160" y1="155" x2="160" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="40" x2="30" y2="75" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="90" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="87" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="103" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="95" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="30" y1="105" x2="30" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="180" x2="160" y2="180" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="40" r="4" fill="#aaa"/><circle cx="30" cy="180" r="4" fill="#aaa"/><circle cx="160" cy="180" r="4" fill="#aaa"/><line x1="95" y1="180" x2="95" y2="186" stroke="#888" stroke-width="2.5"/><line x1="83" y1="186" x2="107" y2="186" stroke="#888" stroke-width="2.5"/><line x1="87" y1="191" x2="103" y2="191" stroke="#888" stroke-width="2"/><line x1="91" y1="196" x2="99" y2="196" stroke="#888" stroke-width="2"/></svg>
+<div class="circuit-caption">q10 RC电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $u_C(0_+)=0V$ ② $u_C(\infty)=6V$ ③ $\tau=RC=3s$<br>④ $u_C(t)=6(1-e^{-t/3})V$（零状态响应）</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q10','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q10','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q11">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">11</span><span class="q-text">【计算题·配图】RL电路 $V_S=12V$, $R=3\Omega$, $L=0.6H$，$i_L(0_-)=0A$，$t=0$闭合开关。求 $i_L(t)$ 和 $u_L(t)$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="40" x2="80" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="40" x2="105" y2="28" stroke="#F5A623" stroke-width="2.5"/><circle cx="80" cy="40" r="4" fill="#aaa"/><text x="83" y="25" fill="#F5A623" font-size="10" font-weight="bold">t=0</text><line x1="105" y1="28" x2="160" y2="28" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="28" x2="160" y2="50" stroke="#9090a8" stroke-width="2.5"/><polyline points="160,50 168,55 152,60 168,65 152,70 168,75 152,80 168,85 152,90 168,95 160,100" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="175" y="80" fill="#F5A623" font-size="14" font-weight="bold">R</text><line x1="160" y1="100" x2="160" y2="115" stroke="#9090a8" stroke-width="2.5"/><path d="M 150 121.25 Q 160 108.75 170 121.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 150 133.25 Q 160 120.75 170 133.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 150 146.25 Q 160 133.75 170 146.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 150 159.25 Q 160 146.75 170 159.25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="185" y="145" fill="#4ECB71" font-size="13" font-weight="bold">L</text><line x1="160" y1="165" x2="160" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="40" x2="30" y2="75" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="90" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="87" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="103" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="95" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="30" y1="105" x2="30" y2="180" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="180" x2="160" y2="180" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="40" r="4" fill="#aaa"/><circle cx="30" cy="180" r="4" fill="#aaa"/><circle cx="160" cy="180" r="4" fill="#aaa"/><line x1="95" y1="180" x2="95" y2="186" stroke="#888" stroke-width="2.5"/><line x1="83" y1="186" x2="107" y2="186" stroke="#888" stroke-width="2.5"/><line x1="87" y1="191" x2="103" y2="191" stroke="#888" stroke-width="2"/><line x1="91" y1="196" x2="99" y2="196" stroke="#888" stroke-width="2"/></svg>
+<div class="circuit-caption">q11 RL电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $i_L(0_+)=0A$ ② $i_L(\infty)=4A$ ③ $\tau=L/R=0.2s$<br>④ $i_L(t)=4(1-e^{-5t})A$ ⑤ $u_L(t)=12e^{-5t}V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q11','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q11','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q12">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">12</span><span class="q-text">【计算题·配图】网孔电流法求 $I_1, I_2$。$R_1=4\Omega$, $R_2=2\Omega$, $R_3=4\Omega$, $V_{S1}=20V$, $V_{S2}=10V$</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg"><defs><marker id="mk12qa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#7C6FF0"/></marker><marker id="mk12qb" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#4ECDC4"/></marker></defs><line x1="50" y1="25" x2="310" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="50" y1="25" x2="50" y2="155" stroke="#9090a8" stroke-width="2.5"/><line x1="310" y1="25" x2="310" y2="155" stroke="#9090a8" stroke-width="2.5"/><line x1="50" y1="155" x2="310" y2="155" stroke="#9090a8" stroke-width="2.5"/><line x1="180" y1="25" x2="180" y2="155" stroke="#9090a8" stroke-width="2.5"/><polyline points="85,25 90,17 95,33 100,17 105,33 110,17 115,33 120,17 125,33 130,17 135,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="95" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="235,25 240,17 245,33 250,17 255,33 260,17 265,33 270,17 275,33 280,17 285,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="245" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><polyline points="180,65 188,70 172,75 188,80 172,85 188,90 172,95 188,100 172,105 188,110 180,115" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="188" y="92" fill="#F5A623" font-size="11" font-weight="bold">R₃</text><line x1="50" y1="75" x2="50" y2="90" stroke="#9090a8" stroke-width="2.5"/><circle cx="50" cy="100" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="45" y="97" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="44" y="113" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="30" y="105" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₁</text><line x1="50" y1="115" x2="50" y2="155" stroke="#9090a8" stroke-width="2.5"/><line x1="50" y1="75" x2="50" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="310" y1="75" x2="310" y2="90" stroke="#9090a8" stroke-width="2.5"/><circle cx="310" cy="100" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="305" y="97" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="304" y="113" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="290" y="105" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs₂</text><line x1="310" y1="115" x2="310" y2="155" stroke="#9090a8" stroke-width="2.5"/><line x1="310" y1="75" x2="310" y2="25" stroke="#9090a8" stroke-width="2.5"/><circle cx="50" cy="25" r="4" fill="#aaa"/><circle cx="180" cy="25" r="4" fill="#aaa"/><circle cx="310" cy="25" r="4" fill="#aaa"/><circle cx="50" cy="155" r="4" fill="#aaa"/><circle cx="180" cy="155" r="4" fill="#aaa"/><circle cx="310" cy="155" r="4" fill="#aaa"/><text x="100" y="95" fill="#7C6FF0" font-size="14" font-weight="bold">I₁</text><text x="250" y="95" fill="#4ECDC4" font-size="14" font-weight="bold">I₂</text></svg>
+<div class="circuit-caption">q12 网孔电流法电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>网孔1: $8I_1-4I_2=20$ 网孔2: $-4I_1+6I_2=-10$<br>联立解得: $I_1=2.86A$, $I_2=0.24A$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q12','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q12','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day1" data-qid="q13">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">13</span><span class="q-text">【计算题·配图】求端口 $a$-$b$ 的戴维南等效。$V_S=10V$, $R_1=4\Omega$, $R_2=6\Omega$</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="30" x2="190" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="30" x2="40" y2="55" stroke="#9090a8" stroke-width="2.5"/><circle cx="40" cy="70" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="35" y="67" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="34" y="83" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="20" y="75" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="40" y1="85" x2="40" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="40" y1="130" x2="190" y2="130" stroke="#9090a8" stroke-width="2.5"/><polyline points="75,30 80,22 85,38 90,22 95,38 100,22 105,38 110,22 115,38 120,22 125,30" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="85" y="22" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="145,30 150,22 155,38 160,22 165,38 170,22 175,38 180,22 185,38 190,22 195,30" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="160" y="22" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="190" y1="30" x2="260" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="190" y1="130" x2="260" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="260" cy="30" r="4" fill="#aaa"/><circle cx="260" cy="130" r="4" fill="#aaa"/><text x="265" y="28" fill="#F05454" font-size="14" font-weight="bold">a</text><text x="265" y="138" fill="#F05454" font-size="14" font-weight="bold">b</text><circle cx="40" cy="30" r="4" fill="#aaa"/><circle cx="40" cy="130" r="4" fill="#aaa"/><circle cx="190" cy="30" r="4" fill="#aaa"/><circle cx="190" cy="130" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q13 戴维南等效电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $V_{oc}=10\times\frac{4}{10}=4V$ ② $R_{th}=R_1\parallel R_2=2.4\Omega$<br>③ 最大功率: $R_L=2.4\Omega$, $P_{max}=\frac{16}{9.6}=1.67W$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q13','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q13','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<h3>📗 Day2：正弦稳态 + 三相电路</h3>
+
+<div class="quiz-item" data-day="day2" data-qid="q14">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">14</span><span class="q-text">$u(t) = 10\sqrt{2}\cos(100\pi t + 30°)V$ 的有效值相量为（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. $10\sqrt{2}\angle 30°$</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. $10\angle 30°$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $5\angle 30°$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $10\angle 60°$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>$U=U_m/\sqrt{2}=10V$, $\varphi=30°$ → $\dot{U}=10\angle 30°V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q14','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q14','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q15">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">15</span><span class="q-text">电感 $L=0.1H$，$f=50Hz$，阻抗 $Z_L$ = （ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. $j10\Omega$</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. $j31.4\Omega$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $-j31.4\Omega$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $31.4\Omega$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>$Z_L=j\omega L=j\times2\pi\times50\times0.1=j31.4\Omega$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q15','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q15','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q16">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">16</span><span class="q-text">【计算题·配图】$\dot{U}=100\angle 0°V$，$R=6\Omega$，$X_L=8\Omega$。求 $I, P, Q, \cos\varphi$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="25" x2="80" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="25" x2="30" y2="50" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="62" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="78" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="70" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">U̇</text><line x1="30" y1="80" x2="30" y2="120" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="120" x2="240" y2="120" stroke="#9090a8" stroke-width="2.5"/><line x1="80" y1="25" x2="130" y2="25" stroke="#9090a8" stroke-width="2.5"/><polyline points="80,25 85,17 90,33 95,17 100,33 105,17 110,33 115,17 120,33 125,17 130,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="95" y="17" fill="#F5A623" font-size="12" font-weight="bold">R</text><line x1="130" y1="25" x2="190" y2="25" stroke="#9090a8" stroke-width="2.5"/><path d="M 140 25 Q 145.0 15 150.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 150 25 Q 155.0 15 160.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 160 25 Q 165.0 15 170.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 170 25 Q 175.0 15 180.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="175" y="17" fill="#4ECB71" font-size="12" font-weight="bold">L</text><line x1="180" y1="25" x2="240" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="240" y1="25" x2="240" y2="120" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="25" r="4" fill="#aaa"/><circle cx="30" cy="120" r="4" fill="#aaa"/><circle cx="240" cy="25" r="4" fill="#aaa"/><circle cx="240" cy="120" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q16 RL串联电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>$Z=6+j8=10\angle 53.13°$<br>$\dot{I}=10\angle(-53.13°)A$, $P=600W$, $Q=800\text{var}$, $S=1000\text{VA}$, $\cos\varphi=0.6$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q16','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q16','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q17">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">17</span><span class="q-text">$\cos\varphi=0.8$（滞后），$P=800W$，则 $Q$ = （ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. 600var</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. 1000var</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 800var</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 400var</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>$\sin\varphi=0.6$, $\tan\varphi=0.75$, $Q=P\tan\varphi=800\times0.75=600\text{var}$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q17','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q17','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q18">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">18</span><span class="q-text">【计算题·配图】对称三相Y型，每相 $Z=8+j6\,\Omega$，$U_l=380V$。求线电流和功率。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"><line x1="160" y1="100" x2="160" y2="150" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="100" x2="80" y2="55" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="100" x2="240" y2="55" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="100" x2="160" y2="30" stroke="#9090a8" stroke-width="2.5"/><circle cx="80" cy="42" r="14" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="74" y="47" fill="#F05454" font-size="13" font-weight="bold">~</text><text x="58" y="18" fill="#F05454" font-size="13" font-weight="bold">A</text><circle cx="160" cy="22" r="14" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="154" y="27" fill="#F05454" font-size="13" font-weight="bold">~</text><text x="148" y="10" fill="#F05454" font-size="13" font-weight="bold">B</text><circle cx="240" cy="42" r="14" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="234" y="47" fill="#F05454" font-size="13" font-weight="bold">~</text><text x="250" y="18" fill="#F05454" font-size="13" font-weight="bold">C</text><polyline points="100,75 103,67 106,83 109,67 112,83 115,67 118,83 121,67 124,83 127,67 130,75" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="100" y="68" fill="#F5A623" font-size="10" font-weight="bold">Z</text><polyline points="160,50 168,53 152,56 168,59 152,62 168,65 152,68 168,71 152,74 168,77 160,80" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="168" y="68" fill="#F5A623" font-size="10" font-weight="bold">Z</text><polyline points="190,75 193,67 196,83 199,67 202,83 205,67 208,83 211,67 214,83 217,67 220,75" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="220" y="68" fill="#F5A623" font-size="10" font-weight="bold">Z</text><circle cx="160" cy="100" r="4" fill="#aaa"/><text x="148" y="165" fill="#a0a0b0" font-size="13" font-weight="bold">N</text><line x1="160" y1="150" x2="160" y2="156" stroke="#888" stroke-width="2.5"/><line x1="148" y1="156" x2="172" y2="156" stroke="#888" stroke-width="2.5"/><line x1="152" y1="161" x2="168" y2="161" stroke="#888" stroke-width="2"/><line x1="156" y1="166" x2="164" y2="166" stroke="#888" stroke-width="2"/></svg>
+<div class="circuit-caption">q18 三相Y型电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $U_p=220V$ ② $|Z|=10\Omega$ ③ $I_l=22A$ ④ $\cos\varphi=0.8$<br>⑤ $P=\sqrt{3}\times380\times22\times0.8\approx11.58kW$ ⑥ $Q\approx8.69k\text{var}$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q18','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q18','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q19">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">19</span><span class="q-text">对称Δ型连接中，线电流与相电流的关系为（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. $I_l = I_p$</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. $I_l = \sqrt{3}I_p$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $I_l = 3I_p$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $I_l = I_p/\sqrt{3}$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>Δ型：$U_l=U_p$，$I_l=\sqrt{3}I_p$。Y型：$I_l=I_p$，$U_l=\sqrt{3}U_p$。两者对偶。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q19','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q19','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q20">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">20</span><span class="q-text">耦合系数 $k$ 的取值范围（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. $0 \le k \le \infty$</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. $0 \le k \le 1$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $-1 \le k \le 1$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $k \ge 1$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>$k=M/\sqrt{L_1L_2}$，$k=1$全耦合(理想变压器)，$k=0$无耦合。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q20','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q20','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q21">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">21</span><span class="q-text">【计算题·配图】理想变压器 $n=2$，副边 $R_L=8\Omega$。求原边输入阻抗。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="35" x2="60" y2="35" stroke="#9090a8" stroke-width="2.5"/><path d="M 60 35 Q 65.0 25 70.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 70 35 Q 75.0 25 80.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 80 35 Q 85.0 25 90.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 90 35 Q 95.0 25 100.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="68" y="20" fill="#4ECB71" font-size="11" font-weight="bold">N₁</text><line x1="105" y1="20" x2="105" y2="95" stroke="#888" stroke-width="2.5"/><line x1="112" y1="20" x2="112" y2="95" stroke="#888" stroke-width="2.5"/><path d="M 115 35 Q 120.0 25 125.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 125 35 Q 130.0 25 135.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 135 35 Q 140.0 25 145.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 145 35 Q 150.0 25 155.0 35" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="130" y="20" fill="#F5A623" font-size="11" font-weight="bold">N₂</text><line x1="155" y1="35" x2="200" y2="35" stroke="#9090a8" stroke-width="2.5"/><line x1="15" y1="95" x2="60" y2="95" stroke="#9090a8" stroke-width="2.5"/><line x1="155" y1="95" x2="200" y2="95" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="35" x2="200" y2="50" stroke="#9090a8" stroke-width="2.5"/><polyline points="200,50 208,54 192,57 208,60 192,64 208,68 192,71 208,74 192,78 208,82 200,85" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="215" y="70" fill="#7C6FF0" font-size="12" font-weight="bold">R_L</text><line x1="200" y1="85" x2="200" y2="95" stroke="#9090a8" stroke-width="2.5"/><circle cx="15" cy="35" r="4" fill="#aaa"/><circle cx="15" cy="95" r="4" fill="#aaa"/><circle cx="200" cy="35" r="4" fill="#aaa"/><circle cx="200" cy="95" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q21 理想变压器电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>$Z_{in}=n^2 Z_L=4\times8=32\Omega$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q21','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q21','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q22">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">22</span><span class="q-text">Y-Δ对称变换中 $R_\Delta$ 与 $R_Y$ 的关系（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. $R_\Delta = 3R_Y$</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. $R_\Delta = R_Y$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $R_\Delta = R_Y/3$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $R_\Delta = 9R_Y$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>对称时 $R_\Delta=3R_Y$，反之 $R_Y=R_\Delta/3$。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q22','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q22','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q23">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">23</span><span class="q-text">【计算题·配图】$\dot{U}=50\angle 0°V$，$R=3\Omega$，$X_C=4\Omega$。求 $\dot{I}, P, \cos\varphi$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="25" x2="80" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="25" x2="30" y2="50" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="62" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="78" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="70" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">U̇</text><line x1="30" y1="80" x2="30" y2="120" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="120" x2="240" y2="120" stroke="#9090a8" stroke-width="2.5"/><polyline points="80,25 85,17 90,33 95,17 100,33 105,17 110,33 115,17 120,33 125,17 130,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="95" y="17" fill="#F5A623" font-size="12" font-weight="bold">R</text><line x1="130" y1="25" x2="180" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="180" y1="25" x2="180" y2="40" stroke="#9090a8" stroke-width="2.5"/><line x1="165" y1="42" x2="195" y2="42" stroke="#4A9EFF" stroke-width="3"/><line x1="165" y1="52" x2="195" y2="52" stroke="#4A9EFF" stroke-width="3"/><text x="205" y="58" fill="#4A9EFF" font-size="12" font-weight="bold">C</text><line x1="180" y1="70" x2="180" y2="120" stroke="#9090a8" stroke-width="2.5"/><line x1="180" y1="25" x2="240" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="240" y1="25" x2="240" y2="120" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="25" r="4" fill="#aaa"/><circle cx="30" cy="120" r="4" fill="#aaa"/><circle cx="240" cy="25" r="4" fill="#aaa"/><circle cx="240" cy="120" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q23 RC串联电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>$Z=3-j4=5\angle(-53.13°)\Omega$（容性）<br>$\dot{I}=10\angle 53.13°A$, $P=300W$, $\cos\varphi=0.6$（超前）</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q23','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q23','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q24">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">24</span><span class="q-text">提高功率因数（感性负载）的方法是（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 串联电感</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 并联电容</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 串联电容</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 并联电感</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>并联电容补偿感性无功，不影响负载本身电压和功率。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q24','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q24','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q25">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">25</span><span class="q-text">正弦稳态最大功率传输条件（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. $Z_L = Z_{th}$</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. $Z_L = Z_{th}^*$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $|Z_L| = |Z_{th}|$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $R_L = R_{th}$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>共轭匹配：$R_L=R_{th}$, $X_L=-X_{th}$。$P_{max}=|V_{th}|^2/(4R_{th})$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q25','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q25','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q26">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">26</span><span class="q-text">【计算题·配图】对称Δ型负载，每相 $Z=10\angle 30°\,\Omega$，$U_l=380V$。求线电流和功率。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><line x1="60" y1="30" x2="220" y2="30" stroke="#9090a8" stroke-width="2.5"/><line x1="60" y1="30" x2="140" y2="140" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="30" x2="140" y2="140" stroke="#9090a8" stroke-width="2.5"/><polyline points="100,30 108,22 116,38 124,22 132,38 140,22 148,38 156,22 164,38 172,22 180,30" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="125" y="22" fill="#F5A623" font-size="12" font-weight="bold">Z</text><polyline points="80,50 88,57 72,64 88,71 72,78 88,85 72,92 88,99 72,106 88,113 80,120" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="55" y="90" fill="#F5A623" font-size="12" font-weight="bold">Z</text><polyline points="200,50 208,57 192,64 208,71 192,78 208,85 192,92 208,99 192,106 208,113 200,120" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="210" y="90" fill="#F5A623" font-size="12" font-weight="bold">Z</text><circle cx="60" cy="30" r="4" fill="#aaa"/><circle cx="220" cy="30" r="4" fill="#aaa"/><circle cx="140" cy="140" r="4" fill="#aaa"/><text x="42" y="23" fill="#F05454" font-size="13" font-weight="bold">A</text><text x="228" y="23" fill="#F05454" font-size="13" font-weight="bold">B</text><text x="145" y="160" fill="#F05454" font-size="13" font-weight="bold">C</text></svg>
+<div class="circuit-caption">q26 Δ型连接电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $U_p=U_l=380V$ ② $I_p=38A$ ③ $I_l=\sqrt{3}\times38\approx65.8A$<br>④ $\cos\varphi=\cos30°=0.866$ ⑤ $P=\sqrt{3}\times380\times65.8\times0.866\approx37.5kW$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q26','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q26','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day2" data-qid="q27">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">27</span><span class="q-text">同名端的物理意义：电流从同名端流入时，互感磁通与自感磁通（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. 相互增强</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. 相互抵消</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 无关</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 方向垂直</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>同名端流入→互感与自感同方向→互感电压取正号。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q27','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q27','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<h3>📕 Day3：受控源 + 运放 + 二端口</h3>
+
+<div class="quiz-item" data-day="day3" data-qid="q28">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">28</span><span class="q-text">受控源与独立源的根本区别是（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 受控源不能提供能量</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 受控源输出取决于电路中另一处的电压或电流</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 受控源符号是圆形</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 受控源只能在直流中使用</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>受控源输出受控制量约束，符号为菱形。独立源输出给定，符号为圆形。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q28','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q28','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q29">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">29</span><span class="q-text">含受控源电路用节点法/网孔法分析时，受控源应如何处理？</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,false)">A. 直接忽略</li><li class="quiz-opt" onclick="markAnswer(this,true)">B. 先当独立源列方程，再补充控制量方程</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 置零</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 只能用叠加定理</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：B</span><br>① 受控源先当独立源参与列方程 ② 补充控制量=节点电压/网孔电流的关系 ③ 联立求解</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q29','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q29','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q30">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">30</span><span class="q-text">【计算题·配图】含VCVS电路，$V_S=10V$, $R_1=2\Omega$, $R_2=3\Omega$，VCVS: $u_2=2u_1$。求 $V_{oc}$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="25" x2="160" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="25" x2="30" y2="50" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="62" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="78" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="70" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="30" y1="80" x2="30" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="130" x2="250" y2="130" stroke="#9090a8" stroke-width="2.5"/><polyline points="60,25 65,17 70,33 75,17 80,33 85,17 90,33 95,17 100,33 105,17 110,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="70" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="120,25 125,17 130,33 135,17 140,33 145,17 150,33 155,17 160,33 165,17 170,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="130" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="160" y1="25" x2="200" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="25" x2="200" y2="55" stroke="#9090a8" stroke-width="2.5"/><polygon points="230,65 210,75 230,85 250,75" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="218" y="72" fill="#F05454" font-size="9" font-weight="bold">+</text><text x="215" y="82" fill="#F05454" font-size="8" font-weight="bold">2u₁</text><line x1="200" y1="75" x2="210" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="250" y1="75" x2="290" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="55" x2="200" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="290" y1="25" x2="290" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="25" x2="290" y2="25" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="25" r="4" fill="#aaa"/><circle cx="30" cy="130" r="4" fill="#aaa"/><circle cx="200" cy="25" r="4" fill="#aaa"/><circle cx="290" cy="25" r="4" fill="#aaa"/><circle cx="290" cy="130" r="4" fill="#aaa"/><circle cx="290" cy="75" r="4" fill="#aaa"/><text x="295" y="73" fill="#F05454" font-size="13" font-weight="bold">a</text><text x="295" y="138" fill="#F05454" font-size="13" font-weight="bold">b</text><circle cx="200" cy="75" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q30 含VCVS电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $i=V_S/(R_1+R_2)=10/5=2A$ ② $u_1=iR_1=4V$ ③ $u_2=2u_1=8V$ ④ $V_{oc}=8V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q30','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q30','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q31">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">31</span><span class="q-text">理想运放"虚短"是____，"虚断"是____</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. $V_+=V_-$，$I_+=I_-=0$</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. $V_+=0$，$I_+=I_-$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $V_+=V_-$，$I_+=I_-$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $V_+=0$，$I_+=I_-=0$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>虚短=两输入端电压相等；虚断=输入端不取电流。前提：线性区（有负反馈）。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q31','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q31','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q32">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">32</span><span class="q-text">【计算题·配图】反相比例运放，$R_1=10k\Omega$, $R_f=100k\Omega$, $u_{in}=0.2V$。求 $u_o$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg"><polygon points="140,40 140,120 210,80" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><text x="126" y="50" fill="#F05454" font-size="13" font-weight="bold">−</text><text x="126" y="105" fill="#4A9EFF" font-size="13" font-weight="bold">+</text><line x1="15" y1="50" x2="35" y2="50" stroke="#9090a8" stroke-width="2.5"/><polyline points="35,50 40,42 45,58 50,42 55,58 60,42 65,58 70,42 75,58 80,42 85,50" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="50" y="42" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><line x1="85" y1="50" x2="140" y2="50" stroke="#9090a8" stroke-width="2.5"/><text x="0" y="55" fill="#a0a0b0" font-size="9" font-weight="bold">u_in</text><line x1="140" y1="50" x2="140" y2="25" stroke="#9090a8" stroke-width="2.5"/><polyline points="140,25 147,17 154,33 161,17 168,33 175,17 182,33 189,17 196,33 203,17 210,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="165" y="17" fill="#F5A623" font-size="11" font-weight="bold">Rf</text><line x1="210" y1="25" x2="210" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="140" y1="105" x2="110" y2="105" stroke="#9090a8" stroke-width="2.5"/><line x1="110" y1="105" x2="110" y2="111" stroke="#888" stroke-width="2.5"/><line x1="98" y1="111" x2="122" y2="111" stroke="#888" stroke-width="2.5"/><line x1="102" y1="116" x2="118" y2="116" stroke="#888" stroke-width="2"/><line x1="106" y1="121" x2="114" y2="121" stroke="#888" stroke-width="2"/><line x1="210" y1="80" x2="295" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="275" y="72" fill="#4ECB71" font-size="11" font-weight="bold">u_o</text><circle cx="140" cy="50" r="4" fill="#aaa"/><circle cx="210" cy="80" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q32 反相比例运放电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>虚地：$V_-=0$，虚断：$I_{R1}=I_{Rf}$<br>$u_o=-\frac{R_f}{R_1}u_{in}=-\frac{100k}{10k}\times0.2=-2V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q32','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q32','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q33">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">33</span><span class="q-text">【计算题·配图】同相比例运放，$R_1=5k\Omega$, $R_f=15k\Omega$, $u_{in}=0.5V$。求 $u_o$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg"><polygon points="150,40 150,120 220,80" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><text x="136" y="50" fill="#F05454" font-size="13" font-weight="bold">−</text><text x="136" y="105" fill="#4A9EFF" font-size="13" font-weight="bold">+</text><line x1="15" y1="105" x2="150" y2="105" stroke="#9090a8" stroke-width="2.5"/><text x="0" y="100" fill="#a0a0b0" font-size="9" font-weight="bold">u_in</text><line x1="150" y1="50" x2="100" y2="50" stroke="#9090a8" stroke-width="2.5"/><polyline points="50,50 55,42 60,58 65,42 70,58 75,42 80,58 85,42 90,58 95,42 100,50" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="60" y="42" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><line x1="50" y1="50" x2="50" y2="65" stroke="#9090a8" stroke-width="2.5"/><line x1="50" y1="65" x2="50" y2="71" stroke="#888" stroke-width="2.5"/><line x1="38" y1="71" x2="62" y2="71" stroke="#888" stroke-width="2.5"/><line x1="42" y1="76" x2="58" y2="76" stroke="#888" stroke-width="2"/><line x1="46" y1="81" x2="54" y2="81" stroke="#888" stroke-width="2"/><line x1="150" y1="50" x2="150" y2="25" stroke="#9090a8" stroke-width="2.5"/><polyline points="150,25 157,17 164,33 171,17 178,33 185,17 192,33 199,17 206,33 213,17 220,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="175" y="17" fill="#F5A623" font-size="11" font-weight="bold">Rf</text><line x1="220" y1="25" x2="220" y2="80" stroke="#9090a8" stroke-width="2.5"/><line x1="220" y1="80" x2="305" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="285" y="72" fill="#4ECB71" font-size="11" font-weight="bold">u_o</text><circle cx="150" cy="50" r="4" fill="#aaa"/><circle cx="220" cy="80" r="4" fill="#aaa"/><circle cx="150" cy="105" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q33 同相比例运放电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>$u_o=(1+\frac{R_f}{R_1})u_{in}=(1+\frac{15}{5})\times0.5=4\times0.5=2V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q33','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q33','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q34">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">34</span><span class="q-text">电压跟随器的 $u_o$ 与 $u_{in}$ 关系及用途（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. $u_o=u_{in}$，阻抗变换</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. $u_o=-u_{in}$，反相</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $u_o=2u_{in}$，放大</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $u_o=0$，隔离</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>跟随器：$R_f=0$，$R_1=\infty$，$u_o=u_{in}$。输入阻抗∞、输出阻抗0，用于前后级缓冲。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q34','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q34','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q35">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">35</span><span class="q-text">【计算题·配图】含CCVS电路，$V_S=10V$, $R_1=2\Omega$, $R_2=3\Omega$，CCVS: $u=2i_1$。用外加电源法求 $R_{th}$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="25" x2="150" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="25" x2="30" y2="50" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="62" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="78" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="70" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">Vs</text><line x1="30" y1="80" x2="30" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="130" x2="250" y2="130" stroke="#9090a8" stroke-width="2.5"/><polyline points="50,25 55,17 60,33 65,17 70,33 75,17 80,33 85,17 90,33 95,17 100,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="60" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₁</text><polyline points="110,25 115,17 120,33 125,17 130,33 135,17 140,33 145,17 150,33 155,17 160,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="120" y="17" fill="#F5A623" font-size="11" font-weight="bold">R₂</text><line x1="150" y1="25" x2="200" y2="25" stroke="#9090a8" stroke-width="2.5"/><polygon points="230,65 210,75 230,85 250,75" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="218" y="72" fill="#F5A623" font-size="9" font-weight="bold">+</text><text x="213" y="82" fill="#F5A623" font-size="8" font-weight="bold">2i₁</text><line x1="200" y1="55" x2="200" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="210" y1="75" x2="200" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="250" y1="75" x2="290" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="290" y1="25" x2="290" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="200" y1="25" x2="290" y2="25" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="25" r="4" fill="#aaa"/><circle cx="30" cy="130" r="4" fill="#aaa"/><circle cx="200" cy="25" r="4" fill="#aaa"/><circle cx="290" cy="25" r="4" fill="#aaa"/><circle cx="290" cy="130" r="4" fill="#aaa"/><circle cx="200" cy="75" r="4" fill="#aaa"/><circle cx="290" cy="75" r="4" fill="#aaa"/><text x="295" y="73" fill="#F05454" font-size="13" font-weight="bold">a</text><text x="295" y="138" fill="#F05454" font-size="13" font-weight="bold">b</text></svg>
+<div class="circuit-caption">q35 含CCVS电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① $V_{oc}$: 开路时 $i=2A$, $V_{oc}=10-4-4=2V$<br>② $R_{th}$: Vs短路, 加$V_0=1V$, $R_1\parallel R_2=1.2\Omega$, $i_1=0.6I_0$<br>$V_0=1.2I_0+2(0.6I_0)=2.4I_0$ → $R_{th}=2.4\Omega$<br>③ 等效: $V_{th}=2V$ 串 $R_{th}=2.4\Omega$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q35','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q35','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q36">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">36</span><span class="q-text">Z参数互易条件（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. $Z_{12} = Z_{21}$</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. $Z_{11} = Z_{22}$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $Z_{11}Z_{22} = Z_{12}Z_{21}$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $Z_{12} = 0$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>互易：$Z_{12}=Z_{21}$。对称：$Z_{11}=Z_{22}$。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q36','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q36','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q37">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">37</span><span class="q-text">T参数互易条件（ ）</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. $AD - BC = 1$</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. $A = D$</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. $B = C$</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. $AD = 0$</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>T参数互易：行列式$AD-BC=1$。对称：$A=D$。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q37','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q37','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q38">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">38</span><span class="q-text">【计算题·配图】反相加法器，$R_1=10k\Omega$, $R_2=20k\Omega$, $R_f=40k\Omega$, $u_1=0.3V$, $u_2=0.5V$。求 $u_o$。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg"><polygon points="160,50 160,120 230,85" fill="none" stroke="#7C6FF0" stroke-width="2.5"/><text x="146" y="60" fill="#F05454" font-size="13" font-weight="bold">−</text><text x="146" y="110" fill="#4A9EFF" font-size="13" font-weight="bold">+</text><line x1="15" y1="60" x2="35" y2="60" stroke="#9090a8" stroke-width="2.5"/><polyline points="35,60 39,52 43,68 47,52 51,68 55,52 59,68 63,52 67,68 71,52 75,60" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="45" y="52" fill="#F5A623" font-size="10" font-weight="bold">R₁</text><line x1="75" y1="60" x2="160" y2="60" stroke="#9090a8" stroke-width="2.5"/><text x="0" y="65" fill="#a0a0b0" font-size="9" font-weight="bold">u₁</text><line x1="15" y1="80" x2="35" y2="80" stroke="#9090a8" stroke-width="2.5"/><polyline points="35,80 39,72 43,88 47,72 51,88 55,72 59,88 63,72 67,88 71,72 75,80" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="45" y="72" fill="#F5A623" font-size="10" font-weight="bold">R₂</text><line x1="75" y1="80" x2="160" y2="80" stroke="#9090a8" stroke-width="2.5"/><text x="0" y="85" fill="#a0a0b0" font-size="9" font-weight="bold">u₂</text><line x1="160" y1="60" x2="160" y2="30" stroke="#9090a8" stroke-width="2.5"/><polyline points="160,30 167,22 174,38 181,22 188,38 195,22 202,38 209,22 216,38 223,22 230,30" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="185" y="22" fill="#F5A623" font-size="10" font-weight="bold">Rf</text><line x1="230" y1="30" x2="230" y2="85" stroke="#9090a8" stroke-width="2.5"/><line x1="160" y1="110" x2="130" y2="110" stroke="#9090a8" stroke-width="2.5"/><line x1="130" y1="110" x2="130" y2="116" stroke="#888" stroke-width="2.5"/><line x1="118" y1="116" x2="142" y2="116" stroke="#888" stroke-width="2.5"/><line x1="122" y1="121" x2="138" y2="121" stroke="#888" stroke-width="2"/><line x1="126" y1="126" x2="134" y2="126" stroke="#888" stroke-width="2"/><line x1="230" y1="85" x2="315" y2="85" stroke="#9090a8" stroke-width="2.5"/><text x="295" y="77" fill="#4ECB71" font-size="11" font-weight="bold">u_o</text><circle cx="160" cy="60" r="4" fill="#aaa"/><circle cx="160" cy="80" r="4" fill="#aaa"/><circle cx="230" cy="85" r="4" fill="#aaa"/></svg>
+<div class="circuit-caption">q38 反相加法器电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>虚地：$V_-=0$<br>$u_o=-R_f(\frac{u_1}{R_1}+\frac{u_2}{R_2})=-40k(\frac{0.3}{10k}+\frac{0.5}{20k})=-40(0.03+0.025)=-2.2V$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q38','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q38','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q39">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">39</span><span class="q-text">直流稳态时，电容相当于____，电感相当于____</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<ul class="quiz-options"><li class="quiz-opt" onclick="markAnswer(this,true)">A. 开路，短路</li><li class="quiz-opt" onclick="markAnswer(this,false)">B. 短路，开路</li><li class="quiz-opt" onclick="markAnswer(this,false)">C. 开路，开路</li><li class="quiz-opt" onclick="markAnswer(this,false)">D. 短路，短路</li></ul>
+<div class="quiz-answer"><span class="ans-label">答案：A</span><br>口诀：容开感短。$i_C=0$（开路），$u_L=0$（短路）。</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q39','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q39','review')">📋 需复习</button></div>
+</div>
+</div>
+
+<div class="quiz-item" data-day="day3" data-qid="q40">
+<div class="quiz-header" onclick="toggleQuiz(this)"><span class="q-num">40</span><span class="q-text">【综合题·配图】含VCCS正弦电路，$\dot{U}_S=10\angle 0°V$，$R=4\Omega$，$X_L=3\Omega$，VCCS: $\dot{I}_c=2\dot{U}_1$。求总阻抗和总电流。</span><span class="q-toggle">▼</span></div>
+<div class="quiz-body">
+<div class="circuit-box">
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="25" x2="80" y2="25" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="25" x2="30" y2="50" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="65" r="15" fill="none" stroke="#F05454" stroke-width="2.5"/><text x="25" y="62" fill="#F05454" font-size="14" font-weight="bold">+</text><text x="24" y="78" fill="#F05454" font-size="14" font-weight="bold">−</text><text x="10" y="70" fill="#F05454" font-size="13" font-weight="bold" text-anchor="end">U̇_S</text><line x1="30" y1="80" x2="30" y2="130" stroke="#9090a8" stroke-width="2.5"/><line x1="30" y1="130" x2="280" y2="130" stroke="#9090a8" stroke-width="2.5"/><polyline points="80,25 85,17 90,33 95,17 100,33 105,17 110,33 115,17 120,33 125,17 130,25" fill="none" stroke="#F5A623" stroke-width="2.5"/><text x="95" y="17" fill="#F5A623" font-size="11" font-weight="bold">R</text><line x1="130" y1="25" x2="190" y2="25" stroke="#9090a8" stroke-width="2.5"/><path d="M 130 25 Q 137.5 15 145.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 145 25 Q 152.5 15 160.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 160 25 Q 167.5 15 175.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><path d="M 175 25 Q 182.5 15 190.0 25" fill="none" stroke="#4ECB71" stroke-width="2.5"/><text x="155" y="17" fill="#4ECB71" font-size="11" font-weight="bold">L</text><line x1="190" y1="25" x2="280" y2="25" stroke="#9090a8" stroke-width="2.5"/><polygon points="230,65 210,75 230,85 250,75" fill="none" stroke="#4ECB71" stroke-width="2.5"/><line x1="210" y1="75" x2="210" y2="50" stroke="#9090a8" stroke-width="2.5"/><line x1="210" y1="50" x2="210" y2="25" stroke="#9090a8" stroke-width="2.5"/><text x="200" y="72" fill="#4ECB71" font-size="8" font-weight="bold">2U̇₁</text><line x1="250" y1="75" x2="280" y2="75" stroke="#9090a8" stroke-width="2.5"/><line x1="280" y1="25" x2="280" y2="130" stroke="#9090a8" stroke-width="2.5"/><circle cx="30" cy="25" r="4" fill="#aaa"/><circle cx="30" cy="130" r="4" fill="#aaa"/><circle cx="280" cy="25" r="4" fill="#aaa"/><circle cx="280" cy="130" r="4" fill="#aaa"/><circle cx="210" cy="25" r="4" fill="#aaa"/><circle cx="280" cy="75" r="4" fill="#aaa"/><text x="285" y="73" fill="#F05454" font-size="13" font-weight="bold">a</text><text x="285" y="138" fill="#F05454" font-size="13" font-weight="bold">b</text></svg>
+<div class="circuit-caption">q40 含VCCS综合电路图</div>
+</div>
+<div class="quiz-answer"><span class="ans-label">详解</span><br>① KCL: $\dot{I}=\dot{I}_R+8\dot{I}_R=9\dot{I}_R$ → $\dot{I}_R=\dot{I}/9$<br>② $\dot{U}_1=4\dot{I}/9$, $Z_{\parallel}=4/9\approx0.444\Omega$<br>③ $Z_{total}=0.444+j3=3.03\angle 81.6°\Omega$<br>④ $\dot{I}=10/3.03=3.30\angle(-81.6°)A$, $\cos\varphi\approx0.146$</div>
+<div class="mastery-btns"><button class="mastery-btn" onclick="setMastery(this,'q40','mastered')">✅ 已掌握</button><button class="mastery-btn" onclick="setMastery(this,'q40','review')">📋 需复习</button></div>
+</div>
+</div>
+</div>
+
+<script>
+// ============ 页面切换 ============
+function showPage(pageId, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById(pageId);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // 切换页面后重新渲染MathJax
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([target]).catch(function(err){});
+  }
+  // 切换到自测页时刷新进度
+  if (pageId === 'page-quiz') updateProgress();
+  window.scrollTo(0, 0);
+}
+
+// ============ 自测题展开/收起 ============
+function toggleQuiz(headerEl) {
+  const item = headerEl.parentElement;
+  item.classList.toggle('open');
+  // 展开时重新渲染MathJax
+  if (item.classList.contains('open') && window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([item]).catch(function(err){});
+  }
+}
+
+// ============ 选项标记 ============
+function markAnswer(optEl, isCorrect) {
+  const quizItem = optEl.closest('.quiz-item');
+  // 如果已经标记过，不再重复
+  if (quizItem.querySelector('.quiz-opt.correct')) return;
+  if (isCorrect) {
+    optEl.classList.add('correct');
+  } else {
+    optEl.classList.add('wrong');
+    // 同时显示正确答案
+    const correctOpt = quizItem.querySelector('.quiz-opt');
+    const allOpts = quizItem.querySelectorAll('.quiz-opt');
+    allOpts.forEach(function(o) {
+      // 通过onclick属性判断哪个是正确的
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').indexOf('true') !== -1) {
+        o.classList.add('correct');
+      }
+    });
+  }
+}
+
+// ============ 掌握度标记 ============
+function setMastery(btn, qid, status) {
+  var mastery = {};
+  try { mastery = JSON.parse(localStorage.getItem('ck_mastery') || '{}'); } catch(e) { mastery = {}; }
+  mastery[qid] = status;
+  localStorage.setItem('ck_mastery', JSON.stringify(mastery));
+  // 更新按钮样式
+  var btns = btn.parentElement.querySelectorAll('.mastery-btn');
+  btns.forEach(function(b) {
+    b.classList.remove('active-mastered', 'active-review');
+  });
+  if (status === 'mastered') {
+    btn.classList.add('active-mastered');
+  } else {
+    btn.classList.add('active-review');
+  }
+  updateProgress();
+}
+
+// ============ 恢复掌握度状态 ============
+function restoreMastery() {
+  var mastery = {};
+  try { mastery = JSON.parse(localStorage.getItem('ck_mastery') || '{}'); } catch(e) { mastery = {}; }
+  Object.keys(mastery).forEach(function(qid) {
+    var status = mastery[qid];
+    var item = document.querySelector('[data-qid="' + qid + '"]');
+    if (item) {
+      var btns = item.querySelectorAll('.mastery-btn');
+      btns.forEach(function(b) {
+        b.classList.remove('active-mastered', 'active-review');
+        var onclick = b.getAttribute('onclick') || '';
+        if (onclick.indexOf(status) !== -1) {
+          if (status === 'mastered') b.classList.add('active-mastered');
+          else b.classList.add('active-review');
+        }
+      });
+    }
+  });
+  updateProgress();
+}
+
+// ============ 筛选题目 ============
+function filterQuiz(day, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.quiz-item').forEach(function(item) {
+    if (day === 'all' || item.getAttribute('data-day') === day) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// ============ 更新进度条 ============
+function updateProgress() {
+  var mastery = {};
+  try { mastery = JSON.parse(localStorage.getItem('ck_mastery') || '{}'); } catch(e) { mastery = {}; }
+  var total = 40;
+  var mastered = 0;
+  Object.keys(mastery).forEach(function(k) {
+    if (mastery[k] === 'mastered') mastered++;
+  });
+  var pct = Math.round(mastered / total * 100);
+  var fill = document.getElementById('progressFill');
+  if (fill) {
+    fill.style.width = pct + '%';
+    fill.textContent = pct + '% 已掌握 (' + mastered + '/' + total + ')';
+  }
+}
+
+// ============ 计划页任务复选框持久化 ============
+function saveTaskState(checkbox) {
+  var tasks = {};
+  try { tasks = JSON.parse(localStorage.getItem('ck_tasks') || '{}'); } catch(e) { tasks = {}; }
+  tasks[checkbox.id || checkbox.name || 'task_' + Math.random()] = checkbox.checked;
+  localStorage.setItem('ck_tasks', JSON.stringify(tasks));
+}
+
+function restoreTaskState() {
+  var tasks = {};
+  try { tasks = JSON.parse(localStorage.getItem('ck_tasks') || '{}'); } catch(e) { tasks = {}; }
+  Object.keys(tasks).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.checked = tasks[id];
+  });
+}
+
+// ============ 初始化 ============
+window.addEventListener('DOMContentLoaded', function() {
+  restoreMastery();
+  restoreTaskState();
+  // 确保MathJax加载完成后渲染初始页面
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(function(err){});
+  }
+});
+</script>
+</body>
+</html>

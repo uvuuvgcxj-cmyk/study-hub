@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学语文期末冲刺手册</title>
+<style>
+:root{--bg:#0f0f14;--card:#1a1a24;--card2:#222230;--border:#2a2a3a;--text:#e8e8ec;--text2:#a0a0b0;--text3:#6a6a7a;--accent:#7C6FF0;--accent2:#5B4FD4;--red:#F05454;--green:#4ECB71;--amber:#F5A623;--radius:12px;--radius-sm:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.75;padding:24px;padding-bottom:120px;max-width:900px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px 0;color:#fff}
+h2{font-size:18px;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);color:#fff}
+h3{font-size:14px;margin:20px 0 8px;color:var(--accent)}
+p,li{font-size:13px;color:var(--text2)}
+.subtitle{color:var(--text3);font-size:13px;margin-bottom:28px}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{white-space:nowrap;background:var(--card);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+.nav button:hover{background:var(--card2)}
+.nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.page{display:none}
+.page.active{display:block}
+
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0}
+.info-card .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.info-card .value{font-size:14px;color:var(--text)}
+
+.chapter-list{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chapter-badge{background:var(--card2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--text2)}
+.chapter-badge.hot{background:rgba(240,84,84,0.12);border-color:rgba(240,84,84,0.25);color:var(--red)}
+
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);margin:6px 0;cursor:pointer}
+.check-item input{margin-top:3px;cursor:pointer}
+.check-item.checked .text{text-decoration:line-through;color:var(--text3)}
+.check-item .text{font-size:13px;color:var(--text2)}
+.check-item .weight{font-size:11px;color:var(--amber);margin-left:auto;white-space:nowrap}
+
+.day-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:16px 0}
+.day-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.day-tag{background:var(--accent);color:#fff;font-size:11px;padding:2px 8px;border-radius:20px}
+
+.knowledge-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+.knowledge-table th,.knowledge-table td{border:1px solid var(--border);padding:8px;text-align:left}
+.knowledge-table th{background:var(--card2);color:#fff;font-weight:600}
+.knowledge-table td{color:var(--text2)}
+.knowledge-table tr:nth-child(even){background:rgba(255,255,255,0.02)}
+
+.highlight{color:var(--red);font-weight:600}
+.poetry-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin:10px 0;font-size:13px;color:var(--text)}
+.poetry-card .title{font-weight:600;color:var(--accent);margin-bottom:6px}
+
+.prompt-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 0;overflow:hidden}
+.prompt-card .header{background:var(--card2);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.prompt-card .header:hover{background:#282840}
+.prompt-card .header .title{font-size:14px;font-weight:600;color:#fff}
+.prompt-card .body{padding:16px;display:none;border-top:1px solid var(--border)}
+.prompt-card.open .body{display:block}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 0;overflow:hidden}
+.q-card .q-header{padding:12px 16px;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;background:var(--card2)}
+.q-card .q-header:hover{background:#282840}
+.q-card .q-body{padding:16px;display:none;border-top:1px solid var(--border)}
+.q-card.open .q-body{display:block}
+.q-card .q-title{font-size:13px;color:#fff;font-weight:500}
+.q-type{font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;background:var(--accent);color:#fff}
+.q-type.multi{background:var(--green)}
+.q-type.blank{background:var(--amber);color:#000}
+.q-type.trans{background:var(--red)}
+.q-type.essay{background:#9b59b6}
+.q-type.short{background:#3498db}
+
+.answer{font-size:13px;color:var(--text2);line-height:1.8}
+.answer .key{color:var(--red);font-weight:600}
+
+.tag-btn{font-size:11px;padding:4px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:var(--text2);cursor:pointer;margin-top:8px}
+.tag-btn.mastered{background:rgba(78,203,113,0.15);border-color:var(--green);color:var(--green)}
+
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.filter-bar button{font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer}
+.filter-bar button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0}
+.stat-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.stat-num{font-size:18px;font-weight:600;color:var(--accent)}
+.stat-label{font-size:11px;color:var(--text3)}
+
+pre{background:#0a0a12;color:#c8c8d4;padding:14px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid var(--border);margin:10px 0}
+
+.fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;box-shadow:0 4px 20px rgba(124,111,240,0.3);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:200}
+.fab:hover{background:var(--accent2)}
+
+.ai-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:center;justify-content:center;padding:20px}
+.ai-modal.show{display:flex}
+.ai-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:600px;max-height:80vh;display:flex;flex-direction:column}
+.ai-head{padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.ai-body{padding:16px;overflow-y:auto;flex:1}
+.ai-body textarea{width:100%;min-height:80px;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;color:#fff;font-size:13px;resize:vertical;margin-bottom:10px}
+.ai-body button{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px}
+.ai-response{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-top:12px;font-size:13px;color:var(--text2);min-height:60px}
+.close-btn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+.tip-box{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:var(--radius-sm);padding:12px;margin:10px 0;font-size:13px;color:var(--text2)}
+.tip-box strong{color:var(--amber)}
+</style>
+</head>
+<body>
+
+<h1>📚 大学语文 · 期末冲刺手册</h1>
+<p class="subtitle">海南大学 2025-2026-2 学期 | 闭卷期末</p>
+
+<nav class="nav">
+  <button class="active" onclick="showPage(0)">计划</button>
+  <button onclick="showPage(1)">Day1</button>
+  <button onclick="showPage(2)">Day2</button>
+  <button onclick="showPage(3)">Day3</button>
+  <button onclick="showPage(4)">速查</button>
+  <button onclick="showPage(5)">锦囊</button>
+  <button onclick="showPage(6)">自测</button>
+</nav>
+
+<!-- 页面1：三天复习计划 -->
+<section class="page active" id="page0">
+  <div class="info-card">
+    <div class="label">📊 题型与分值</div>
+    <div class="value" style="font-size:13px;line-height:2">
+      单选 20×1.5=30分 | 多选 5×2=10分 | 填空 10×1=10分 | 翻译 1×10=10分 | 作文 1×40=40分<br>
+      <span style="color:var(--amber)">红色重点</span>为高频考点；Day3 需留出时间背诵5篇默写篇目并至少准备2个作文母题。
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">Day1</span>先秦 + 两汉魏晋（约30%分值）</div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握孔子生平、思想核心（仁/礼）与《论语》语录体特点</span><span class="weight">高频</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">区分“君子和而不同”与“小人同而不和”的内涵</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">理解晏子以“羹汤”“音乐”比喻“和”与“同”的论证</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">背诵《老子》核心章句：上善若水、小国寡民、为腹不为目</span><span class="weight">默写</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握《诗经》风/雅/颂、赋/比/兴及“黍离之悲”典故</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">熟背《黍离》三章，注意“苗—穗—实”与“摇摇—如醉—如噎”</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握《史记》纪传体通史、鲁迅评价“史家之绝唱”</span><span class="weight">高频</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">理解“管鲍之交”内涵与管仲/晏婴人物对比</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握《世说新语》三则：管宁华歆、谢安雅量、王子猷任诞</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">完成Day1单选/多选/填空自测并标记错题</span><span class="weight">练习</span></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">Day2</span>唐代 + 宋代（约35%分值）</div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握李白生平、诗仙称号来源及“谪仙人”典故</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">熟背《宣州谢朓楼饯别校书叔云》全诗</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">理解“抽刀断水水更流，举杯消愁愁更愁”的艺术手法</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握杜甫生平、诗史/诗圣称号及“沉郁顿挫”风格</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">熟背《赠卫八处士》并理解“夜雨剪春韭，新炊间黄粱”</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">比较李白与杜甫诗风差异（严羽评语）</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握苏轼“游于物之外”的超然思想与《超然台记》结构</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握辛弃疾生平、苏辛并称及《摸鱼儿》比兴寄托</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">熟背《摸鱼儿》全词，注意长门事/玉环飞燕典故</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">完成Day2自测并整理错题本</span><span class="weight">练习</span></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">Day3</span>清代 + 现代 + 综合（约35%分值）</div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握纳兰性德生平、词风“真”与“满洲第一词人”</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">熟背《蝶恋花·出塞》并理解“一往情深深几许”</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握《红楼梦》第四回“护官符”与四大家族关系</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">理解贾宝玉、林黛玉、薛宝钗人物性格关键词</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">掌握鲁迅生平、《阿Q正传》精神胜利法及社会批判意义</span><span class="weight">重点</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">了解《雷雨》周朴园/侍萍人物关系与命运主题</span><span class="weight">了解</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">了解《骆驼祥子》祥子三起三落与“个人主义的末路鬼”</span><span class="weight">了解</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">5篇默写篇目全部能准确默写，没有错别字</span><span class="weight">必背</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">准备至少3个作文母题：和而不同、家国情怀、精神自由</span><span class="weight">作文</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><input type="checkbox"><span class="text">完成Day3自测+翻译题+限时作文提纲</span><span class="weight">练习</span></div>
+  </div>
+</section>
+
+<!-- 页面2：Day1 知识点 -->
+<section class="page" id="page1">
+  <h2>Day1 · 先秦 + 两汉魏晋</h2>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">先秦</span>《论语》· 君子和而不同</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>孔子</td><td>名丘，春秋末期鲁国人；儒家创始人；思想核心 <span class="highlight">“仁”</span>，提倡 <span class="highlight">“礼”</span></td></tr>
+      <tr><td>教育思想</td><td>有教无类、因材施教、启发诱导、温故知新、不耻下问、择善而从</td></tr>
+      <tr><td>文学思想</td><td>诗可以 <span class="highlight">兴、观、群、怨</span>；文质彬彬然后君子</td></tr>
+      <tr><td>《论语》</td><td>语录体散文，四书之一，记载孔子及其弟子言行</td></tr>
+      <tr><td>核心句</td><td>君子和而不同，小人同而不和</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">🔑 “和”与“同”的区别（重点）</div>
+      <p><span class="highlight">“和”</span>：承认差异，在差异中协调统一，如羹汤需水火醯醢盐梅相济，音乐需清浊高下快慢相补。</p>
+      <p><span class="highlight">“同”</span>：无原则附和、表面一致，如梁丘据“君所谓可，据亦曰可；君所谓否，据亦曰否”。</p>
+      <p>论证方法：<span class="highlight">比喻论证</span>（羹汤、音乐）+<span class="highlight">对比论证</span>（和与同对比）。</p>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">先秦</span>《老子》五章</div>
+    <table class="knowledge-table">
+      <tr><th>要点</th><th>内容</th></tr>
+      <tr><td>老子</td><td>姓李名耳，字伯阳，春秋末期楚国人；道家创始人，与庄子并称“老庄”</td></tr>
+      <tr><td>核心思想</td><td><span class="highlight">道法自然</span>、贵柔守雌、<span class="highlight">无为而治</span>（不妄为、不乱为）</td></tr>
+      <tr><td>《老子》</td><td>又称《道德经》，八十一章，分《道经》《德经》</td></tr>
+      <tr><td>第二章</td><td>美丑、善恶、有无、难易等对立关系相互依存</td></tr>
+      <tr><td>第八章</td><td><span class="highlight">上善若水</span>：水善利万物而不争，处众人之所恶，故几于道</td></tr>
+      <tr><td>第十二章</td><td>五色令人目盲，五音令人耳聋，五味令人口爽；<span class="highlight">为腹不为目</span></td></tr>
+      <tr><td>第八十章</td><td><span class="highlight">小国寡民</span>：理想社会简朴、宁静、安居、少欲</td></tr>
+      <tr><td>第八十一章</td><td>天之道，利而不害；人之道，为而不争</td></tr>
+    </table>
+    <div class="tip-box"><strong>易错：</strong>“无为”不是无所作为，而是顺应规律、不妄为。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">先秦</span>《诗经·王风·黍离》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>《诗经》</td><td>我国第一部诗歌总集，305篇；原名《诗》或《诗三百》</td></tr>
+      <tr><td>分类</td><td><span class="highlight">风（160篇）、雅（105篇）、颂（40篇）</span></td></tr>
+      <tr><td>表现手法</td><td><span class="highlight">赋、比、兴</span></td></tr>
+      <tr><td>背景</td><td>周平王东迁后，王室衰微，诗人行经故都见黍稷而生哀</td></tr>
+      <tr><td>主题</td><td>故国之思、兴亡之痛、家国悲情；<span class="highlight">“黍离之悲”</span>成为文化典故</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">📝 原文（必背）</div>
+      <p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。<br>
+      知我者谓我心忧，不知我者谓我何求。<br>
+      悠悠苍天，此何人哉！</p>
+      <p>（二、三章替换为“穗/实”“如醉/如噎”）</p>
+    </div>
+    <div class="tip-box"><strong>艺术特色：</strong>重章叠句、叠字抒情（离离/靡靡/悠悠）、层层递进（苗→穗→实，摇摇→如醉→如噎）、情景交融。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">两汉</span>司马迁《史记·管晏列传》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>司马迁</td><td>字子长，西汉史学家、文学家</td></tr>
+      <tr><td>《史记》</td><td>我国第一部纪传体通史；130篇，五十二万余字；鲁迅称“史家之绝唱，无韵之《离骚》”</td></tr>
+      <tr><td>体例</td><td>十二本纪、十表、八书、三十世家、七十列传</td></tr>
+      <tr><td>旨趣</td><td>究天人之际，通古今之变，成一家之言</td></tr>
+      <tr><td>管仲</td><td>名夷吾，春秋齐国政治家；<span class="highlight">“管鲍之交”</span>；提出“仓廪实而知礼节，衣食足而知荣辱”</td></tr>
+      <tr><td>晏婴</td><td>字平仲，历仕三朝，节俭力行、知人荐才、敢于进谏</td></tr>
+      <tr><td>艺术特色</td><td>典型事件写人物、人物自述强化情感、对比中见差异</td></tr>
+    </table>
+    <div class="tip-box"><strong>重点句：</strong>“生我者父母，知我者鲍子也。” “天下不多管仲之贤而多鲍叔能知人也。” “假令晏子而在，余虽为之执鞭，所忻慕焉。”</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">魏晋</span>刘义庆《世说新语》三则</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>刘义庆</td><td>南朝宋彭城人，临川王</td></tr>
+      <tr><td>《世说新语》</td><td>魏晋南北朝志人小说代表；36门；鲁迅评“记言则玄远冷隽，记行则高简瑰奇”</td></tr>
+      <tr><td>魏晋风度</td><td>淡泊名利、雅量从容、任诞率真、崇尚自然</td></tr>
+      <tr><td>管宁华歆</td><td>“割席分坐”——淡泊名利 vs 为外物所动</td></tr>
+      <tr><td>谢安泛海</td><td>“神情方王，吟啸不言”——<span class="highlight">雅量</span></td></tr>
+      <tr><td>王子猷访戴</td><td>“乘兴而行，兴尽而返”——<span class="highlight">任诞</span></td></tr>
+      <tr><td>艺术特色</td><td>篇幅短小、以小见大、语言简约隽永</td></tr>
+    </table>
+  </div>
+
+
+<div class="day-card">
+<div class="day-title"><span class="day-tag">扩展</span>Day1 重点篇目深度拆解</div>
+
+<h3>《论语·君子和而不同》</h3>
+<div class="poetry-card">
+<div class="title">原文核心</div>
+<p>子曰：“君子和而不同，小人同而不和。”</p>
+<p>齐侯至自田，晏子侍于遄台。子犹驰而造焉。公曰：“唯据与我和夫！”晏子对曰：“据亦同也，焉得为和？”</p>
+</div>
+<div class="poetry-card">
+<div class="title">重点词句</div>
+<p><span class="highlight">和</span>：承认差异，在差异中协调统一（如羹汤、音乐）。</p>
+<p><span class="highlight">同</span>：无原则附和、表面一致（如梁丘据“君所谓可，据亦曰可”）。</p>
+<p><span class="highlight">以水济水</span>：用水调水，比喻完全相同没有价值。</p>
+<p><span class="highlight">琴瑟专一</span>：只有一种声音，无人愿听。</p>
+</div>
+<div class="poetry-card">
+<div class="title">论证方法与主题</div>
+<p>1. 比喻论证：以羹汤需水火醯醢盐梅相济、音乐需清浊高下相和说明“和”的真义。</p>
+<p>2. 对比论证：羹汤之和与“以水济水”对比；君臣相济与梁丘据附和对比。</p>
+<p>3. 主题：真正的和谐建立在差异与原则之上，反对盲目附和。</p>
+</div>
+
+<h3>《老子》五章</h3>
+<div class="poetry-card">
+<div class="title">核心章句</div>
+<p>天下皆知美之为美，斯恶已；皆知善之为善，斯不善已。故有无相生，难易相成，长短相形，高下相倾。</p>
+<p>上善若水。水善利万物而不争，处众人之所恶，故几于道。</p>
+<p>五色令人目盲；五音令人耳聋；五味令人口爽；驰骋畋猎，令人心发狂；难得之货，令人行妨。是以圣人为腹不为目。</p>
+<p>小国寡民。使有什伯之器而不用，使民重死而不远徙。</p>
+<p>天之道，利而不害；人之道，为而不争。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 老子思想核心：<span class="highlight">道法自然、贵柔守雌、无为而治</span>。</p>
+<p>2. “无为”不是不作为，而是<span class="highlight">不妄为、不乱为</span>，顺应自然规律。</p>
+<p>3. 《老子》又称《道德经》《五千言》，今本81章，分《道经》《德经》。</p>
+<p>4. 艺术特点：格言化、诗化、对偶排比、朴素辩证法。</p>
+</div>
+
+<h3>《诗经·王风·黍离》</h3>
+<div class="poetry-card">
+<div class="title">原文</div>
+<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。知我者谓我心忧，不知我者谓我何求。悠悠苍天，此何人哉！</p>
+<p>彼黍离离，彼稷之穗。行迈靡靡，中心如醉。知我者谓我心忧，不知我者谓我何求。悠悠苍天，此何人哉！</p>
+<p>彼黍离离，彼稷之实。行迈靡靡，中心如噎。知我者谓我心忧，不知我者谓我何求。悠悠苍天，此何人哉！</p>
+</div>
+<div class="poetry-card">
+<div class="title">重点赏析</div>
+<p>1. <span class="highlight">重章叠句</span>：三章结构相同，仅换“苗—穗—实”和“摇摇—如醉—如噎”，层层递进。</p>
+<p>2. <span class="highlight">情景交融</span>：以黍稷生长之景，写故国残破、今不如昔的哀痛。</p>
+<p>3. <span class="highlight">黍离之悲</span>：后世表达亡国之痛、故国之思的重要典故。</p>
+</div>
+
+<h3>《史记·管晏列传》</h3>
+<div class="poetry-card">
+<div class="title">核心人物与事件</div>
+<p>1. <span class="highlight">管鲍之交</span>：鲍叔牙知管仲之贫、不肖、怯、不遭时，推荐管仲，自己甘居其下。</p>
+<p>2. 管仲政绩：仓廪实而知礼节，衣食足而知荣辱；俗之所欲，因而与之；俗之所否，因而去之。</p>
+<p>3. 晏婴事迹：越石父、御之妻，体现节俭力行、知人荐才、谦恭下士。</p>
+</div>
+<div class="poetry-card">
+<div class="title">文言要点</div>
+<p>判断句：“……者，……也”；被动句：“见……于……”；状语后置：“任政于齐”。</p>
+<p>词类活用：进（使动）、下（名作动）、信（使动）、衣（名作动）、多（称赞）、死（为动）、羞/耻（意动）。</p>
+</div>
+<div class="poetry-card">
+<div class="title">主题</div>
+<p>通过管仲之才、鲍叔之德、晏婴之量，强调知人善任、以民为本、节俭谦下的政治智慧。</p>
+</div>
+
+<h3>《世说新语》三则</h3>
+<div class="poetry-card">
+<div class="title">原文精要</div>
+<p>管宁、华歆共园中锄菜，见地有片金，管挥锄与瓦石不异，华捉而掷去之。……宁割席分坐曰：“子非吾友也。”</p>
+<p>太傅神情方王，吟啸不言。……公徐云：“如此，将无归？”</p>
+<p>王子猷居山阴，夜大雪，眠觉，开室，命酌酒……即便夜乘小船就之。经宿方至，造门不前而返。</p>
+</div>
+<div class="poetry-card">
+<div class="title">魏晋风度</div>
+<p>1. 管宁华歆：淡泊名利、坚守本心。</p>
+<p>2. 谢安泛海：雅量、从容、临危不乱。</p>
+<p>3. 王子猷雪夜访戴：任诞、率真、审美人生，“乘兴而行，兴尽而返”。</p>
+</div>
+</div>
+
+</section>
+
+<!-- 页面3：Day2 知识点 -->
+<section class="page" id="page2">
+  <h2>Day2 · 唐代 + 宋代</h2>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">唐代</span>李白《宣州谢朓楼饯别校书叔云》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>李白</td><td>字太白，号青莲居士；盛唐浪漫主义诗人，世称“诗仙”</td></tr>
+      <tr><td>诗仙来源</td><td>贺知章读《蜀道难》称“谪仙”；司马承桢赞“仙风道骨”</td></tr>
+      <tr><td>诗风</td><td>飘逸、豪迈、雄奇；想象瑰丽，语言明朗自然，尤擅七古</td></tr>
+      <tr><td>本篇</td><td>天宝十二年秋于宣州谢朓楼饯别族叔李云；歌行体</td></tr>
+      <tr><td>主旨</td><td>抒发怀才不遇的牢骚与愤懑，又表现昂扬豪迈的矛盾心境</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">📝 全诗（必背）</div>
+      <p>弃我去者，昨日之日不可留；乱我心者，今日之日多烦忧。<br>
+      长风万里送秋雁，对此可以酣高楼。<br>
+      蓬莱文章建安骨，中间小谢又清发。<br>
+      俱怀逸兴壮思飞，欲上青天览明月。<br>
+      抽刀断水水更流，举杯消愁愁更愁。<br>
+      人生在世不称意，明朝散发弄扁舟。</p>
+    </div>
+    <div class="tip-box"><strong>艺术特色：</strong>结构腾挪跳跃、情感瞬息万变；浪漫色彩浓厚；对比/比喻/反复/夸张；“抽刀断水水更流”以动作与流水写愁绪难断，仍具盛唐气象。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">唐代</span>杜甫《赠卫八处士》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>杜甫</td><td>字子美，世称杜工部；唐代现实主义诗人，被誉为“诗圣”，其诗被称为“诗史”</td></tr>
+      <tr><td>人生阶段</td><td>读书壮游→困居长安→陷贼为官→漂泊西南</td></tr>
+      <tr><td>风格</td><td>忧愤深广、沉郁顿挫；律诗成就极高</td></tr>
+      <tr><td>本篇</td><td>乾元二年春，杜甫探访少年友人卫八处士，乱世重逢</td></tr>
+      <tr><td>主题</td><td>久别重逢的悲喜、故旧凋零的悲凉、乱世友情的珍贵</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">📝 重点句（必背）</div>
+      <p>人生不相见，动如参与商。<br>
+      今夕复何夕，共此灯烛光。<br>
+      少壮能几时，鬓发各已苍。<br>
+      访旧半为鬼，惊呼热中肠。<br>
+      夜雨剪春韭，新炊间黄粱。<br>
+      主称会面难，一举累十觞。<br>
+      明日隔山岳，世事两茫茫。</p>
+    </div>
+    <div class="tip-box"><strong>艺术特色：</strong>白描手法、平易真切；首尾照应（“人生不相见”→“世事两茫茫”）；生活美与时代感交织。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">唐代</span>李杜诗风对比</div>
+    <table class="knowledge-table">
+      <tr><th>李白</th><th>杜甫</th></tr>
+      <tr><td>浪漫主义</td><td>现实主义</td></tr>
+      <tr><td>飘逸、雄奇、奔放</td><td>沉郁、顿挫、深广</td></tr>
+      <tr><td>诗仙</td><td>诗圣</td></tr>
+      <tr><td>以七古、七绝见长</td><td>以律诗（尤其七律）见长</td></tr>
+      <tr><td>严羽：“子美不能为太白之飘逸”</td><td>严羽：“太白不能为子美之沉郁”</td></tr>
+    </table>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">宋代</span>苏轼《超然台记》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>苏轼</td><td>字子瞻，号东坡居士；北宋文坛领袖，三苏之一</td></tr>
+      <tr><td>思想</td><td>出入儒道佛，以儒家为本，兼收并蓄，旷达乐观</td></tr>
+      <tr><td>写作背景</td><td>熙宁七年由杭州移守密州，修城北旧台，弟辙命名“超然”</td></tr>
+      <tr><td>核心观点</td><td><span class="highlight">“凡物皆有可观，苟有可观，皆有可乐”</span>；快乐在于“游于物之外”</td></tr>
+      <tr><td>艺术特色</td><td>正反对照、叙议结合、骈散结合、理趣充沛</td></tr>
+    </table>
+    <div class="tip-box"><strong>重点翻译：</strong>“人之所欲无穷，而物之可以足吾欲者有尽”——人的欲望无穷，能满足欲望的外物有限。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">宋代</span>辛弃疾《摸鱼儿》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>辛弃疾</td><td>字幼安，号稼轩；南宋爱国词人，与苏轼并称“苏辛”</td></tr>
+      <tr><td>词集</td><td>《稼轩长短句》；现存词六百余首</td></tr>
+      <tr><td>思想核心</td><td>抗金北伐、统一祖国；词风豪放为主，兼具婉约妩媚</td></tr>
+      <tr><td>本篇</td><td>淳熙六年，自湖北漕移湖南，同官王正之置酒小山亭</td></tr>
+      <tr><td>主题</td><td>明写惜春闺怨，实写忧己忧国、壮志难酬</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">📝 全词（必背）</div>
+      <p>淳熙己亥，自湖北漕移湖南，同官王正之置酒小山亭，为赋。</p>
+      <p>更能消、几番风雨。匆匆春又归去。惜春长怕花开早，何况落红无数。春且住。见说道、天涯芳草无归路。怨春不语。算只有殷勤，画檐蛛网，尽日惹飞絮。</p>
+      <p>长门事，准拟佳期又误。蛾眉曾有人妒。千金纵买相如赋，脉脉此情谁诉。君莫舞。君不见、玉环飞燕皆尘土。闲愁最苦。休去倚危楼，斜阳正在，烟柳断肠处。</p>
+    </div>
+    <div class="tip-box"><strong>艺术特色：</strong>比兴寄托（春/落花/斜阳/烟柳象征国势）、借典抒情（长门事/相如赋/玉环飞燕）、情景交融、柔中带刚。</div>
+  </div>
+
+
+<div class="day-card">
+<div class="day-title"><span class="day-tag">扩展</span>Day2 重点篇目深度拆解</div>
+
+<h3>李白《宣州谢朓楼饯别校书叔云》</h3>
+<div class="poetry-card">
+<div class="title">原文</div>
+<p>弃我去者，昨日之日不可留；乱我心者，今日之日多烦忧。</p>
+<p>长风万里送秋雁，对此可以酣高楼。</p>
+<p>蓬莱文章建安骨，中间小谢又清发。</p>
+<p>俱怀逸兴壮思飞，欲上青天览明月。</p>
+<p>抽刀断水水更流，举杯消愁愁更愁。</p>
+<p>人生在世不称意，明朝散发弄扁舟。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 李白字<span class="highlight">太白</span>，号<span class="highlight">青莲居士</span>，世称“诗仙”。贺知章读《蜀道难》称其为“谪仙人”。</p>
+<p>2. 诗风：飘逸、豪迈、雄奇、想象瑰丽、感情奔放。</p>
+<p>3. 谢朓：字玄晖，南朝齐诗人，世称“谢宣城”“小谢”，李白“一生低首谢宣城”。</p>
+<p>4. “抽刀断水水更流，举杯消愁愁更愁”：比喻写愁，但仍具盛唐气象。</p>
+</div>
+
+<h3>杜甫《赠卫八处士》</h3>
+<div class="poetry-card">
+<div class="title">原文</div>
+<p>人生不相见，动如参与商。今夕复何夕，共此灯烛光。</p>
+<p>少壮能几时，鬓发各已苍。访旧半为鬼，惊呼热中肠。</p>
+<p>焉知二十载，重上君子堂。昔别君未婚，儿女忽成行。</p>
+<p>怡然敬父执，问我来何方。问答未及已，驱儿罗酒浆。</p>
+<p>夜雨剪春韭，新炊间黄粱。主称会面难，一举累十觞。</p>
+<p>十觞亦不醉，感子故意长。明日隔山岳，世事两茫茫。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 杜甫字<span class="highlight">子美</span>，世称“诗圣”，其诗被称为“诗史”。</p>
+<p>2. 诗风：<span class="highlight">沉郁顿挫</span>——感情深厚、节奏抑扬。</p>
+<p>3. “参商”喻朋友久别难逢；“夜雨剪春韭，新炊间黄粱”写家常温情。</p>
+<p>4. 艺术特色：白描手法、前后照应、生活美与时代感并存。</p>
+</div>
+
+<h3>苏轼《超然台记》</h3>
+<div class="poetry-card">
+<div class="title">核心原文</div>
+<p>凡物皆有可观。苟有可观，皆有可乐，非必怪奇伟丽者也。</p>
+<p>人之所欲无穷，而物之可以足吾欲者有尽……彼游于物之内，而不游于物之外。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 苏轼字<span class="highlight">子瞻</span>，号<span class="highlight">东坡居士</span>，与父苏洵、弟苏辙合称“三苏”。</p>
+<p>2. 思想：儒道佛兼收，政治上积极入世，逆境中随缘自适、超然物外。</p>
+<p>3. 核心观点：<span class="highlight">游于物之外</span>，则“无所往而不乐”。</p>
+<p>4. 艺术特色：议论开篇、正反对照、骈散结合、叙议结合。</p>
+</div>
+
+<h3>辛弃疾《摸鱼儿》</h3>
+<div class="poetry-card">
+<div class="title">原文</div>
+<p>更能消、几番风雨。匆匆春又归去。惜春长怕花开早，何况落红无数。</p>
+<p>春且住。见说道、天涯芳草无归路。怨春不语。算只有殷勤，画檐蛛网，尽日惹飞絮。</p>
+<p>长门事，准拟佳期又误。蛾眉曾有人妒。千金纵买相如赋，脉脉此情谁诉。</p>
+<p>君莫舞。君不见、玉环飞燕皆尘土。闲愁最苦。休去倚危楼，斜阳正在，烟柳断肠处。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 辛弃疾字<span class="highlight">幼安</span>，号<span class="highlight">稼轩</span>，与苏轼并称“苏辛”。</p>
+<p>2. 词集《稼轩长短句》；词风以豪放为主，兼具清丽婉约。</p>
+<p>3. 比兴寄托：表面写惜春闺怨，实则忧己忧国、壮志难酬。</p>
+<p>4. 典故：长门事/司马相如赋、玉环飞燕、斜阳烟柳象征国势衰微。</p>
+</div>
+</div>
+
+</section>
+
+<!-- 页面4：Day3 知识点 -->
+<section class="page" id="page3">
+  <h2>Day3 · 清代 + 现代</h2>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">清代</span>纳兰性德《蝶恋花·出塞》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>纳兰性德</td><td>字容若，号楞伽山人，满洲正黄旗人；大学士明珠长子</td></tr>
+      <tr><td>词风</td><td>以“真”取胜，善用白描，凄惋低沉；被誉为“满洲第一词人”</td></tr>
+      <tr><td>评价</td><td>陈维崧“哀感顽艳，得南唐后主之遗”；王国维“北宋以来，一人而已”</td></tr>
+      <tr><td>背景</td><td>康熙二十一年出塞赴梭龙途中，触景生情，思祖思乡</td></tr>
+      <tr><td>主题</td><td>古今兴亡之感、家族历史之痛、报国理想难酬的幽怨</td></tr>
+    </table>
+    <div class="poetry-card">
+      <div class="title">📝 全词（必背）</div>
+      <p>今古河山无定据。画角声中，牧马频来去。满目荒凉谁可语，西风吹老丹枫树。</p>
+      <p>从前幽怨应无数。铁马金戈，青冢黄昏路。一往情深深几许，深山夕照深秋雨。</p>
+    </div>
+    <div class="tip-box"><strong>艺术特色：</strong>比兴寄托、吊古伤今；情景交融，以“深山夕照深秋雨”作结；虚实结合（眼前塞外之景+历史联想）；雄浑壮阔与苍凉孤寂并存。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">清代</span>曹雪芹《红楼梦·葫芦僧乱判葫芦案》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>曹雪芹</td><td>名霑，字梦阮，号雪芹；先世汉人，后入满洲正白旗；家族由江宁织造盛转衰</td></tr>
+      <tr><td>《红楼梦》</td><td>中国古代伟大章回体长篇小说；原名《石头记》等；以四大家族为背景，宝黛爱情为主线</td></tr>
+      <tr><td>思想内涵</td><td>爱情婚姻悲剧、家族没落悲剧、人生悲剧、网状结构</td></tr>
+      <tr><td>第四回</td><td>“葫芦僧乱判葫芦案”：薛蟠命案→门子献“护官符”→贾雨村徇情枉法</td></tr>
+      <tr><td>护官符</td><td>贾不假，白玉为堂金作马；阿房宫，三百里，住不下金陵一个史；东海缺少白玉床，龙王来请金陵王；丰年好大雪，珍珠如土金如铁</td></tr>
+    </table>
+    <div class="tip-box"><strong>人物：</strong>贾宝玉（叛逆/平等/自由）、林黛玉（敏感/纯洁/反抗）、薛宝钗（封建淑女/政治家风度/藏愚守拙）。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">现代</span>鲁迅《阿Q正传》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>鲁迅</td><td>原名周树人，字豫才；中国现代文学奠基人；1918年发表《狂人日记》</td></tr>
+      <tr><td>创作动因</td><td>“要画出这样沉默的国民的魂灵”</td></tr>
+      <tr><td>阿Q</td><td>无姓、无名、无籍、无行状；未庄底层雇农，流浪短工</td></tr>
+      <tr><td>精神胜利法</td><td>面临失败屈辱时通过自我安慰、幻想等方式取得心理平衡；典型表现：“儿子打老子”“我是虫豸”</td></tr>
+      <tr><td>主题</td><td>批判国民性弱点、揭示底层生存困境，推动社会进步与文明发展</td></tr>
+    </table>
+    <div class="tip-box"><strong>重点：</strong>精神胜利法既是阿Q不得已的生存策略，又使他无法真正改变处境；鲁迅借此批判国民劣根性。</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">现代</span>曹禺《雷雨》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>曹禺</td><td>原名万家宝，中国现代戏剧家</td></tr>
+      <tr><td>《雷雨》</td><td>1934年发表；一天时间、两个场景，展开周鲁两家三十年矛盾</td></tr>
+      <tr><td>人物关系</td><td>周朴园与侍萍（旧情人）、蘩漪与周萍、周朴园与大海（父子/劳资对立）</td></tr>
+      <tr><td>主题</td><td>命运悲剧、阶级矛盾、封建家庭的罪恶</td></tr>
+      <tr><td>选段</td><td>周朴园与侍萍重逢：认出旧衣、梅花绣字、支票撕碎</td></tr>
+    </table>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">现代</span>老舍《骆驼祥子》</div>
+    <table class="knowledge-table">
+      <tr><th>项目</th><th>要点</th></tr>
+      <tr><td>老舍</td><td>原名舒庆春，字舍予，满族人；京味小说代表</td></tr>
+      <tr><td>《骆驼祥子》</td><td>1936-1937年连载；以人力车夫祥子三起三落为线索</td></tr>
+      <tr><td>祥子</td><td>最初体面、要强、有梦想；经历买车失车、被敲诈、出卖阮明后堕落</td></tr>
+      <tr><td>主题</td><td>旧社会底层劳动者悲剧；个人奋斗在黑暗社会中的失败</td></tr>
+      <tr><td>结尾</td><td>“个人主义的末路鬼”——祥子成为社会病胎里的产儿</td></tr>
+    </table>
+  </div>
+
+
+<div class="day-card">
+<div class="day-title"><span class="day-tag">扩展</span>Day3 重点篇目深度拆解</div>
+
+<h3>纳兰性德《蝶恋花·出塞》</h3>
+<div class="poetry-card">
+<div class="title">原文</div>
+<p>今古河山无定据。画角声中，牧马频来往。满目荒凉谁可语，西风吹老丹枫树。</p>
+<p>从前幽怨应无数。铁马金戈，青冢黄昏路。一往情深深几许，深山夕照深秋雨。</p>
+</div>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 纳兰性德字<span class="highlight">容若</span>，满洲正黄旗人，被誉为“满洲第一词人”。</p>
+<p>2. 词风：以“真”取胜，凄婉低沉，接近李煜、晏几道、李清照。</p>
+<p>3. 王国维评：“以自然之眼观物，以自然之舌言情……北宋以来，一人而已。”</p>
+<p>4. 主题：塞外荒凉、古今兴亡、家族历史、报国理想难酬。</p>
+</div>
+
+<h3>曹雪芹《红楼梦·葫芦僧乱判葫芦案》</h3>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 曹雪芹名<span class="highlight">霑</span>，字<span class="highlight">梦阮</span>，号<span class="highlight">雪芹</span>。《红楼梦》原名《石头记》。</p>
+<p>2. 四大家族：贾、史、王、薛；“护官符”揭露官官相护、官绅勾结。</p>
+<p>3. 贾宝玉：反对仕途经济，尊重女子，追求平等自由。</p>
+<p>4. 林黛玉：多愁善感、孤高自许、具有反抗精神。</p>
+<p>5. 薛宝钗：封建淑女，圆融世故，博学多才。</p>
+<p>6. 主题：爱情婚姻悲剧、家族没落悲剧、人生悲剧。</p>
+</div>
+
+<h3>鲁迅《阿Q正传》</h3>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 鲁迅原名<span class="highlight">周樟寿</span>，后改名<span class="highlight">周树人</span>，字豫才。</p>
+<p>2. 1918年发表《狂人日记》，首次以“鲁迅”为笔名。</p>
+<p>3. <span class="highlight">精神胜利法</span>：在失败和屈辱中通过自我安慰获得虚假胜利，如“儿子打老子”“我是虫豸”。</p>
+<p>4. 主题：批判国民性弱点，揭示底层民众的悲剧命运。</p>
+</div>
+
+<h3>曹禺《雷雨》</h3>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 曹禺原名<span class="highlight">万家宝</span>，代表作《雷雨》《日出》《原野》《北京人》。</p>
+<p>2. 《雷雨》通过周、鲁两家三十年纠葛，揭示封建家庭的罪恶和命运悲剧。</p>
+<p>3. 周朴园：封建家长、资本家，冷酷自私；鲁侍萍：被侮辱与被损害的劳动妇女。</p>
+<p>4. 主题：阶级矛盾、人性悲剧、命运悲剧。</p>
+</div>
+
+<h3>老舍《骆驼祥子》</h3>
+<div class="poetry-card">
+<div class="title">高频考点</div>
+<p>1. 老舍原名<span class="highlight">舒庆春</span>，字<span class="highlight">舍予</span>，满族，北京人，“人民艺术家”。</p>
+<p>2. 祥子三起三落：买车—被抢—攒钱—被敲诈—再买车—卖车葬虎妞。</p>
+<p>3. 主题：旧社会底层劳动者无法逃脱的悲剧命运；个人奋斗在黑暗社会中必然失败。</p>
+<p>4. 结尾评价：“社会病胎里的产儿，个人主义的末路鬼。”</p>
+</div>
+</div>
+
+</section>
+
+<!-- 页面5：作家作品速查 -->
+<section class="page" id="page4">
+  <h2>作家作品速查表</h2>
+  <p style="font-size:12px;color:var(--text3)">输入朝代/作者/篇目关键词可快速过滤，表格按考试时代顺序排列。</p>
+  <input type="text" id="quickSearch" placeholder="输入关键词过滤..." style="width:100%;padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);color:#fff;margin:10px 0">
+  <table class="knowledge-table" id="quickTable">
+    <tr><th>时代</th><th>作者</th><th>篇目</th><th>身份/地位</th><th>核心考点</th></tr>
+    <tr>
+      <td>先秦</td>
+      <td>孔子弟子及再传弟子</td>
+      <td>《论语·君子和而不同》</td>
+      <td>儒家经典，语录体散文，"四书"之一</td>
+      <td><span class="highlight">君子和而不同，小人同而不和</span>；晏子以羹汤、音乐喻"和"；"和"承认差异，"同"盲目附和</td>
+    </tr>
+    <tr>
+      <td>先秦</td>
+      <td>老子（李耳）</td>
+      <td>《老子》五章</td>
+      <td>道家学派创始人，与庄子并称"老庄"</td>
+      <td><span class="highlight">上善若水</span>；为腹不为目；小国寡民；对立统一；道法自然</td>
+    </tr>
+    <tr>
+      <td>先秦</td>
+      <td>《诗经》（王风）</td>
+      <td>《黍离》</td>
+      <td>我国第一部诗歌总集；分风、雅、颂；手法赋、比、兴</td>
+      <td><span class="highlight">黍离之悲</span>；重章叠句；苗—穗—实；摇摇—如醉—如噎</td>
+    </tr>
+    <tr>
+      <td>先秦</td>
+      <td>《诗经》</td>
+      <td>《关雎》《蒹葭》</td>
+      <td>十五国风中的爱情/追求母题</td>
+      <td>采摘母题、追求母题；比兴；伊人；重章叠句</td>
+    </tr>
+    <tr>
+      <td>两汉魏晋</td>
+      <td>司马迁</td>
+      <td>《史记·管晏列传》</td>
+      <td>第一部纪传体通史；鲁迅：史家之绝唱，无韵之《离骚》</td>
+      <td><span class="highlight">管鲍之交</span>；鲍叔知人；管仲以民为本；晏婴节俭举贤；仓廪实而知礼节</td>
+    </tr>
+    <tr>
+      <td>两汉魏晋</td>
+      <td>刘义庆</td>
+      <td>《世说新语》三则</td>
+      <td>魏晋南北朝志人小说代表，"魏晋风度"载体</td>
+      <td>管宁华歆割席；谢安泛海雅量；王子猷雪夜访戴任诞</td>
+    </tr>
+    <tr>
+      <td>唐代</td>
+      <td>李白</td>
+      <td>《宣州谢朓楼饯别校书叔云》</td>
+      <td>诗仙，浪漫主义代表，与杜甫并称"大李杜"</td>
+      <td>怀才不遇；<span class="highlight">抽刀断水水更流，举杯消愁愁更愁</span>；散发弄扁舟</td>
+    </tr>
+    <tr>
+      <td>唐代</td>
+      <td>杜甫</td>
+      <td>《赠卫八处士》</td>
+      <td>诗圣，现实主义诗人，诗被称为"诗史"</td>
+      <td>乱世友情；<span class="highlight">人生不相见，动如参与商</span>；夜雨剪春韭，新炊间黄粱</td>
+    </tr>
+    <tr>
+      <td>宋代</td>
+      <td>苏轼</td>
+      <td>《超然台记》</td>
+      <td>三苏之一，与欧阳修并称"欧苏"，与辛弃疾并称"苏辛"</td>
+      <td><span class="highlight">游于物之外</span>；凡物皆有可观；密州移守；正反对照</td>
+    </tr>
+    <tr>
+      <td>宋代</td>
+      <td>辛弃疾</td>
+      <td>《摸鱼儿》</td>
+      <td>南宋爱国词人，与苏轼并称"苏辛"，号稼轩</td>
+      <td>比兴寄托；惜春寓国事；长门事/相如赋/玉环飞燕；柔中带刚</td>
+    </tr>
+    <tr>
+      <td>清代</td>
+      <td>纳兰性德</td>
+      <td>《蝶恋花·出塞》</td>
+      <td>字容若，满洲正黄旗，"满洲第一词人"</td>
+      <td>出塞思祖；今古河山无定据；<span class="highlight">一往情深深几许，深山夕照深秋雨</span></td>
+    </tr>
+    <tr>
+      <td>清代</td>
+      <td>曹雪芹</td>
+      <td>《红楼梦·葫芦僧乱判葫芦案》</td>
+      <td>章回体长篇小说巅峰，原名《石头记》</td>
+      <td><span class="highlight">护官符</span>；四大家族；贾雨村乱判；宝玉/黛玉/宝钗性格</td>
+    </tr>
+    <tr>
+      <td>现代</td>
+      <td>鲁迅</td>
+      <td>《阿Q正传》</td>
+      <td>现代文学奠基人，原名周树人</td>
+      <td><span class="highlight">精神胜利法</span>；阿Q无姓无名；国民性批判</td>
+    </tr>
+    <tr>
+      <td>现代</td>
+      <td>曹禺</td>
+      <td>《雷雨》</td>
+      <td>现代戏剧家，原名万家宝</td>
+      <td>一天两场景；周朴园与侍萍；命运悲剧；阶级矛盾</td>
+    </tr>
+    <tr>
+      <td>现代</td>
+      <td>老舍</td>
+      <td>《骆驼祥子》</td>
+      <td>京味小说代表，原名舒庆春</td>
+      <td>三起三落；<span class="highlight">个人主义的末路鬼</span>；社会病胎里的产儿</td>
+    </tr>
+  </table>
+
+
+<div class="day-card">
+<div class="day-title"><span class="day-tag">速查</span>分篇考点浓缩</div>
+<table class="knowledge-table">
+<tr><th>篇目</th><th>作者</th><th>时代/身份</th><th>核心考点</th></tr>
+<tr><td>《论语·君子和而不同》</td><td>孔子弟子及再传弟子</td><td>春秋末期语录体</td><td>和而不同；晏子论和；比喻与对比论证</td></tr>
+<tr><td>《老子》五章</td><td>老子（李耳）</td><td>春秋道家创始人</td><td>对立统一、上善若水、为腹不为目、小国寡民、为而不争</td></tr>
+<tr><td>《诗经·王风·黍离》</td><td>佚名</td><td>先秦民歌</td><td>重章叠句、黍离之悲、情景交融</td></tr>
+<tr><td>《史记·管晏列传》</td><td>司马迁</td><td>西汉史学家</td><td>纪传体通史；管鲍之交；晏子知人；词类活用</td></tr>
+<tr><td>《世说新语》三则</td><td>刘义庆</td><td>南朝宋志人小说</td><td>魏晋风度；管宁割席；谢安雅量；王子猷任诞</td></tr>
+<tr><td>《宣州谢朓楼饯别校书叔云》</td><td>李白</td><td>盛唐浪漫主义</td><td>诗仙；抽刀断水；谢朓；豪放与超拔</td></tr>
+<tr><td>《赠卫八处士》</td><td>杜甫</td><td>盛唐现实主义</td><td>诗圣；诗史；参商；夜雨剪春韭；沉郁顿挫</td></tr>
+<tr><td>《超然台记》</td><td>苏轼</td><td>北宋文豪</td><td>游于物外；凡物皆有可观；骈散结合</td></tr>
+<tr><td>《摸鱼儿》</td><td>辛弃疾</td><td>南宋豪放词人</td><td>苏辛；比兴寄托；长门/玉环飞燕典故</td></tr>
+<tr><td>《蝶恋花·出塞》</td><td>纳兰性德</td><td>清初满洲词人</td><td>满洲第一词人；塞外苍凉；一往情深</td></tr>
+<tr><td>《红楼梦·葫芦僧乱判葫芦案》</td><td>曹雪芹</td><td>清代小说家</td><td>护官符；四大家族；宝黛钗；社会批判</td></tr>
+<tr><td>《阿Q正传》</td><td>鲁迅</td><td>现代文学奠基人</td><td>精神胜利法；国民性批判</td></tr>
+<tr><td>《雷雨》</td><td>曹禺</td><td>现代剧作家</td><td>命运悲剧；周朴园；阶级与伦理冲突</td></tr>
+<tr><td>《骆驼祥子》</td><td>老舍</td><td>现代小说家</td><td>三起三落；个人主义末路鬼；京味语言</td></tr>
+</table>
+</div>
+
+</section>
+
+<!-- 页面6：解题锦囊 -->
+<section class="page" id="page5">
+  <h2>解题锦囊 · 按题型突破</h2>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">单选</span>20题×1.5分=30分</div>
+    <ul style="padding-left:18px;color:var(--text2);font-size:13px;line-height:2">
+      <li>先读题干，圈出<span class="highlight">朝代、作家、篇名、名句归属</span>等关键词。</li>
+      <li>警惕反向设问：如"<span class="highlight">不正确</span>""<span class="highlight">不属于</span>""<span class="highlight">错误</span>"，先在题干上做记号。</li>
+      <li>作家字号对应：李白字太白、杜甫字子美、苏轼号东坡、辛弃疾号稼轩、纳兰性德字容若。</li>
+      <li>并称要记牢：三苏、欧苏、苏黄、苏辛、大李杜、老庄。</li>
+      <li>高频概念：风雅颂/赋比兴、纪传体通史、魏晋风度、精神胜利法、护官符。</li>
+    </ul>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">多选</span>5题×2分=10分</div>
+    <ul style="padding-left:18px;color:var(--text2);font-size:13px;line-height:2">
+      <li>多选、少选、错选通常均不得分，务必<span class="highlight">宁缺毋滥</span>。</li>
+      <li>常见考法：苏轼文学并称、纳兰性德评价、《史记》体例、《诗经》分类与手法、阿Q形象。</li>
+      <li>注意并列选项：如《史记》包括"本纪、世家、列传、书、表"，缺一不可。</li>
+    </ul>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">填空</span>10题×1分=10分</div>
+    <ul style="padding-left:18px;color:var(--text2);font-size:13px;line-height:2">
+      <li><span class="highlight">五篇必背</span>：《黍离》《宣州谢朓楼饯别校书叔云》《赠卫八处士》《摸鱼儿》《蝶恋花·出塞》。</li>
+      <li>易错字强化："<span class="highlight">醯醢</span>""<span class="highlight">采椽</span>""<span class="highlight">黍稷</span>""<span class="highlight">靡靡</span>""<span class="highlight">如噎</span>""<span class="highlight">消愁</span>""<span class="highlight">扁舟</span>""<span class="highlight">斜阳</span>""<span class="highlight">深山夕照深秋雨</span>"。</li>
+      <li>名句对应：看清上下句提示，不要串篇；注意通假字在原文中的写法。</li>
+    </ul>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">翻译</span>1题×10分=10分</div>
+    <ul style="padding-left:18px;color:var(--text2);font-size:13px;line-height:2">
+      <li>翻译范围在15篇课内文，重点集中在<span class="highlight">先秦诸子散文</span>与<span class="highlight">唐宋古文</span>。</li>
+      <li>原则：字字落实、直译为主、意译为辅；注意词类活用、通假字、特殊句式。</li>
+      <li>高频句式：判断句（……者，……也）、被动句（见……于……）、宾语/疑问代词前置（吾安往而不乐）、使动用法（信之、洁其庭宇）。</li>
+      <li>建议先在心里划出主谓宾，再补出省略成分，避免漏译关键词。</li>
+    </ul>
+  </div>
+
+  <div class="day-card">
+    <div class="day-title"><span class="day-tag">作文</span>1题×40分=40分</div>
+    <ul style="padding-left:18px;color:var(--text2);font-size:13px;line-height:2">
+      <li>作文分值最高，建议至少留<span class="highlight">50-60分钟</span>；先列提纲再动笔。</li>
+      <li>推荐母题：①和而不同/求同存异；②超然物外/苦难中的精神自处；③家国情怀/黍离之悲。</li>
+      <li>议论文结构：开头引用课文名句点题→中间三段用课文素材论证→结尾回扣现实。</li>
+      <li>可直接化用的课文：晏子"和如羹"、苏轼"游于物之外"、辛弃疾"斜阳烟柳"、纳兰"今古河山无定据"、阿Q精神胜利法批判。</li>
+      <li>字迹工整、段落清晰、不要跑题；标题尽量出现关键词。</li>
+    </ul>
+  </div>
+
+
+<div class="day-card">
+<div class="day-title"><span class="day-tag">模板</span>各题型答题模板</div>
+<h3>一、选择题</h3>
+<div class="poetry-card">
+<p><span class="highlight">文学常识题</span>：先锁定作者、朝代、字号、作品集，再排除明显错误项。</p>
+<p><span class="highlight">主题理解题</span>：抓住文本情感关键词（如“黍离之悲”“忧国忧民”“超然物外”）。</p>
+<p><span class="highlight">艺术手法题</span>：区分赋/比/兴、比喻/对比、比兴寄托、白描、重章叠句等。</p>
+</div>
+<h3>二、填空题</h3>
+<div class="poetry-card">
+<p>1. 名句默写注意：通假字、易错字、虚词。</p>
+<p>2. 文学常识填空：作家名、字、号、作品集、朝代、评价。</p>
+</div>
+<h3>三、翻译题</h3>
+<div class="poetry-card">
+<p><span class="highlight">直译为主，意译为辅</span>：重点词、特殊句式、词类活用必须体现。</p>
+<p><span class="highlight">常见句式</span>：判断句（……者……也）、被动句（见……于……）、状语后置（于齐任政）、省略句、意动/使动用法。</p>
+</div>
+<h3>四、作文题</h3>
+<div class="poetry-card">
+<p><span class="highlight">母题一：和而不同</span>——可用《论语》素材，论证差异中的协调。</p>
+<p><span class="highlight">母题二：家国情怀</span>——可用《黍离》《摸鱼儿》《蝶恋花·出塞》素材。</p>
+<p><span class="highlight">母题三：精神自由/超然</span>——可用《老子》《超然台记》《李白》素材。</p>
+<p><span class="highlight">母题四：知人善任/人才</span>——可用《管晏列传》素材。</p>
+<p><span class="highlight">母题五：个人与时代</span>——可用《阿Q正传》《骆驼祥子》《雷雨》素材。</p>
+<p>结构建议：开头引用课文名句，中间分论点+课文素材+现实联系，结尾回扣主题。</p>
+</div>
+</div>
+
+</section>
+
+<!-- 页面7：互动自测 -->
+<section class="page" id="page6">
+<div class="info-card">
+<div class="label">📊 自测进度</div>
+<div class="stats">
+<div class="stat-item"><div class="stat-num" id="statTotal">0</div><div class="stat-label">总题数</div></div>
+<div class="stat-item"><div class="stat-num" id="statMastered">0</div><div class="stat-label">已掌握</div></div>
+<div class="stat-item"><div class="stat-num" id="statRate">0%</div><div class="stat-label">掌握率</div></div>
+</div>
+</div>
+<div class="filter-bar">
+<button class="active" onclick="filterQuestions('all')">全部</button>
+<button onclick="filterQuestions('single')">单选</button>
+<button onclick="filterQuestions('multi')">多选</button>
+<button onclick="filterQuestions('blank')">填空</button>
+<button onclick="filterQuestions('trans')">翻译</button>
+<button onclick="filterQuestions('short')">简答</button>
+<button onclick="filterQuestions('essay')">作文</button>
+</div>
+<div class="tip-box"><strong>提示：</strong>点击题目展开答案，答完可标记“已掌握”。</div>
+
+<div class="q-card" data-id="q1" data-type="single">
+<div class="q-header"><span class="q-title">1. 下列关于《论语》的表述，正确的是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 战国时期鲁国史官左丘明所作</p><p>B. 语录体散文，记载孔子及其弟子言行</p><p>C. 与《大学》《中庸》《孟子》合称“五经”</p><p>D. 核心思想是“无为而治”</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q1',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q2" data-type="single">
+<div class="q-header"><span class="q-title">2. “君子和而不同，小人同而不和”中“和”的含义是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 完全相同、无差别一致</p><p>B. 承认差异，在差异中协调统一</p><p>C. 盲目附和、无原则迎合</p><p>D. 表面和谐、内心对立</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q2',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q3" data-type="single">
+<div class="q-header"><span class="q-title">3. 晏子论“和”时所用的主要论证方法是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 举例论证和引用论证</p><p>B. 比喻论证和对比论证</p><p>C. 类比论证和因果论证</p><p>D. 演绎论证和归纳论证</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q3',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q4" data-type="single">
+<div class="q-header"><span class="q-title">4. 《老子》中体现“对立统一”思想的是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 上善若水</p><p>B. 小国寡民</p><p>C. 有无相生，难易相成</p><p>D. 圣人不积</p><p class="key">答案：C</p></div><button class="tag-btn" onclick="toggleMastered('q4',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q5" data-type="single">
+<div class="q-header"><span class="q-title">5. 《老子》“上善若水”中，水的品格不包括</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 柔弱</p><p>B. 处下</p><p>C. 利万物而不争</p><p>D. 刚强好胜</p><p class="key">答案：D</p></div><button class="tag-btn" onclick="toggleMastered('q5',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q6" data-type="single">
+<div class="q-header"><span class="q-title">6. 《诗经》按音乐性质分为</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 赋、比、兴</p><p>B. 风、雅、颂</p><p>C. 大雅、小雅、颂</p><p>D. 国风、楚辞、汉赋</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q6',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q7" data-type="single">
+<div class="q-header"><span class="q-title">7. “黍离之悲”主要表达的情感是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 爱情失意</p><p>B. 故国之思、兴亡之痛</p><p>C. 怀才不遇</p><p>D. 离别之苦</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q7',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q8" data-type="single">
+<div class="q-header"><span class="q-title">8. 下列人物不属于《管晏列传》的是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 管仲</p><p>B. 晏婴</p><p>C. 鲍叔牙</p><p>D. 司马牛</p><p class="key">答案：D</p></div><button class="tag-btn" onclick="toggleMastered('q8',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q9" data-type="single">
+<div class="q-header"><span class="q-title">9. 鲁迅称《史记》为</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 史家之绝唱，无韵之《离骚》</p><p>B. 史家之绝唱，韵文之典范</p><p>C. 纪传体之祖，文章之宗</p><p>D. 百家争鸣之结集</p><p class="key">答案：A</p></div><button class="tag-btn" onclick="toggleMastered('q9',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q10" data-type="single">
+<div class="q-header"><span class="q-title">10. “生我者父母，知我者鲍子也”出自</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 《论语》</p><p>B. 《老子》</p><p>C. 《史记·管晏列传》</p><p>D. 《世说新语》</p><p class="key">答案：C</p></div><button class="tag-btn" onclick="toggleMastered('q10',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q11" data-type="single">
+<div class="q-header"><span class="q-title">11. 下列哪一则出自《世说新语·任诞》</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 管宁割席</p><p>B. 谢安泛海</p><p>C. 王子猷雪夜访戴</p><p>D. 华歆捉金</p><p class="key">答案：C</p></div><button class="tag-btn" onclick="toggleMastered('q11',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q12" data-type="single">
+<div class="q-header"><span class="q-title">12. 李白被称为“诗仙”与哪位人物有关</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 杜甫</p><p>B. 贺知章</p><p>C. 司马承桢</p><p>D. 孟浩然</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q12',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q13" data-type="single">
+<div class="q-header"><span class="q-title">13. 杜甫被尊为“诗圣”，其诗被称为</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 诗仙</p><p>B. 诗史</p><p>C. 诗佛</p><p>D. 诗鬼</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q13',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q14" data-type="single">
+<div class="q-header"><span class="q-title">14. “抽刀断水水更流，举杯消愁愁更愁”出自</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 《蜀道难》</p><p>B. 《宣州谢朓楼饯别校书叔云》</p><p>C. 《梦游天姥吟留别》</p><p>D. 《将进酒》</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q14',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q15" data-type="single">
+<div class="q-header"><span class="q-title">15. 《赠卫八处士》中“夜雨剪春韭，新炊间黄粱”体现的艺术手法是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 夸张</p><p>B. 白描</p><p>C. 用典</p><p>D. 比喻</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q15',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q16" data-type="single">
+<div class="q-header"><span class="q-title">16. 《超然台记》中“游于物之外”的含义是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 逃避现实</p><p>B. 超脱外物束缚，获得精神自由</p><p>C. 追求奇伟壮丽的景观</p><p>D. 沉溺物质享受</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q16',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q17" data-type="single">
+<div class="q-header"><span class="q-title">17. 苏轼《超然台记》的写作地点是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 杭州</p><p>B. 密州</p><p>C. 黄州</p><p>D. 儋州</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q17',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q18" data-type="single">
+<div class="q-header"><span class="q-title">18. 与辛弃疾并称“苏辛”的是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 苏轼</p><p>B. 苏洵</p><p>C. 苏辙</p><p>D. 范仲淹</p><p class="key">答案：A</p></div><button class="tag-btn" onclick="toggleMastered('q18',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q19" data-type="single">
+<div class="q-header"><span class="q-title">19. 《摸鱼儿》中“长门事”典故涉及的人物是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 王昭君</p><p>B. 陈皇后</p><p>C. 杨贵妃</p><p>D. 赵飞燕</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q19',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q20" data-type="single">
+<div class="q-header"><span class="q-title">20. 纳兰性德《蝶恋花·出塞》中“青冢”指的是</span><span class="q-type">单选</span></div>
+<div class="q-body"><div class="answer"><p>A. 杨贵妃墓</p><p>B. 王昭君墓</p><p>C. 陈皇后墓</p><p>D. 赵飞燕墓</p><p class="key">答案：B</p></div><button class="tag-btn" onclick="toggleMastered('q20',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q21" data-type="multi">
+<div class="q-header"><span class="q-title">21. 《红楼梦》中“四大家族”包括</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 贾</p><p>B. 史</p><p>C. 王</p><p>D. 薛</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q21',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q22" data-type="multi">
+<div class="q-header"><span class="q-title">22. 孔子的教育思想包括</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 有教无类</p><p>B. 因材施教</p><p>C. 温故知新</p><p>D. 不耻下问</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q22',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q23" data-type="multi">
+<div class="q-header"><span class="q-title">23. 下列属于《诗经》表现手法的是</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 赋</p><p>B. 比</p><p>C. 兴</p><p>D. 雅</p><p class="key">答案：ABC</p></div><button class="tag-btn" onclick="toggleMastered('q23',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q24" data-type="multi">
+<div class="q-header"><span class="q-title">24. 李白诗歌风格的特点有</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 飘逸</p><p>B. 豪放</p><p>C. 雄奇</p><p>D. 想象瑰丽</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q24',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q25" data-type="multi">
+<div class="q-header"><span class="q-title">25. 下列关于《雷雨》的说法正确的是</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 作者是曹禺</p><p>B. 主要讲述周、鲁两家矛盾</p><p>C. 周朴园是封建家长和资本家</p><p>D. 主题是阶级矛盾和命运悲剧</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q25',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q26" data-type="multi">
+<div class="q-header"><span class="q-title">26. 下列关于《骆驼祥子》的说法正确的是</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 作者是老舍</p><p>B. 祥子经历了三起三落</p><p>C. 小说批判了个人主义奋斗</p><p>D. 祥子最终沦为“个人主义的末路鬼”</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q26',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q27" data-type="multi">
+<div class="q-header"><span class="q-title">27. 下列人物属于《管晏列传》的是</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 管仲</p><p>B. 晏婴</p><p>C. 鲍叔牙</p><p>D. 越石父</p><p class="key">答案：ABCD</p></div><button class="tag-btn" onclick="toggleMastered('q27',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q28" data-type="multi">
+<div class="q-header"><span class="q-title">28. 下列体现“魏晋风度”的有</span><span class="q-type multi">多选</span></div>
+<div class="q-body"><div class="answer"><p>A. 管宁割席</p><p>B. 谢安泛海</p><p>C. 王子猷雪夜访戴</p><p>D. 晏子荐车夫</p><p class="key">答案：ABC</p></div><button class="tag-btn" onclick="toggleMastered('q28',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q29" data-type="blank">
+<div class="q-header"><span class="q-title">29. 孔子思想的核心是“____”和“____”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：仁；礼</p></div><button class="tag-btn" onclick="toggleMastered('q29',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q30" data-type="blank">
+<div class="q-header"><span class="q-title">30. 《老子》又称《____》，今通行本共八十一章。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：道德经</p></div><button class="tag-btn" onclick="toggleMastered('q30',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q31" data-type="blank">
+<div class="q-header"><span class="q-title">31. 《诗经》是我国第一部诗歌总集，按音乐性质分为____、____、____。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：风；雅；颂</p></div><button class="tag-btn" onclick="toggleMastered('q31',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q32" data-type="blank">
+<div class="q-header"><span class="q-title">32. 《黍离》中“彼黍离离，彼稷之____。行迈靡靡，中心____。”</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：苗；摇摇</p></div><button class="tag-btn" onclick="toggleMastered('q32',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q33" data-type="blank">
+<div class="q-header"><span class="q-title">33. 鲁迅称《史记》为“____，____”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：史家之绝唱；无韵之离骚</p></div><button class="tag-btn" onclick="toggleMastered('q33',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q34" data-type="blank">
+<div class="q-header"><span class="q-title">34. 李白字____，号____。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：太白；青莲居士</p></div><button class="tag-btn" onclick="toggleMastered('q34',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q35" data-type="blank">
+<div class="q-header"><span class="q-title">35. 杜甫字____，世称____，其诗被称为“诗史”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：子美；诗圣</p></div><button class="tag-btn" onclick="toggleMastered('q35',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q36" data-type="blank">
+<div class="q-header"><span class="q-title">36. 苏轼字____，号____，与父苏洵、弟苏辙合称“三苏”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：子瞻；东坡居士</p></div><button class="tag-btn" onclick="toggleMastered('q36',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q37" data-type="blank">
+<div class="q-header"><span class="q-title">37. 辛弃疾字____，号____，与苏轼并称“苏辛”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：幼安；稼轩</p></div><button class="tag-btn" onclick="toggleMastered('q37',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q38" data-type="blank">
+<div class="q-header"><span class="q-title">38. 纳兰性德字____，被誉为“____”。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：容若；满洲第一词人</p></div><button class="tag-btn" onclick="toggleMastered('q38',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q39" data-type="blank">
+<div class="q-header"><span class="q-title">39. 《红楼梦》原名《____》，作者曹雪芹名____。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：石头记；霑</p></div><button class="tag-btn" onclick="toggleMastered('q39',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q40" data-type="blank">
+<div class="q-header"><span class="q-title">40. 鲁迅原名____，字____。</span><span class="q-type blank">填空</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：周树人；豫才</p></div><button class="tag-btn" onclick="toggleMastered('q40',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q41" data-type="trans">
+<div class="q-header"><span class="q-title">41. 翻译：君子和而不同，小人同而不和。</span><span class="q-type trans">翻译</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：君子能够与人和谐相处，但不盲目附和；小人只是表面上附和一致，却不能真正和谐。</p></div><button class="tag-btn" onclick="toggleMastered('q41',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q42" data-type="trans">
+<div class="q-header"><span class="q-title">42. 翻译：上善若水。水善利万物而不争，处众人之所恶，故几于道。</span><span class="q-type trans">翻译</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：最高的善就像水一样。水善于滋养万物却不与万物争夺，停留在众人都厌恶的低下之处，所以最接近于“道”。</p></div><button class="tag-btn" onclick="toggleMastered('q42',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q43" data-type="trans">
+<div class="q-header"><span class="q-title">43. 翻译：人生不相见，动如参与商。</span><span class="q-type trans">翻译</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：世间挚友真难相见，往往就像参星与商星一样此出彼没、永不相遇。</p></div><button class="tag-btn" onclick="toggleMastered('q43',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q44" data-type="trans">
+<div class="q-header"><span class="q-title">44. 翻译：抽刀断水水更流，举杯消愁愁更愁。</span><span class="q-type trans">翻译</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：抽刀去斩流水，水反而流得更急；举杯想要消除忧愁，忧愁却更加深重。</p></div><button class="tag-btn" onclick="toggleMastered('q44',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q45" data-type="short">
+<div class="q-header"><span class="q-title">45. 简述“精神胜利法”的内涵。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：阿Q在遭受失败和屈辱时，不是正视现实、改变处境，而是通过自我安慰、幻想胜利等方式获得虚假的心理平衡，如“儿子打老子”“我是虫豸”。这是鲁迅对国民性弱点的深刻批判。</p></div><button class="tag-btn" onclick="toggleMastered('q45',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q46" data-type="short">
+<div class="q-header"><span class="q-title">46. 简述《黍离》的艺术特色。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：1.重章叠句，三章反复咏叹；2.层层递进，由“苗—穗—实”和“摇摇—如醉—如噎”表现情感加深；3.叠字抒情，如“离离”“靡靡”“悠悠”；4.情景交融，以黍稷之景写故国之悲。</p></div><button class="tag-btn" onclick="toggleMastered('q46',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q47" data-type="short">
+<div class="q-header"><span class="q-title">47. 简述苏轼《超然台记》的核心观点。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：苏轼认为“凡物皆有可观，苟有可观，皆有可乐”，真正的快乐不在于外物是否奇伟壮丽，而在于人能否“游于物之外”，超脱得失、贫富、美恶、顺逆的束缚，从而获得精神自由。</p></div><button class="tag-btn" onclick="toggleMastered('q47',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q48" data-type="short">
+<div class="q-header"><span class="q-title">48. 简述《摸鱼儿》的比兴寄托手法。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：表面写惜春、怨春、闺怨，实则寄托政治失意和忧国之思。春天象征美好时光与国家前途；落红、飞絮、斜阳、烟柳象征衰败；长门事、玉环飞燕等典故暗示自己遭谗遭弃、壮志难酬。</p></div><button class="tag-btn" onclick="toggleMastered('q48',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q49" data-type="short">
+<div class="q-header"><span class="q-title">49. 简述“管鲍之交”的内涵。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：鲍叔牙了解管仲的处境与才能，不因其小节失误而否定其大才，反而推荐管仲，自己甘居其下。体现了真正的知己、知人善任和让贤之德。</p></div><button class="tag-btn" onclick="toggleMastered('q49',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q50" data-type="short">
+<div class="q-header"><span class="q-title">50. 简述《雷雨》中周朴园的人物形象。</span><span class="q-type short">简答</span></div>
+<div class="q-body"><div class="answer"><p class="key">答案：周朴园是封建家长和资本家，冷酷自私、专横霸道。他年轻时与侍萍相爱又抛弃，三十年后重逢时仍以金钱衡量感情，体现了封建伦理与资本利益对人性的扭曲。</p></div><button class="tag-btn" onclick="toggleMastered('q50',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q51" data-type="essay">
+<div class="q-header"><span class="q-title">51. 作文：以“和而不同”为话题，写一篇不少于800字的议论文。</span><span class="q-type essay">作文</span></div>
+<div class="q-body"><div class="answer"><p class="key">写作提示：</p><p>1. 开头可引用“君子和而不同，小人同而不和”。</p><p>2. 分论点：①和是差异中的协调；②不同是独立人格与原则；③真正的和谐能成就更大共同体。</p><p>3. 素材：晏子以羹汤、音乐论和；管鲍之交；费孝通“各美其美，美美与共”。</p><p>4. 结尾：回应现实，强调在多元社会中坚持和而不同的价值。</p></div><button class="tag-btn" onclick="toggleMastered('q51',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q52" data-type="essay">
+<div class="q-header"><span class="q-title">52. 作文：以“家国情怀”为话题，结合所学课文写一篇议论文。</span><span class="q-type essay">作文</span></div>
+<div class="q-body"><div class="answer"><p class="key">写作提示：</p><p>1. 可用《黍离》“知我者谓我心忧”写故国之思。</p><p>2. 可用《摸鱼儿》斜阳烟柳写忧国情怀。</p><p>3. 可用《蝶恋花·出塞》“一往情深深几许”写对山河的深情。</p><p>4. 联系当下：文化认同、历史记忆、青年责任。</p></div><button class="tag-btn" onclick="toggleMastered('q52',this)">标记已掌握</button></div>
+</div>
+
+<div class="q-card" data-id="q53" data-type="essay">
+<div class="q-header"><span class="q-title">53. 作文：以“在困境中保持精神自由”为话题，结合课文写作。</span><span class="q-type essay">作文</span></div>
+<div class="q-body"><div class="answer"><p class="key">写作提示：</p><p>1. 可用《老子》“上善若水”“为而不争”写柔韧与不争。</p><p>2. 可用《超然台记》“游于物之外”写超脱。</p><p>3. 可用李白“明朝散发弄扁舟”写失意中的精神高昂。</p><p>4. 联系个人成长：挫折、压力、选择。</p></div><button class="tag-btn" onclick="toggleMastered('q53',this)">标记已掌握</button></div>
+</div>
+</section>
+
+<button class="fab" onclick="openAI()" title="AI助教">🤖</button>
+
+<div class="ai-modal" id="aiModal">
+  <div class="ai-box">
+    <div class="ai-head">
+      <div style="font-weight:600">AI 助教</div>
+      <button class="close-btn" onclick="closeAI()">×</button>
+    </div>
+    <div class="ai-body">
+      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">AI 已接入 DeepSeek v4-flash，可直接提问复习疑难。</p>
+      <input type="password" id="aiKey" value="sk-889ceecb9fd2479dbdd3a26380b31495" placeholder="DeepSeek API Key" style="width:100%;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);color:#fff;margin-bottom:10px">
+      <textarea id="aiInput" placeholder="例如：帮我分析一下《摸鱼儿》的比兴寄托手法"></textarea>
+      <button onclick="askAI()">发送</button>
+      <div class="ai-response" id="aiResponse">AI 回复将显示在这里。</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  document.querySelectorAll('.nav button')[n].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleCheck(el){
+  const cb=el.querySelector('input');
+  cb.checked=!cb.checked;
+  el.classList.toggle('checked',cb.checked);
+}
+
+// q-card toggle
+document.querySelectorAll('.q-card .q-header').forEach(h=>{
+  h.addEventListener('click',()=>{
+    h.parentElement.classList.toggle('open');
+  });
+});
+
+function getMastered(){
+  try{return JSON.parse(localStorage.getItem('dxyw_mastered')||'{}');}catch(e){return {};}
+}
+function saveMastered(m){
+  localStorage.setItem('dxyw_mastered',JSON.stringify(m));
+  updateStats();
+}
+function toggleMastered(id,btn){
+  const m=getMastered();
+  m[id]=!m[id];
+  saveMastered(m);
+  btn.classList.toggle('mastered',m[id]);
+  btn.textContent=m[id]?'已掌握':'标记已掌握';
+  showToast(m[id]?'已标记掌握':'已取消标记');
+}
+function updateStats(){
+  const cards=document.querySelectorAll('.q-card');
+  const total=cards.length;
+  const m=getMastered();
+  const mastered=Object.keys(m).filter(k=>m[k]&&document.querySelector('.q-card[data-id="'+k+'"]')).length;
+  const rate=total?Math.round(mastered/total*100):0;
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statMastered').textContent=mastered;
+  document.getElementById('statRate').textContent=rate+'%';
+}
+function initMastered(){
+  const m=getMastered();
+  document.querySelectorAll('.q-card').forEach(card=>{
+    const id=card.dataset.id;
+    const btn=card.querySelector('.tag-btn');
+    if(m[id]){
+      btn.classList.add('mastered');
+      btn.textContent='已掌握';
+    }
+  });
+  updateStats();
+}
+
+function filterQuestions(type){
+  document.querySelectorAll('.filter-bar button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.q-card').forEach(card=>{
+    card.style.display=(type==='all'||card.dataset.type===type)?'':'none';
+  });
+}
+
+// quick search table
+document.getElementById('quickSearch').addEventListener('input',function(){
+  const val=this.value.trim().toLowerCase();
+  const rows=document.querySelectorAll('#quickTable tr');
+  for(let i=1;i<rows.length;i++){
+    rows[i].style.display=rows[i].textContent.toLowerCase().includes(val)?'':'none';
+  }
+});
+
+// AI modal
+function openAI(){document.getElementById('aiModal').classList.add('show');}
+function closeAI(){document.getElementById('aiModal').classList.remove('show');}
+async function askAI(){
+  const key=document.getElementById('aiKey').value.trim();
+  const q=document.getElementById('aiInput').value.trim();
+  const res=document.getElementById('aiResponse');
+  if(!q){res.textContent='请先输入问题。';return;}
+  if(!key){res.textContent='请先输入 DeepSeek API Key。';return;}
+  res.textContent='思考中...';
+  try{
+    const r=await fetch('https://api.deepseek.com/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:'deepseek-v4-flash',messages:[{role:'system',content:'你是海南大学《大学语文》期末复习助教。请用中文回答，要求：1.紧扣教材与讲义原文；2.对文学常识、重点字词、艺术手法给出准确解释；3.作文题可从课文素材切入，给出分论点和成段表达；4.简洁但信息完整。'},{role:'user',content:q}]})
+    });
+    if(!r.ok){res.textContent='请求失败：'+r.status+' '+r.statusText;return;}
+    const data=await r.json();
+    res.textContent=data.choices?.[0]?.message?.content||'暂无回复';
+  }catch(e){
+    res.textContent='请求出错：'+e.message;
+  }
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1500);
+}
+
+// init
+document.addEventListener('DOMContentLoaded',()=>{
+  initMastered();
+});
+</script>
+
+</body>
+</html>

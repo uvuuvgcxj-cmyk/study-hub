@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率论与数理统计A · 期末冲刺手册 | 海南大学</title>
+<style>
+:root{
+  --bg:#0f0f14;--card:#1a1a24;--card2:#222230;--border:#2a2a3a;
+  --text:#e8e8ec;--text2:#a0a0b0;--text3:#6a6a7a;
+  --accent:#7C6FF0;--accent2:#5B4FD4;--red:#F05454;--green:#4ECB71;--amber:#F5A623;
+  --radius:12px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;font-size:15px}
+
+/* 导航 */
+.nav{position:sticky;top:0;z-index:100;background:rgba(15,15,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 16px}
+.nav-btn{flex-shrink:0;padding:12px 16px;font-size:13px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none}
+.nav-btn:hover{color:var(--text)}
+.nav-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+
+/* 页面 */
+.page{display:none;max-width:900px;margin:0 auto;padding:24px 20px 100px}
+.page.show{display:block}
+
+/* 标题 */
+h1{font-size:26px;color:#fff;margin:8px 0 4px}
+h2{font-size:20px;color:#fff;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+h3{font-size:16px;color:var(--accent);margin:20px 0 8px}
+h4{font-size:14px;color:var(--text);margin:14px 0 6px;font-weight:600}
+.subtitle{color:var(--text3);font-size:13px;margin-bottom:20px}
+p,li{font-size:14px;color:var(--text2);line-height:1.9}
+ul,ol{margin:8px 0 8px 20px}
+
+/* 卡片 */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin:14px 0}
+.card-red{border-left:4px solid var(--red)}
+.card-green{border-left:4px solid var(--green)}
+.card-amber{border-left:4px solid var(--amber)}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;margin:2px 4px 2px 0}
+.tag-red{background:rgba(240,84,84,0.15);color:var(--red)}
+.tag-green{background:rgba(78,203,113,0.15);color:var(--green)}
+.tag-amber{background:rgba(245,166,35,0.15);color:var(--amber)}
+.tag-blue{background:rgba(124,111,240,0.15);color:var(--accent)}
+
+/* 公式块 - 核心！用CSS渲染，不依赖数学库 */
+.math-block{
+  background:#0a0a12;border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:14px 18px;margin:10px 0;text-align:center;overflow-x:auto;
+  font-family:'Times New Roman','Cambria Math',Georgia,serif;
+  font-size:16px;color:#e0d8f0;letter-spacing:0.5px;line-height:2;
+}
+.math-block em{font-style:italic;color:#d4c8f0}
+.math-block .kw{color:var(--text3);font-style:normal;font-size:13px}
+/* 行内公式 */
+.math{font-family:'Times New Roman','Cambria Math',Georgia,serif;color:#d4c8f0;font-size:14.5px}
+.math em{font-style:italic}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+th{background:var(--card2);color:var(--text);font-weight:600;font-size:12.5px}
+td{color:var(--text2);vertical-align:top}
+
+/* 例题 */
+.example{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:14px 0}
+.example-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.solution-toggle{background:var(--accent);color:#fff;border:none;padding:5px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;margin-top:8px}
+.solution-toggle:hover{background:var(--accent2)}
+.solution{display:none;margin-top:10px;padding:12px;background:var(--card2);border-radius:var(--radius-sm);font-size:13px;color:var(--text2);line-height:2}
+.solution.open{display:block}
+
+/* 复选框 */
+.cb{display:flex;align-items:flex-start;gap:10px;padding:7px 0;cursor:pointer;font-size:13px;color:var(--text2)}
+.cb input{margin-top:4px;accent-color:var(--accent);flex-shrink:0}
+.cb.done{color:var(--text3);text-decoration:line-through}
+
+/* 自测 */
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0}
+.quiz-q{font-size:14px;color:var(--text);margin-bottom:8px;font-weight:500;line-height:1.9}
+.quiz-opts{margin:8px 0}
+.quiz-opt{display:block;padding:6px 12px;margin:4px 0;background:var(--card2);border-radius:var(--radius-sm);font-size:13px;color:var(--text2);cursor:pointer;border:1px solid transparent;transition:all .15s}
+.quiz-opt:hover{border-color:var(--accent)}
+.quiz-opt.correct{border-color:var(--green);background:rgba(78,203,113,0.1);color:var(--green)}
+.quiz-opt.wrong{border-color:var(--red);background:rgba(240,84,84,0.1);color:var(--red)}
+.quiz-ans{display:none;margin-top:8px;padding:10px;background:var(--card2);border-radius:var(--radius-sm);font-size:12.5px;color:var(--text2);line-height:1.8}
+.quiz-ans.open{display:block}
+.mastery-btns{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.m-btn{padding:4px 12px;border-radius:12px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:var(--card2);color:var(--text2);transition:all .15s}
+.m-btn:hover{opacity:0.8}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.filter-btn{padding:5px 14px;border-radius:16px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--card2);color:var(--text2);transition:all .15s}
+.filter-btn:hover{color:var(--text)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* 进度条 */
+.progress-bar{height:6px;background:var(--card2);border-radius:3px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
+
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0}
+.score-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.score-card .num{font-size:28px;font-weight:700;color:var(--accent)}
+.score-card .label{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* AI 按钮 - 更醒目 */
+#ai-fab{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:linear-gradient(135deg,#7C6FF0,#5B4FD4);color:#fff;
+  height:50px;border-radius:25px;display:flex;align-items:center;
+  justify-content:center;gap:8px;cursor:pointer;
+  box-shadow:0 4px 24px rgba(124,111,240,0.55);
+  font-size:22px;border:none;padding:0 20px 0 16px;transition:all .25s;white-space:nowrap;
+}
+#ai-fab:hover{transform:scale(1.06);box-shadow:0 6px 32px rgba(124,111,240,0.7)}
+#ai-fab .fab-text{font-size:14px;font-weight:600}
+
+/* AI 面板 */
+#ai-panel{
+  position:fixed;bottom:90px;right:24px;z-index:9998;
+  width:380px;max-height:500px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);display:none;flex-direction:column;
+  box-shadow:0 8px 40px rgba(0,0,0,0.6);overflow:hidden;
+}
+#ai-panel.open{display:flex}
+.ai-hd{padding:14px 16px;background:linear-gradient(135deg,var(--card2),var(--card));border-bottom:1px solid var(--border);font-size:14px;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.ai-hd button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;padding:0 4px;line-height:1}
+.ai-hd button:hover{color:var(--red)}
+.ai-body{flex:1;overflow-y:auto;padding:14px;font-size:13px;min-height:60px;max-height:320px}
+.ai-msg{padding:8px 12px;margin:6px 0;border-radius:10px;max-width:90%;word-break:break-word;line-height:1.7}
+.ai-msg.bot{background:var(--card2);color:var(--text2)}
+.ai-msg.user{background:var(--accent);color:#fff;margin-left:auto}
+.ai-input-area{display:flex;padding:10px;gap:6px;border-top:1px solid var(--border);flex-shrink:0}
+.ai-input-area input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.ai-input-area input:focus{border-color:var(--accent)}
+.ai-input-area button{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
+.ai-input-area button:hover{background:var(--accent2)}
+
+@media(max-width:600px){
+  .nav-btn{padding:10px 12px;font-size:12px}
+  .page{padding:16px 12px 80px}
+  h1{font-size:22px}
+  #ai-panel{width:calc(100vw - 24px);right:12px;bottom:80px;max-height:420px}
+  #ai-fab .fab-text{display:none}
+  #ai-fab{padding:0;width:50px;border-radius:25px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="main-nav">
+  <button class="nav-btn active" data-page="plan">📅 复习计划</button>
+  <button class="nav-btn" data-page="day1">📘 Day1</button>
+  <button class="nav-btn" data-page="day2">📗 Day2</button>
+  <button class="nav-btn" data-page="day3">📙 Day3</button>
+  <button class="nav-btn" data-page="formula">📐 公式速查</button>
+  <button class="nav-btn" data-page="tips">💡 解题锦囊</button>
+  <button class="nav-btn" data-page="quiz">✅ 自测(100题)</button>
+</nav>
+
+<!-- ========== 第1页：复习计划 ========== -->
+<div class="page show" id="page-plan">
+  <h1>📅 概率统计期末冲刺计划</h1>
+  <p class="subtitle">海南大学 · 概率论与数理统计A · 目标80分 · 3天冲刺</p>
+
+  <div class="card card-amber">
+    <h3>📊 分值权重估算</h3>
+    <div class="score-grid">
+      <div class="score-card"><div class="num">15%</div><div class="label">随机事件与概率</div></div>
+      <div class="score-card"><div class="num">20%</div><div class="label">一维随机变量</div></div>
+      <div class="score-card"><div class="num">20%</div><div class="label">多维随机变量</div></div>
+      <div class="score-card"><div class="num">15%</div><div class="label">数字特征</div></div>
+      <div class="score-card"><div class="num">10%</div><div class="label">大数/中心极限</div></div>
+      <div class="score-card"><div class="num">20%</div><div class="label">参数估计</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📅 Day 1 — 概率基础 + 一维分布<span class="tag tag-amber" style="margin-left:8px">目标60%</span></h3>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>事件的关系与运算（并集/交集/补集/德摩根律）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>概率的公理化定义与性质（非负性/规范性/可列可加性）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>条件概率公式 P(<em>B</em>|<em>A</em>) = P(<em>AB</em>)/P(<em>A</em>) 熟练计算</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>乘法公式 P(<em>AB</em>) = P(<em>A</em>)P(<em>B</em>|<em>A</em>) = P(<em>B</em>)P(<em>A</em>|<em>B</em>)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>全概率公式 P(<em>B</em>) = ∑ P(<em>A</em><sub>i</sub>)P(<em>B</em>|<em>A</em><sub>i</sub>)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>贝叶斯公式 P(<em>A</em><sub>j</sub>|<em>B</em>) = P(<em>A</em><sub>j</sub>)P(<em>B</em>|<em>A</em><sub>j</sub>) / ∑ P(<em>A</em><sub>i</sub>)P(<em>B</em>|<em>A</em><sub>i</sub>) — <b style="color:var(--red)">必考大题</b></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>事件独立性：P(<em>AB</em>) = P(<em>A</em>)P(<em>B</em>)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>离散型分布律：∑ p<sub>i</sub> = 1, p<sub>i</sub> ≥ 0</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>连续型密度：∫<sub>−∞</sub><sup>+∞</sup> <em>f</em>(<em>x</em>)d<em>x</em> = 1</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>分布函数 <em>F</em>(<em>x</em>) = P(<em>X</em> ≤ <em>x</em>)：单调不减/右连续/极限</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>均匀分布 <em>X</em>∼U[<em>a,b</em>]：密度 1/(<em>b</em>−<em>a</em>)，E=(<em>a</em>+<em>b</em>)/2，D=(<em>b</em>−<em>a</em>)²/12</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>指数分布 <em>X</em>∼Exp(λ)：密度 λe<sup>−λx</sup>，无记忆性</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>正态分布 <em>X</em>∼N(μ,σ²)：标准化 Z=(<em>X</em>−μ)/σ ∼ N(0,1)，会查表</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>0-1分布、二项B(<em>n,p</em>)、泊松P(λ) 的期望和方差</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做3道贝叶斯大题（三厂次品问题同类题）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做5道一维密度求参+概率+分布函数综合题</span></label>
+  </div>
+
+  <div class="card">
+    <h3>📅 Day 2 — 多维分布 + 数字特征<span class="tag tag-amber" style="margin-left:8px">目标80%</span></h3>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>二维离散：联合分布律 p<sub>ij</sub>，边缘 p<sub>i·</sub> = ∑<sub>j</sub> p<sub>ij</sub></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>二维连续：联合密度 <em>f</em>(<em>x,y</em>)，边缘 f<sub>X</sub>(<em>x</em>) = ∫ <em>f</em>(<em>x,y</em>)d<em>y</em></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>条件分布：f<sub>X|Y</sub>(<em>x</em>|<em>y</em>) = <em>f</em>(<em>x,y</em>) / f<sub>Y</sub>(<em>y</em>)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>独立性：<em>f</em>(<em>x,y</em>) = f<sub>X</sub>(<em>x</em>)·f<sub>Y</sub>(<em>y</em>) 或 p<sub>ij</sub> = p<sub>i·</sub>·p<sub>·j</sub></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>二维均匀分布：区域D上密度 1/S<sub>D</sub>，概率 = 面积比</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>Z=X+Y 的分布：卷积 f<sub>Z</sub>(z) = ∫ <em>f</em>(<em>x</em>, z−<em>x</em>)d<em>x</em></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>Z=max(X,Y) 的分布律（离散型：枚举法）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>期望：E(<em>X</em>) = ∑ x<sub>i</sub>p<sub>i</sub>（离散）/ ∫ <em>x</em>·<em>f</em>(<em>x</em>)d<em>x</em>（连续）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>方差：D(<em>X</em>) = E(<em>X</em>²) − [E(<em>X</em>)]²；D(aX+b) = a²D(X)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>协方差 Cov(<em>X,Y</em>) = E(<em>XY</em>) − E(<em>X</em>)E(<em>Y</em>)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>相关系数 ρ<sub>XY</sub> = Cov(<em>X,Y</em>) / √[D(<em>X</em>)D(<em>Y</em>)]，−1≤ρ≤1</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>切比雪夫：P(|<em>X</em>−E(<em>X</em>)|≥ε) ≤ D(<em>X</em>)/ε²</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>中心极限：标准化和 ≈ N(0,1)（n充分大）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做2道二维联合→边缘密度+概率题</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做2道 Z=max(X,Y) 或 Z=X+Y 分布题</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做1道中心极限定理应用题（供电/排队）</span></label>
+  </div>
+
+  <div class="card">
+    <h3>📅 Day 3 — 统计量 + 参数估计<span class="tag tag-amber" style="margin-left:8px">目标85%+</span></h3>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>总体与样本：X<sub>1</sub>,...,X<sub>n</sub> 为简单随机样本，X̄ = (1/n)∑ X<sub>i</sub></span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>样本均值分布：X̄ ∼ N(μ, σ²/n)（正态总体）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>χ² 分布：(n−1)S²/σ² ∼ χ²(n−1)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>t 分布：(X̄−μ)/(S/√n) ∼ t(n−1)（σ²未知时）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>F 分布：(S<sub>1</sub>²/σ<sub>1</sub>²)/(S<sub>2</sub>²/σ<sub>2</sub>²) ∼ F(n<sub>1</sub>−1, n<sub>2</sub>−1)</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>矩估计法：用样本矩估计总体矩（一阶矩=E，二阶=E²+D）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>极大似然四步法：似然 → 取对数 → 求偏导 → 解方程</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>无偏估计：E(θ̂) = θ</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>有效性：两无偏估计，方差小更有效</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>置信区间（σ²已知）：X̄ ± z<sub>α/2</sub>·σ/√n</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>置信区间（σ²未知）：X̄ ± t<sub>α/2</sub>(n−1)·S/√n</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做3道矩估计+极大似然估计题</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做2道无偏估计判断+有效性比较题</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>📝 做1套完整真题（限时120分钟模拟）</span></label>
+  </div>
+
+  <div class="card card-green">
+    <h3>🏆 80分达成路线图</h3>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%" id="plan-progress"></div></div>
+    <p style="font-size:12px;color:var(--text3);margin-top:6px">完成上方checklist后进度会自动更新</p>
+    <p style="margin-top:10px"><strong style="color:var(--green)">保80分策略：</strong></p>
+    <ul>
+      <li>选择题(8题)：目标对6题 → 贝叶斯+分布函数+独立性+方差性质</li>
+      <li>填空题(5题)：目标对4题 → 互斥概率+均匀密度+二维概率+样本均值分布</li>
+      <li>计算题(6题)：目标对5题 → 贝叶斯必满分，参数估计必满分</li>
+      <li>应用题(1题)：目标满分 → 中心极限定理送分题</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== 第2页：Day1 ========== -->
+<div class="page" id="page-day1">
+  <h1>📘 Day 1 · 概率基础与一维分布</h1>
+  <p class="subtitle">核心：贝叶斯公式 + 一维常用分布 + 分布函数</p>
+
+  <h2>一、随机事件与概率</h2>
+  <div class="card">
+    <h3>核心公式</h3>
+    <div class="math-block">P(<em>B</em>|<em>A</em>) = P(<em>AB</em>)/P(<em>A</em>) &nbsp;&nbsp;(P(<em>A</em>) &gt; 0)</div>
+    <div class="math-block">P(<em>AB</em>) = P(<em>A</em>)P(<em>B</em>|<em>A</em>) = P(<em>B</em>)P(<em>A</em>|<em>B</em>) &nbsp;&nbsp;<span class="kw">乘法公式</span></div>
+    <div class="math-block">P(<em>B</em>) = <span style="font-size:20px">∑</span><sub>i</sub> P(<em>A</em><sub>i</sub>)P(<em>B</em>|<em>A</em><sub>i</sub>) &nbsp;&nbsp;<span class="kw">全概率公式</span></div>
+    <div class="math-block">P(<em>A</em><sub>j</sub>|<em>B</em>) = <span style="display:inline-block;text-align:center"><span style="border-bottom:1px solid #d4c8f0;display:block;padding:0 4px">P(<em>A</em><sub>j</sub>)P(<em>B</em>|<em>A</em><sub>j</sub>)</span><span style="display:block;padding-top:4px"><span style="font-size:20px">∑</span><sub>i</sub> P(<em>A</em><sub>i</sub>)P(<em>B</em>|<em>A</em><sub>i</sub>)</span></span> &nbsp;&nbsp;<span class="kw">贝叶斯公式</span></div>
+  </div>
+
+  <div class="card card-red">
+    <h3>⚡ 贝叶斯公式 — 必考大题计算模板</h3>
+    <p>三步法：</p>
+    <ol>
+      <li><b>设事件</b>：A<sub>1</sub>,A<sub>2</sub>,...,A<sub>n</sub> 为原因，B 为结果</li>
+      <li><b>写先验</b>：P(A<sub>i</sub>) = 各原因占比</li>
+      <li><b>写似然</b>：P(B|A<sub>i</sub>) = 各原因下结果发生概率</li>
+      <li><b>代贝叶斯</b>：P(A<sub>j</sub>|B) = 分子(P(A<sub>j</sub>)P(B|A<sub>j</sub>)) / 分母(全概率)</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题1（贝叶斯 · 三厂次品）</div>
+    <p>某厂三条生产线：甲占50%次品率2%，乙占30%次品率3%，丙占20%次品率5%。随机抽一件是次品，求来自甲的概率。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p><b>解：</b>设 A<sub>1</sub>,A<sub>2</sub>,A<sub>3</sub> = 甲/乙/丙，B = 次品</p>
+      <p>P(A<sub>1</sub>)=0.5, P(A<sub>2</sub>)=0.3, P(A<sub>3</sub>)=0.2</p>
+      <p>P(B|A<sub>1</sub>)=0.02, P(B|A<sub>2</sub>)=0.03, P(B|A<sub>3</sub>)=0.05</p>
+      <p><b>全概率：</b>P(B) = 0.5×0.02+0.3×0.03+0.2×0.05 = 0.029</p>
+      <p><b>贝叶斯：</b>P(A<sub>1</sub>|B) = 0.5×0.02 / 0.029 ≈ <span style="color:var(--green);font-weight:600">0.3448（约34.48%）</span></p>
+    </div>
+  </div>
+
+  <h2>二、一维随机变量</h2>
+  <div class="card">
+    <h3>分布函数 F(x) = P(X ≤ x)</h3>
+    <p>性质：</p>
+    <ul>
+      <li>0 ≤ F(x) ≤ 1，F(−∞)=0，F(+∞)=1</li>
+      <li>F(x) 单调不减</li>
+      <li>F(x) 右连续</li>
+      <li>P(a &lt; X ≤ b) = F(b) − F(a)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📊 常用分布一览</h3>
+    <table>
+      <tr><th>分布</th><th>记号</th><th>密度/分布律</th><th>E(X)</th><th>D(X)</th></tr>
+      <tr><td>0-1</td><td>B(1,p)</td><td>P(X=1)=p</td><td>p</td><td>p(1−p)</td></tr>
+      <tr><td>二项</td><td>B(n,p)</td><td>C(n,k)pᵏ(1−p)<sup>n−k</sup></td><td>np</td><td>np(1−p)</td></tr>
+      <tr><td>泊松</td><td>P(λ)</td><td>λᵏe<sup>−λ</sup>/k!</td><td>λ</td><td>λ</td></tr>
+      <tr><td>均匀</td><td>U[a,b]</td><td>1/(b−a), a≤x≤b</td><td>(a+b)/2</td><td>(b−a)²/12</td></tr>
+      <tr><td>指数</td><td>Exp(λ)</td><td>λe<sup>−λx</sup>, x≥0</td><td>1/λ</td><td>1/λ²</td></tr>
+      <tr><td>正态</td><td>N(μ,σ²)</td><td>(1/√(2π)σ)·exp(−(x−μ)²/2σ²)</td><td>μ</td><td>σ²</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题2（连续密度求概率）</div>
+    <p>X 的密度 f(x)=2x (0≤x≤1)，求 P(0.3&lt;X&lt;0.7)。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>P(0.3&lt;X&lt;0.7) = ∫<sub>0.3</sub><sup>0.7</sup> 2x dx = [x²]<sub>0.3</sub><sup>0.7</sup> = 0.49 − 0.09 = <span style="color:var(--green);font-weight:600">0.4</span></p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题3（分布函数）</div>
+    <p>X 密度 f(x)=1/2 (0≤x≤2)，求分布函数 F(x)。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>x&lt;0：F(x)=0</p>
+      <p>0≤x≤2：F(x)=∫<sub>0</sub><sup>x</sup> (1/2)dt = x/2</p>
+      <p>x&gt;2：F(x)=1</p>
+      <p>即 F(x) = { 0, x&lt;0; x/2, 0≤x≤2; 1, x&gt;2 }</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第3页：Day2 ========== -->
+<div class="page" id="page-day2">
+  <h1>📗 Day 2 · 多维分布与数字特征</h1>
+  <p class="subtitle">核心：二维联合分布 + 边缘/条件分布 + 协方差 + 中心极限定理</p>
+
+  <h2>一、二维随机变量</h2>
+  <div class="card">
+    <h3>核心公式</h3>
+    <div class="math-block">边缘密度：f<sub>X</sub>(<em>x</em>) = ∫<sub>−∞</sub><sup>+∞</sup> <em>f</em>(<em>x,y</em>) d<em>y</em></div>
+    <div class="math-block">条件密度：f<sub>Y|X</sub>(<em>y</em>|<em>x</em>) = <em>f</em>(<em>x,y</em>) / f<sub>X</sub>(<em>x</em>)</div>
+    <div class="math-block">独立 ⇔ <em>f</em>(<em>x,y</em>) = f<sub>X</sub>(<em>x</em>)·f<sub>Y</sub>(<em>y</em>)（连续）</div>
+    <div class="math-block">独立 ⇔ p<sub>ij</sub> = p<sub>i·</sub>·p<sub>·j</sub>（离散）</div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题4（边缘密度）</div>
+    <p>(X,Y) 联合密度 f(x,y)=2 (0≤x≤y≤1)，求 f<sub>X</sub>(x)。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>f<sub>X</sub>(x) = ∫<sub>x</sub><sup>1</sup> 2 dy = 2(1−x)，0≤x≤1；其他为0</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题5（Z=max(X,Y)）</div>
+    <p>(X,Y)联合分布律：P(0,0)=0.1, P(0,1)=0.2, P(0,2)=0.1, P(1,0)=0.2, P(1,1)=0.1, P(1,2)=0.2, P(2,2)=0.1。求 Z=max(X,Y) 分布律和期望。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>Z=0：(0,0) → P=0.1</p>
+      <p>Z=1：(0,1),(1,0),(1,1) → P=0.2+0.2+0.1=0.5</p>
+      <p>Z=2：(0,2),(1,2),(2,2) → P=0.1+0.2+0.1=0.4</p>
+      <p>校验：0.1+0.5+0.4=1 ✓</p>
+      <p>E(Z) = 0×0.1 + 1×0.5 + 2×0.4 = <span style="color:var(--green);font-weight:600">1.3</span></p>
+    </div>
+  </div>
+
+  <h2>二、数字特征</h2>
+  <div class="card">
+    <h3>期望、方差、协方差</h3>
+    <div class="math-block">E(<em>X</em>) = <span style="font-size:20px">∑</span> x<sub>i</sub>p<sub>i</sub>（离散）&nbsp;&nbsp;|&nbsp;&nbsp;E(<em>X</em>) = ∫ <em>x</em>·<em>f</em>(<em>x</em>)d<em>x</em>（连续）</div>
+    <div class="math-block">D(<em>X</em>) = E(<em>X</em>²) − [E(<em>X</em>)]² &nbsp;&nbsp;<span class="kw">← 计算方差首选公式</span></div>
+    <div class="math-block">Cov(<em>X,Y</em>) = E(<em>XY</em>) − E(<em>X</em>)E(<em>Y</em>)</div>
+    <div class="math-block">ρ<sub><em>XY</em></sub> = Cov(<em>X,Y</em>) / √[D(<em>X</em>)D(<em>Y</em>)] &nbsp;&nbsp;(−1 ≤ ρ ≤ 1)</div>
+  </div>
+
+  <div class="card">
+    <h3>期望与方差性质</h3>
+    <div class="math-block">E(aX+b) = aE(X)+b</div>
+    <div class="math-block">E(X+Y) = E(X)+E(Y) &nbsp;&nbsp;<span class="kw">← 无条件成立！</span></div>
+    <div class="math-block">D(aX+b) = a²D(X) &nbsp;&nbsp;<span class="kw">← 常数b不影响方差</span></div>
+    <div class="math-block">D(X+Y) = D(X)+D(Y)+2Cov(X,Y)</div>
+    <p style="color:var(--red);margin-top:6px">⚠️ 真题陷阱：D(2X+3) = 4D(X)，不是 2D(X)+3！</p>
+  </div>
+
+  <h2>三、中心极限定理</h2>
+  <div class="card card-red">
+    <h3>⚡ 中心极限定理 — 应用题必考</h3>
+    <div class="math-block">(∑X<sub>i</sub> − nμ) / (√n·σ) <span style="font-size:18px">≈</span> N(0,1) &nbsp;&nbsp;(n 充分大)</div>
+    <p style="margin-top:8px"><b>解题步骤（供电问题模板）：</b></p>
+    <ol>
+      <li>设 X<sub>i</sub> = 第i台用电量，求 μ = E(X<sub>i</sub>), σ² = D(X<sub>i</sub>)</li>
+      <li>总用电 S<sub>n</sub> = ∑X<sub>i</sub> ≈ N(nμ, nσ²)</li>
+      <li>标准化：P(S<sub>n</sub> ≤ C) ≈ Φ((C−nμ)/(√n·σ))</li>
+      <li>查表得概率</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题6（中心极限定理）</div>
+    <p>100台车床，每台开工率0.7且独立。每台耗电1kW，供电80kW，求供电不足概率。（已知 Φ(2.18)=0.9854）</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>X<sub>i</sub> ∼ B(1,0.7)，E=0.7，D=0.21</p>
+      <p>S ∼ N(70, 21)，P(S&gt;80) = P(Z &gt; 10/√21) = P(Z &gt; 2.18) = 1−0.9854 = <span style="color:var(--green);font-weight:600">0.0146（1.46%）</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第4页：Day3 ========== -->
+<div class="page" id="page-day3">
+  <h1>📙 Day 3 · 统计推断与参数估计</h1>
+  <p class="subtitle">核心：抽样分布 + 矩估计 + 极大似然估计 + 无偏性</p>
+
+  <h2>一、抽样分布</h2>
+  <div class="card">
+    <h3>样本均值与样本方差</h3>
+    <div class="math-block">样本均值：X̄ = (1/n)·∑<sub>i</sub> X<sub>i</sub></div>
+    <div class="math-block">样本方差：S² = [1/(n−1)]·∑<sub>i</sub> (X<sub>i</sub> − X̄)² &nbsp;&nbsp;<span class="kw">← 分母 n−1！</span></div>
+  </div>
+
+  <div class="card">
+    <h3>三大抽样分布</h3>
+    <table>
+      <tr><th>分布</th><th>定义</th><th>用途</th></tr>
+      <tr><td>χ²分布</td><td>(n−1)S²/σ² ∼ χ²(n−1)</td><td>方差检验</td></tr>
+      <tr><td>t分布</td><td>(X̄−μ)/(S/√n) ∼ t(n−1)</td><td>σ²未知时均值估计</td></tr>
+      <tr><td>F分布</td><td>(S₁²/σ₁²)/(S₂²/σ₂²) ∼ F(n₁−1, n₂−1)</td><td>两方差比较</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--text3)">记忆口诀：χ²管方差，t管均值，F管两方差比</p>
+  </div>
+
+  <h2>二、参数估计</h2>
+  <div class="card card-red">
+    <h3>⚡ 极大似然估计四步法</h3>
+    <div style="line-height:2.4">
+      <p><b>第一步：</b>写似然函数 L(θ) = ∏ f(x<sub>i</sub>;θ)</p>
+      <p><b>第二步：</b>取对数 ln L(θ) = ∑ ln f(x<sub>i</sub>;θ)</p>
+      <p><b>第三步：</b>求偏导 ∂(ln L)/∂θ = 0</p>
+      <p><b>第四步：</b>解出 θ̂</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题7（指数分布MLE）</div>
+    <p>X<sub>1</sub>,...,X<sub>n</sub> 来自 f(x;λ)=λe<sup>−λx</sup> (x&gt;0)，求 λ 的MLE。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>L(λ) = λ<sup>n</sup>·e<sup>−λ∑x<sub>i</sub></sup></p>
+      <p>ln L = n·ln λ − λ·∑x<sub>i</sub></p>
+      <p>d(ln L)/dλ = n/λ − ∑x<sub>i</sub> = 0</p>
+      <p>λ̂ = n/∑x<sub>i</sub> = <span style="color:var(--green);font-weight:600">1/X̄</span></p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">📝 例题8（正态分布MLE）</div>
+    <p>X<sub>1</sub>,...,X<sub>n</sub> ∼ N(μ,σ²)，求 μ,σ² 的MLE。</p>
+    <button class="solution-toggle" onclick="toggleSolution(this)">查看答案</button>
+    <div class="solution">
+      <p>∂lnL/∂μ = 0 → <span style="color:var(--green);font-weight:600">μ̂ = X̄</span></p>
+      <p>∂lnL/∂σ² = 0 → <span style="color:var(--green);font-weight:600">σ̂² = (1/n)·∑(X<sub>i</sub>−X̄)²</span></p>
+      <p style="color:var(--amber)">⚠️ σ̂² 是有偏的！无偏估计分母用 n−1</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>无偏估计与有效性</h3>
+    <div class="math-block">E(θ̂) = θ &nbsp;⇔&nbsp; θ̂ 是无偏估计</div>
+    <div class="math-block">若 E(θ̂₁) = E(θ̂₂) = θ，且 D(θ̂₁) &lt; D(θ̂₂) &nbsp;⇒&nbsp; θ̂₁ 更有效</div>
+  </div>
+
+  <h2>三、置信区间</h2>
+  <div class="card">
+    <h3>置信区间公式</h3>
+    <table>
+      <tr><th>情形</th><th>置信区间</th><th>用分布</th></tr>
+      <tr><td>σ²已知</td><td>X̄ ± z<sub>α/2</sub>·σ/√n</td><td>N(0,1)</td></tr>
+      <tr><td>σ²未知</td><td>X̄ ± t<sub>α/2</sub>(n−1)·S/√n</td><td>t(n−1)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== 第5页：公式速查 ========== -->
+<div class="page" id="page-formula">
+  <h1>📐 公式速查表</h1>
+  <p class="subtitle">考试时搜索用 · 建议打印一份</p>
+
+  <h2>一、概率计算</h2>
+  <div class="card">
+    <table>
+      <tr><th>公式名</th><th>公式</th><th>备注</th></tr>
+      <tr><td>条件概率</td><td>P(B|A) = P(AB)/P(A)</td><td>P(A)&gt;0</td></tr>
+      <tr><td>乘法公式</td><td>P(AB) = P(A)·P(B|A)</td><td>可推广到n个事件</td></tr>
+      <tr><td>全概率</td><td>P(B) = ∑ P(A<sub>i</sub>)P(B|A<sub>i</sub>)</td><td>{A<sub>i</sub>}完备事件组</td></tr>
+      <tr><td>贝叶斯</td><td>P(A<sub>j</sub>|B) = [P(A<sub>j</sub>)P(B|A<sub>j</sub>)] / [∑ P(A<sub>i</sub>)P(B|A<sub>i</sub>)]</td><td>必考</td></tr>
+      <tr><td>独立性</td><td>P(AB) = P(A)·P(B)</td><td>三个事件需4条件</td></tr>
+    </table>
+  </div>
+
+  <h2>二、常用分布全家福</h2>
+  <div class="card">
+    <table>
+      <tr><th>分布</th><th>参数</th><th>E(X)</th><th>D(X)</th><th>密度/分布律</th></tr>
+      <tr><td>0-1</td><td>p</td><td>p</td><td>p(1−p)</td><td>P(X=1)=p</td></tr>
+      <tr><td>二项 B(n,p)</td><td>n,p</td><td>np</td><td>np(1−p)</td><td>C(n,k)·pᵏ(1−p)<sup>n−k</sup></td></tr>
+      <tr><td>泊松 P(λ)</td><td>λ</td><td>λ</td><td>λ</td><td>λᵏe<sup>−λ</sup>/k!</td></tr>
+      <tr><td>均匀 U[a,b]</td><td>a,b</td><td>(a+b)/2</td><td>(b−a)²/12</td><td>1/(b−a), a≤x≤b</td></tr>
+      <tr><td>指数 Exp(λ)</td><td>λ</td><td>1/λ</td><td>1/λ²</td><td>λe<sup>−λx</sup>, x≥0</td></tr>
+      <tr><td>正态 N(μ,σ²)</td><td>μ,σ²</td><td>μ</td><td>σ²</td><td>exp(−(x−μ)²/2σ²)/(√(2π)·σ)</td></tr>
+      <tr><td>标准正态</td><td>—</td><td>0</td><td>1</td><td>φ(x)=e<sup>−x²/2</sup>/√(2π)</td></tr>
+    </table>
+  </div>
+
+  <h2>三、数字特征</h2>
+  <div class="card">
+    <table>
+      <tr><th>量</th><th>公式</th><th>性质</th></tr>
+      <tr><td>期望</td><td>E(X) = ∑ x<sub>i</sub>p<sub>i</sub></td><td>E(aX+b) = aE(X)+b</td></tr>
+      <tr><td>方差</td><td>D(X) = E(X²)−E²(X)</td><td>D(aX+b) = a²D(X)</td></tr>
+      <tr><td>协方差</td><td>Cov(X,Y) = E(XY)−E(X)E(Y)</td><td>Cov(X,X)=D(X)</td></tr>
+      <tr><td>相关系数</td><td>ρ = Cov / √[D(X)D(Y)]</td><td>−1≤ρ≤1</td></tr>
+      <tr><td>方差和</td><td>D(X+Y) = D(X)+D(Y)+2Cov</td><td>独立时Cov=0</td></tr>
+    </table>
+  </div>
+
+  <h2>四、参数估计</h2>
+  <div class="card">
+    <table>
+      <tr><th>方法</th><th>公式/步骤</th><th>说明</th></tr>
+      <tr><td>矩估计</td><td>令 (1/n)∑X<sub>i</sub> = E(X) 解 θ̂</td><td>样本矩=总体矩</td></tr>
+      <tr><td>极大似然</td><td>max L(θ) 或 max ln L(θ)</td><td>四步法</td></tr>
+      <tr><td>无偏性</td><td>E(θ̂) = θ</td><td>—</td></tr>
+      <tr><td>CI(σ已知)</td><td>X̄ ± z<sub>α/2</sub>·σ/√n</td><td>用N(0,1)</td></tr>
+      <tr><td>CI(σ未知)</td><td>X̄ ± t<sub>α/2</sub>·S/√n</td><td>用t(n−1)</td></tr>
+    </table>
+  </div>
+
+  <h2>五、常用分位数</h2>
+  <div class="card">
+    <table>
+      <tr><th>z值</th><th>Φ(z)</th><th>说明</th></tr>
+      <tr><td>z<sub>0.025</sub>=1.96</td><td>0.975</td><td>95%置信区间</td></tr>
+      <tr><td>z<sub>0.05</sub>=1.645</td><td>0.95</td><td>90%置信区间</td></tr>
+      <tr><td>Φ(1)</td><td>0.8413</td><td>考试常给</td></tr>
+      <tr><td>Φ(2)</td><td>0.9772</td><td>考试常给</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== 第6页：解题锦囊 ========== -->
+<div class="page" id="page-tips">
+  <h1>💡 解题锦囊</h1>
+  <p class="subtitle">考场技巧 · 失分点 · 条件→方法速查</p>
+
+  <h2>🏆 考场技巧 Top 5</h2>
+  <div class="card card-green">
+    <ol>
+      <li><b>先易后难</b>：选择题前5题简单先拿分；贝叶斯和参数估计是送分题优先做</li>
+      <li><b>分布函数分段写</b>：x&lt;a、a≤x≤b、x&gt;b 三段，少一段扣分</li>
+      <li><b>中心极限</b>：必须写"由中心极限定理"，不写可能扣分</li>
+      <li><b>极大似然</b>：一定要取对数！直接求 L(θ) 最大值很难</li>
+      <li><b>检查归一性</b>：求完常数验证 ∫f(x)dx=1 或 ∑p<sub>i</sub>=1</li>
+    </ol>
+  </div>
+
+  <h2>⚠️ 常见失分点</h2>
+  <div class="card card-red">
+    <table>
+      <tr><th>失分点</th><th>❌ 错误</th><th>✅ 正确</th></tr>
+      <tr><td>分布函数分段</td><td>只写0≤x≤1段</td><td>写全 x&lt;0, 0≤x≤1, x&gt;1</td></tr>
+      <tr><td>方差性质</td><td>D(2X+3)=2D(X)+3</td><td>D(2X+3)=4D(X)</td></tr>
+      <tr><td>样本方差分母</td><td>S²用分母n</td><td>无偏估计分母n−1</td></tr>
+      <tr><td>极大似然</td><td>直接对L(θ)求导</td><td>先取对数再求导</td></tr>
+      <tr><td>贝叶斯分母</td><td>分母只加一项</td><td>分母加<b>所有</b>P(A<sub>i</sub>)P(B|A<sub>i</sub>)</td></tr>
+      <tr><td>独立≠不相关</td><td>只看E(XY)=E(X)E(Y)</td><td>需验证联合=边缘乘积</td></tr>
+      <tr><td>正态标准化</td><td>Z=(X−μ)/σ²</td><td>Z=(X−μ)/σ（除以σ!）</td></tr>
+    </table>
+  </div>
+
+  <h2>🔍 条件 → 方法 速查</h2>
+  <div class="card">
+    <table>
+      <tr><th>看到题目条件</th><th>用什么方法</th></tr>
+      <tr><td>"三厂生产，随机取一件是次品"</td><td>贝叶斯公式</td></tr>
+      <tr><td>"设密度为 f(x)=...，求 a"</td><td>归一性 ∫f(x)dx=1</td></tr>
+      <tr><td>"求分布函数 F(x)"</td><td>分段积分 F(x)=∫f(t)dt</td></tr>
+      <tr><td>"(X,Y)联合密度为..."</td><td>先边缘→判独立→求概率</td></tr>
+      <tr><td>"Z=max(X,Y)"</td><td>枚举法：列所有组合</td></tr>
+      <tr><td>"求E(X),D(X)"</td><td>先求边缘密度，再用定义</td></tr>
+      <tr><td>"100台设备，供电不足概率"</td><td>中心极限定理</td></tr>
+      <tr><td>"求极大似然估计"</td><td>四步法：似然→对数→求导→解</td></tr>
+      <tr><td>"判断是否是μ的无偏估计"</td><td>求E(θ̂)看是否=μ</td></tr>
+      <tr><td>"求95%置信区间"</td><td>σ已知用z，未知用t</td></tr>
+    </table>
+  </div>
+
+  <h2>📏 考试用具检查</h2>
+  <div class="card card-amber">
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>计算器（带Φ(z)表）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>签字笔（至少2支）</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>铅笔+橡皮</span></label>
+    <label class="cb"><input type="checkbox" onchange="toggleCB(this)"> <span>身份证+学生证+准考证</span></label>
+  </div>
+</div>
+
+<!-- ========== 第7页：互动自测 ========== -->
+<div class="page" id="page-quiz">
+  <h1>✅ 互动自测（100题）</h1>
+  <p class="subtitle">覆盖全部考点 · 点击选项看答案 · 掌握度跟踪</p>
+
+  <div class="filter-bar" id="quiz-filter">
+    <button class="filter-btn active" data-filter="all">全部</button>
+    <button class="filter-btn" data-filter="day1">Day1 概率基础</button>
+    <button class="filter-btn" data-filter="day2">Day2 多维+数字</button>
+    <button class="filter-btn" data-filter="day3">Day3 参数估计</button>
+    <button class="filter-btn" data-filter="clt">中心极限</button>
+  </div>
+
+  <div id="quiz-container"><p style="text-align:center;color:var(--text3);padding:40px 0">题目准备中...</p></div>
+  <p style="text-align:center;color:var(--text3);font-size:13px;margin-top:20px" id="quiz-progress-text">已掌握 0 / 100 题</p>
+  <div class="progress-bar" style="max-width:400px;margin:8px auto"><div class="progress-fill" style="width:0%" id="quiz-progress"></div></div>
+</div>
+
+<!-- AI按钮 -->
+<button id="ai-fab" title="AI助教">🤖 <span class="fab-text">AI 助教</span></button>
+
+<!-- AI面板 -->
+<div id="ai-panel">
+  <div class="ai-hd">
+    <span>🤖 AI助教（DeepSeek）</span>
+    <button id="ai-close" title="关闭">&times;</button>
+  </div>
+  <div class="ai-body" id="ai-body">
+    <div class="ai-msg bot">你好！有任何概率统计问题都可以问我。试试：<br>· "贝叶斯公式怎么用？"<br>· "这题为什么选A？"<br>· "解释一下中心极限定理"</div>
+  </div>
+  <div class="ai-input-area">
+    <input type="text" id="ai-input" placeholder="输入问题，回车发送...">
+    <button id="ai-send">发送</button>
+  </div>
+</div>
+
+<script>
+// ======== 全局 ========
+var _cur='plan';
+var _currentFilter='all';
+
+// ======== 页面切换 ========
+function showPage(id){
+  if(!id||id===_cur) return;
+  var pages=document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('show');
+  var t=document.getElementById('page-'+id);
+  if(!t) return;
+  t.classList.add('show');
+  _cur=id;
+  var btns=document.querySelectorAll('.nav-btn');
+  for(var j=0;j<btns.length;j++){
+    btns[j].classList.remove('active');
+    if(btns[j].getAttribute('data-page')===id) btns[j].classList.add('active');
+  }
+  if(id==='quiz') renderQuiz();
+  window.scrollTo(0,0);
+}
+
+// ======== Checklist ========
+function toggleCB(box){
+  var cb=box.closest('.cb');
+  if(box.checked) cb.classList.add('done'); else cb.classList.remove('done');
+  saveCB();updatePlanProgress();
+}
+function saveCB(){
+  var s={},all=document.querySelectorAll('.cb input');
+  for(var i=0;i<all.length;i++) s['cb'+i]=all[i].checked;
+  try{localStorage.setItem('prob_cb3',JSON.stringify(s));}catch(e){}
+}
+function loadCB(){
+  try{
+    var d=JSON.parse(localStorage.getItem('prob_cb3')||'{}');
+    var all=document.querySelectorAll('.cb input');
+    for(var i=0;i<all.length;i++){if(d['cb'+i]){all[i].checked=true;all[i].closest('.cb').classList.add('done');}}
+  }catch(e){}
+  updatePlanProgress();
+}
+function updatePlanProgress(){
+  var all=document.querySelectorAll('.cb input');
+  var done=document.querySelectorAll('.cb input:checked').length;
+  var bar=document.getElementById('plan-progress');
+  if(bar) bar.style.width=(all.length?Math.round(done/all.length*100):0)+'%';
+}
+
+// ======== 例题展开 ========
+function toggleSolution(btn){
+  var sol=btn.nextElementSibling;
+  sol.classList.toggle('open');
+  btn.textContent=sol.classList.contains('open')?'收起解析':'查看答案';
+}
+
+// ======== 100道自测题 ========
+var quizData=[
+  {m:'day1',q:'设 P(A)=0.3, P(B)=0.5, P(AB)=0.2，则 P(A|B)=？',o:['0.4','0.6','0.667','0.5'],a:0,x:'P(A|B)=P(AB)/P(B)=0.2/0.5=0.4'},
+  {m:'day1',q:'设 P(A)=0.6, P(B)=0.4, P(A∪B)=0.8，则 P(AB)=？',o:['0.2','0.3','0.4','0.1'],a:0,x:'P(A∪B)=P(A)+P(B)−P(AB) ⇒ P(AB)=0.2'},
+  {m:'day1',q:'A,B互不相容，P(A)=0.3, P(B)=0.5，P(A∪B)=？',o:['0.8','0.15','0.3','0.5'],a:0,x:'互不相容⇒P(AB)=0'},
+  {m:'day1',q:'P(A)=0.4, P(B|A)=0.6，则 P(AB)=？',o:['0.24','0.6','0.4','0.2'],a:0,x:'P(AB)=P(A)·P(B|A)=0.24'},
+  {m:'day1',q:'全概率公式的分母是：',o:['P(Aᵢ)','P(B)','P(B|Aᵢ)','1'],a:1,x:'全概率：P(B)=∑P(Aᵢ)P(B|Aᵢ)'},
+  {m:'day1',q:'贝叶斯公式中，分母表示：',o:['先验概率','全概率P(B)','似然概率','边缘概率'],a:1,x:'分母=所有原因引起B的全概率'},
+  {m:'day1',q:'设 X~B(1,0.3)，则 E(X)=？',o:['0.3','0.7','0.21','1'],a:0,x:'0-1分布：E(X)=p=0.3'},
+  {m:'day1',q:'设 X~B(10,0.5)，E(X)=？',o:['5','2.5','10','0.5'],a:0,x:'E(X)=np=10×0.5=5'},
+  {m:'day1',q:'设 X~B(10,0.5)，D(X)=？',o:['2.5','5','10','0.5'],a:0,x:'D(X)=np(1−p)=2.5'},
+  {m:'day1',q:'设 X~P(4)（泊松），E(X)=？',o:['4','2','16','0'],a:0,x:'泊松：E(X)=D(X)=λ=4'},
+  {m:'day1',q:'设 X~U[0,4]，E(X)=？',o:['2','4','0','1'],a:0,x:'E(X)=(a+b)/2=2'},
+  {m:'day1',q:'设 X~U[0,4]，D(X)=？',o:['4/3','2','4','1'],a:0,x:'D(X)=(b−a)²/12=16/12=4/3'},
+  {m:'day1',q:'设 X~Exp(2)，E(X)=？',o:['0.5','2','4','1'],a:0,x:'E(X)=1/λ=0.5'},
+  {m:'day1',q:'设 X~N(2,9)，P(X>2)=？',o:['0.5','0','0.9772','0.0228'],a:0,x:'正态对称，P(X>μ)=0.5'},
+  {m:'day1',q:'设 X~N(10,4)，P(8<X<12)=？（Φ(1)=0.8413）',o:['0.6826','0.8413','0.9772','0.5'],a:0,x:'P(|Z|<1)=2Φ(1)−1=0.6826'},
+  {m:'day1',q:'分布函数F(x)=P(...)：',o:['X≥x','X≤x','X>x','X=x'],a:1,x:'F(x)=P(X≤x)'},
+  {m:'day1',q:'连续型密度f(x)满足：',o:['∑f(x)=1','∫f(x)dx=1','f(x)≤0','F(x)=f(x)'],a:1,x:'归一性：∫f(x)dx=1'},
+  {m:'day1',q:'X密度f(x)=2x(0≤x≤1)，P(X>0.5)=？',o:['0.75','0.25','0.5','1'],a:0,x:'∫₀.₅¹ 2xdx=[x²]₀.₅¹=1−0.25=0.75'},
+  {m:'day1',q:'A,B独立，P(A)=0.4, P(B)=0.5，P(AB)=？',o:['0.2','0.9','0.4','0.5'],a:0,x:'独立⇒P(AB)=P(A)P(B)=0.2'},
+  {m:'day1',q:'三个事件相互独立需几个条件？',o:['3个','4个','5个','7个'],a:1,x:'3个两两独立+1个联合=4个'},
+  {m:'day1',q:'Φ(0)=？',o:['0.5','0','1','0.1587'],a:0,x:'标准正态对称，Φ(0)=0.5'},
+  {m:'day1',q:'指数分布具有：',o:['无记忆性','对称性','可加性','凸性'],a:0,x:'P(X>s+t|X>s)=P(X>t)'},
+  {m:'day1',q:'分布律P(0)=0.2,P(1)=0.5,P(2)=0.3，E=？',o:['1.1','1','0.5','2'],a:0,x:'0×0.2+1×0.5+2×0.3=1.1'},
+  {m:'day1',q:'德摩根律：\u0305A\u222A\u0305B\u0305 =？',o:['A\u0305∪B\u0305','A\u0305∩B\u0305','A\u0305∩B','A∩B\u0305'],a:1,x:'A∪B的补 = A补 ∩ B补'},
+  {m:'day1',q:'P(A)=0.5,P(B)=0.6,P(B|A)=0.8，P(A|B)=？',o:['0.667','0.8','0.5','0.48'],a:0,x:'P(AB)=0.4，P(A|B)=0.4/0.6≈0.667'},
+  {m:'day1',q:'X~N(μ,σ²)，标准化Y=？',o:['N(0,1)','N(μ,σ²)','N(1,0)','χ²(1)'],a:0,x:'Y=(X−μ)/σ ~ N(0,1)'},
+  {m:'day1',q:'哪个不是分布函数的性质？',o:['单调不减','0≤F≤1','连续可导','F(+∞)=1'],a:2,x:'分布函数只需右连续，不一定可导'},
+  {m:'day1',q:'f(x)=ce^(−2x)(x>0)，c=？',o:['2','1','0.5','4'],a:0,x:'∫₀^∞ ce^(−2x)dx=c/2=1 ⇒ c=2'},
+  {m:'day1',q:'A,B互斥且P>0，则：',o:['独立','不独立','P(A|B)=P(A)','P(AB)=P(A)P(B)'],a:1,x:'互斥P(AB)=0≠P(A)P(B)>0'},
+  {m:'day1',q:'X~P(3)，D(X)=？',o:['3','9','0','1'],a:0,x:'泊松D(X)=λ=3'},
+  {m:'day1',q:'X~Exp(0.5)，D(X)=？',o:['4','2','0.5','1'],a:0,x:'D(X)=1/λ²=1/0.25=4'},
+  {m:'day1',q:'n个独立事件至少发生一个的概率：',o:['1−∏(1−P(Aᵢ))','∏P(Aᵢ)','∑P(Aᵢ)','1−∑P(Aᵢ)'],a:0,x:'补事件：全不发生'},
+  // Day2
+  {m:'day2',q:'离散型(X,Y)独立的条件：',o:['pᵢⱼ=pᵢ·p·ⱼ','E(XY)=E(X)E(Y)','Cov=0','ρ=0'],a:0,x:'联合=边缘乘积'},
+  {m:'day2',q:'边缘密度f_X(x)=？',o:['∫f(x,y)dy','∫f(x,y)dx','f(x,y)/f_Y(y)','∂F/∂x'],a:0,x:'对y积分得边缘'},
+  {m:'day2',q:'独立正态X+Y的分布：',o:['N(μ₁+μ₂,σ₁²+σ₂²)','N(μ₁+μ₂,σ₁²−σ₂²)','不确定','N(μ₁μ₂,σ₁²σ₂²)'],a:0,x:'独立正态和仍为正态'},
+  {m:'day2',q:'独立X,Y~U[0,1]，E(XY)=？',o:['0.25','0.5','1','0'],a:0,x:'E(XY)=E(X)E(Y)=0.5×0.5=0.25'},
+  {m:'day2',q:'D(X)=4,D(Y)=9,ρ=0.5，Cov=？',o:['3','6','1.5','0'],a:0,x:'Cov=ρ·√[D(X)D(Y)]=0.5×6=3'},
+  {m:'day2',q:'X,Y独立，D(X−Y)=？',o:['D(X)−D(Y)','D(X)+D(Y)','D(X)+D(Y)−2Cov','不确定'],a:1,x:'独立⇒D(X−Y)=D(X)+D(Y)'},
+  {m:'day2',q:'独立X,Y~N(0,1)，X²+Y²~？',o:['χ²(2)','N(0,2)','t(2)','F(1,1)'],a:0,x:'独立标准正态平方和~χ²'},
+  {m:'day2',q:'独立时Z=max(X,Y)分布函数：',o:['F_X(z)F_Y(z)','F_X+F_Y','1−(1−F_X)(1−F_Y)','不确定'],a:0,x:'P(max≤z)=F_X(z)F_Y(z)'},
+  {m:'day2',q:'独立时Z=min(X,Y)分布函数：',o:['F_X·F_Y','1−(1−F_X)(1−F_Y)','F_X+F_Y','F_X−F_Y'],a:1,x:'P(min>z)=(1−F_X)(1−F_Y)'},
+  {m:'day2',q:'(X,Y)在[0,1]²均匀，P(X+Y≤1)=？',o:['0.5','1','0.25','0.75'],a:0,x:'面积比：三角形面积/正方形面积=0.5'},
+  {m:'day2',q:'Cov(X,Y)=0等价于：',o:['独立','ρ_XY=0','E(XY)=0','D(X+Y)=0'],a:1,x:'Cov=0⇔ρ=0'},
+  {m:'day2',q:'E(X)=2,E(Y)=3,E(XY)=8，Cov=？',o:['2','5','8','−2'],a:0,x:'Cov=8−6=2'},
+  {m:'day2',q:'独立D(X)=1,D(Y)=4，D(2X−3Y)=？',o:['40','10','14','22'],a:0,x:'4D(X)+9D(Y)=4+36=40'},
+  {m:'day2',q:'切比雪夫：P(|X−EX|≥ε)≤？',o:['DX/ε²','EX/ε','ε·DX','Φ(ε/σ)'],a:0,x:'P(|X−μ|≥ε)≤σ²/ε²'},
+  {m:'day2',q:'中心极限定理近似分布：',o:['N(0,1)','χ²(n)','t(n)','F'],a:0,x:'标准化和≈N(0,1)'},
+  {m:'day2',q:'σ²已知，(X̄−μ)/(σ/√n)~？',o:['N(0,1)','t(n−1)','χ²(n−1)','F(1,n−1)'],a:0,x:'方差已知用N(0,1)'},
+  {m:'day2',q:'σ²未知，(X̄−μ)/(S/√n)~？',o:['t(n−1)','N(0,1)','χ²(n−1)','F(n−1,1)'],a:0,x:'方差未知用t(n−1)'},
+  {m:'day2',q:'f(x,y)=1(0≤x,y≤1)，f_X(x)=？',o:['1','x','0.5','不确定'],a:0,x:'f_X(x)=∫₀¹ 1dy=1'},
+  {m:'day2',q:'ρ=1说明：',o:['Y=aX+b严格线性','独立','Cov=0','D(X)=D(Y)'],a:0,x:'ρ=±1⇔严格线性关系'},
+  {m:'day2',q:'X~χ²(n)，E(X)=？',o:['n','2n','0','√n'],a:0,x:'χ²(n)期望=自由度n'},
+  {m:'day2',q:'X~t(n)，E(X)=？',o:['0','n','1','不存在'],a:0,x:'t分布关于0对称'},
+  {m:'day2',q:'下列正确的是：',o:['独立⇒不相关','不相关⇒独立','ρ=0⇒独立','Cov=0⇒独立'],a:0,x:'独立一定不相关，反之不成立'},
+  {m:'day2',q:'X~F(m,n)，1/X~？',o:['F(n,m)','F(m,n)','t(m+n)','χ²(m+n)'],a:0,x:'F分布倒数性质'},
+  {m:'day2',q:'E(X̄)=？',o:['μ','μ/n','0','σ²/n'],a:0,x:'E(X̄)=μ'},
+  {m:'day2',q:'D(X̄)=？',o:['σ²/n','σ²','σ²/n²','不确定'],a:0,x:'D(X̄)=σ²/n'},
+  {m:'day2',q:'iid时D(∑Xᵢ)=？',o:['nσ²','σ²','σ²/n','n²σ²'],a:0,x:'独立同分布方差可加'},
+  {m:'day2',q:'独立泊松X~P(3),Y~P(4)，X+Y~？',o:['P(7)','P(12)','N(7,7)','不确定'],a:0,x:'独立泊松和=泊松，参数相加'},
+  {m:'day2',q:'二维正态的独立与不相关：',o:['等价','无关','独立⇒相关','不相关⇒独立'],a:0,x:'二维正态：独立⇔不相关（特例）'},
+  {m:'day2',q:'D(X+Y)=D(X)+D(Y)的条件：',o:['不相关','独立','E(XY)=0','以上都行'],a:3,x:'独立⇒不相关⇒Cov=0'},
+  {m:'day2',q:'X~N(1,1)，E(X²)=？',o:['2','1','0','3'],a:0,x:'E(X²)=D(X)+E²(X)=2'},
+  {m:'day2',q:'X~χ²(10)，D(X)=？',o:['20','10','100','5'],a:0,x:'D(χ²(n))=2n=20'},
+  // Day3
+  {m:'day3',q:'矩估计思想：',o:['样本矩=总体矩','最大化似然','最小MSE','最小误差'],a:0,x:'用样本矩估计总体矩'},
+  {m:'day3',q:'X~P(λ)，矩估计λ̂=？',o:['X̄','S²','1/X̄','X̄²'],a:0,x:'E(X)=λ⇒λ̂=X̄'},
+  {m:'day3',q:'X~Exp(λ)，矩估计λ̂=？',o:['1/X̄','X̄','S²','1/S²'],a:0,x:'E(X)=1/λ⇒λ̂=1/X̄'},
+  {m:'day3',q:'MLE第一步：',o:['写似然函数','取对数','求偏导','解方程'],a:0,x:'四步法：L(θ)→lnL→偏导→解'},
+  {m:'day3',q:'E(θ̂)=θ，则θ̂是：',o:['无偏估计','有效估计','一致估计','MLE'],a:0,x:'无偏估计定义'},
+  {m:'day3',q:'两无偏，D(θ̂₁)<D(θ̂₂)：',o:['θ̂₁更有效','θ̂₂更有效','一样','不确定'],a:0,x:'方差小更有效'},
+  {m:'day3',q:'σ已知时95%CI：',o:['X̄±1.96σ/√n','X̄±t₀.₀₂₅S/√n','X̄±1.645σ/√n','不确定'],a:0,x:'z₀.₀₂₅=1.96'},
+  {m:'day3',q:'σ未知时置信区间用：',o:['t分布','N(0,1)','χ²','F'],a:0,x:'σ未知用t(n−1)'},
+  {m:'day3',q:'(1/n)∑(Xᵢ−X̄)²是σ²的：',o:['有偏估计','无偏估计','MLE','都不是'],a:0,x:'分母n有偏，n−1无偏'},
+  {m:'day3',q:'X~U[0,θ]，MLEθ̂=？',o:['max(Xᵢ)','min(Xᵢ)','X̄','2X̄'],a:0,x:'似然递减，取θ最小值=max'},
+  {m:'day3',q:'矩估计和MLE一定相同吗？',o:['不一定','一定相同','一定不同','正态才相同'],a:0,x:'不同分布结果不同'},
+  {m:'day3',q:'X₁,X₂~N(μ,1)，最有效无偏：',o:['X̄','X₁','0.6X₁+0.4X₂','都一样'],a:0,x:'D(X̄)=0.5最小'},
+  {m:'day3',q:'95%置信水平，α=？',o:['0.05','0.95','0.025','0.5'],a:0,x:'1−α=0.95⇒α=0.05'},
+  {m:'day3',q:'(n−1)S²/σ²~？',o:['χ²(n−1)','χ²(n)','N(0,1)','t(n−1)'],a:0,x:'抽样分布定理'},
+  {m:'day3',q:'一致性：n→∞时θ̂→θ（依概率）',o:['正确','错误','是有效性','是MLE'],a:0,x:'一致性=相合性，依概率收敛'},
+  {m:'day3',q:'X~B(1,p)，p的MLE：',o:['X̄','S²','p₀','1−X̄'],a:0,x:'似然求解p̂=X̄'},
+  {m:'day3',q:'X~χ²(n)，D(X)=？',o:['2n','n','n²','2√n'],a:0,x:'D(χ²(n))=2n'},
+  {m:'day3',q:'不需求分布形式的估计：',o:['矩估计','极大似然','贝叶斯','都不是'],a:0,x:'矩估计只需矩，不需具体分布'},
+  {m:'day3',q:'N(μ,σ²),μ已知时σ²的MLE：',o:['(1/n)∑(Xᵢ−μ)²','S²','(1/(n−1))∑(Xᵢ−X̄)²','X̄'],a:0,x:'μ已知时分母n'},
+  {m:'day3',q:'E(θ̂²)=？',o:['D(θ̂)+θ²','θ²','D(θ̂)','不确定'],a:0,x:'E(θ̂²)=D+E²'},
+  // CLT
+  {m:'clt',q:'中心极限一般要求n≥？',o:['30','10','5','100'],a:0,x:'一般n≥30近似良好'},
+  {m:'clt',q:'Xᵢ~B(1,0.4),n=100，∑Xᵢ近似：',o:['N(40,24)','N(40,0.24)','B(100,0.4)','P(40)'],a:0,x:'E=40,D=24→N(40,24)'},
+  {m:'clt',q:'CLT通常出现于哪种题型？',o:['应用题','计算题','选择题','填空题'],a:0,x:'需建模的供电/排队问题'},
+  {m:'clt',q:'E(Xᵢ)=5,D(Xᵢ)=4,n=100，P(∑Xᵢ>520)=？',o:['1−Φ(1)=0.1587','Φ(1)=0.8413','0.5','0'],a:0,x:'S~N(500,400),P(S>520)=P(Z>1)'},
+  {m:'clt',q:'林德伯格-莱维要求：',o:['iid且方差存在','独立不同分布','只要n大','正态总体'],a:0,x:'独立同分布，方差有限'},
+  {m:'clt',q:'用正态近二项需连续性修正：',o:['计算区间概率时','连续型时','不需要','n<30时'],a:0,x:'连续近似离散用±0.5修正'},
+  {m:'clt',q:'标准化公式：',o:['(S_n−nμ)/(√n·σ)','(S_n−μ)/σ','(X̄−μ)/σ','(S_n−nμ)/(nσ)'],a:0,x:'Z_n=(S_n−nμ)/(√n·σ)'},
+  {m:'clt',q:'德莫弗-拉普拉斯是：',o:['二项正态近似','泊松正态近似','均匀正态近似','指数正态近似'],a:0,x:'二项B(n,p)的正态近似'},
+  {m:'clt',q:'Xᵢ~Exp(1), n=100，(∑Xᵢ−100)/10~：',o:['N(0,1)','N(100,100)','χ²(100)','Gamma'],a:0,x:'E=D=1，标准化→N(0,1)'},
+  {m:'clt',q:'1000产品次品率0.01，次品>15概率=？',o:['1−Φ(1.59)','Φ(1.59)','0.01','0.99'],a:0,x:'S~B(1000,0.01),E=10,D≈9.9'}
+];
+
+// ======== 自测渲染 ========
+function renderQuiz(){
+  var c=document.getElementById('quiz-container');
+  if(!c) return;
+  var filtered=_currentFilter==='all'?quizData:quizData.filter(function(q){return q.m===_currentFilter;});
+  var ids=[];
+  for(var i=0;i<quizData.length;i++){if(_currentFilter==='all'||quizData[i].m===_currentFilter) ids.push(i);}
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem('prob_mastery3')||'{}');}catch(e){}
+  var html='';
+  var labels='ABCDEFGH';
+  for(var j=0;j<ids.length;j++){
+    var idx=ids[j],q=quizData[idx];
+    var opts='';
+    for(var k=0;k<q.o.length;k++){
+      opts+='<div class="quiz-opt" onclick="checkQuiz(this,'+idx+','+k+')">'+labels[k]+'. '+escHtml(q.o[k])+'</div>';
+    }
+    var m=saved['q'+idx]||'';
+    var mc=m==='mastered'?'#4ECB71':m==='learning'?'#F5A623':m==='notyet'?'#F05454':'';
+    html+='<div class="quiz-card" data-idx="'+idx+'">';
+    html+='<div class="quiz-q">'+(j+1)+'. '+q.q+'</div>';
+    html+='<div class="quiz-opts">'+opts+'</div>';
+    html+='<div class="quiz-ans" id="ans-'+idx+'"><b>答案：</b>'+labels[q.a]+'. '+escHtml(q.o[q.a])+'<br><b>解析：</b>'+q.x+'</div>';
+    html+='<div class="mastery-btns">';
+    html+='<button class="m-btn" onclick="setMastery('+idx+',\'mastered\',this)" style="'+(m==='mastered'?'border-color:#4ECB71;color:#4ECB71':'')+'">&#10004; 已掌握</button>';
+    html+='<button class="m-btn" onclick="setMastery('+idx+',\'learning\',this)" style="'+(m==='learning'?'border-color:#F5A623;color:#F5A623':'')+'">&#128214; 学习中</button>';
+    html+='<button class="m-btn" onclick="setMastery('+idx+',\'notyet\',this)" style="'+(m==='notyet'?'border-color:#F05454;color:#F05454':'')+'">&#10060; 未掌握</button>';
+    html+='</div></div>';
+  }
+  c.innerHTML=html;
+  updateQuizProgress();
+}
+
+function checkQuiz(el,idx,choice){
+  var q=quizData[idx];if(!q) return;
+  var card=el.closest('.quiz-card');if(!card) return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  for(var i=0;i<opts.length;i++){
+    opts[i].style.pointerEvents='none';
+    if(i===q.a) opts[i].classList.add('correct');
+    else if(i===choice) opts[i].classList.add('wrong');
+  }
+  var ans=document.getElementById('ans-'+idx);
+  if(ans) ans.classList.add('open');
+}
+
+function setMastery(idx,level,btn){
+  try{
+    var d=JSON.parse(localStorage.getItem('prob_mastery3')||'{}');
+    d['q'+idx]=level;
+    localStorage.setItem('prob_mastery3',JSON.stringify(d));
+  }catch(e){}
+  var btns=btn.parentElement.querySelectorAll('.m-btn');
+  for(var i=0;i<btns.length;i++){btns[i].style.borderColor='';btns[i].style.color='';}
+  if(level==='mastered'){btn.style.borderColor='#4ECB71';btn.style.color='#4ECB71';}
+  else if(level==='learning'){btn.style.borderColor='#F5A623';btn.style.color='#F5A623';}
+  else{btn.style.borderColor='#F05454';btn.style.color='#F05454';}
+  updateQuizProgress();
+}
+
+function updateQuizProgress(){
+  var d={};try{d=JSON.parse(localStorage.getItem('prob_mastery3')||'{}');}catch(e){}
+  var mastered=0;for(var k in d){if(d[k]==='mastered') mastered++;}
+  var el=document.getElementById('quiz-progress');
+  var txt=document.getElementById('quiz-progress-text');
+  if(el) el.style.width=Math.round(mastered/quizData.length*100)+'%';
+  if(txt) txt.textContent='已掌握 '+mastered+' / '+quizData.length+' 题';
+}
+
+function filterQuiz(module,btn){
+  _currentFilter=module;
+  var btns=document.querySelectorAll('#quiz-filter .filter-btn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+  btn.classList.add('active');
+  renderQuiz();
+}
+
+// ======== AI助教 ========
+var _aiOpen=false;
+function toggleAI(){
+  _aiOpen=!_aiOpen;
+  var p=document.getElementById('ai-panel');
+  if(p){if(_aiOpen) p.classList.add('open');else p.classList.remove('open');}
+}
+function sendAI(){
+  var inp=document.getElementById('ai-input');if(!inp) return;
+  var msg=inp.value.trim();if(!msg) return;
+  var body=document.getElementById('ai-body');if(!body) return;
+  body.innerHTML+='<div class="ai-msg user">'+escHtml(msg)+'</div>';
+  inp.value='';body.scrollTop=body.scrollHeight;
+  var tid='typing-'+Date.now();
+  body.innerHTML+='<div id="'+tid+'" style="color:var(--text3);font-size:12px;padding:8px">思考中...</div>';
+  body.scrollTop=body.scrollHeight;
+  fetch('https://api.deepseek.com/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer sk-889cecceb9fd2479dbdd3a26380b31495'},
+    body:JSON.stringify({
+      model:'deepseek-v4-flash',
+      messages:[
+        {role:'system',content:'你是概率论与数理统计助教。用中文简洁回答，解释概念和解题步骤。'},
+        {role:'user',content:msg}
+      ],
+      max_tokens:800
+    })
+  }).then(function(r){return r.json();})
+  .then(function(data){
+    var te=document.getElementById(tid);if(te) te.remove();
+    var reply=data.choices?data.choices[0].message.content:'暂时无法回答。';
+    var div=document.createElement('div');div.className='ai-msg bot';div.textContent=reply;
+    body.appendChild(div);body.scrollTop=body.scrollHeight;
+  }).catch(function(){
+    var te=document.getElementById(tid);if(te) te.remove();
+    body.innerHTML+='<div class="ai-msg bot" style="color:var(--red)">网络连接失败，请检查网络后重试。</div>';
+  });
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ======== 初始化 ========
+function initAll(){loadCB();renderQuiz();}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var btns=document.querySelectorAll('#main-nav .nav-btn');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(){
+      showPage(this.getAttribute('data-page'));
+    });
+  }
+  var fab=document.getElementById('ai-fab');
+  if(fab) fab.addEventListener('click',toggleAI);
+  var cls=document.getElementById('ai-close');
+  if(cls) cls.addEventListener('click',toggleAI);
+  var snd=document.getElementById('ai-send');
+  if(snd) snd.addEventListener('click',sendAI);
+  var inp=document.getElementById('ai-input');
+  if(inp) inp.addEventListener('keydown',function(e){if(e.key==='Enter')sendAI();});
+  var fbs=document.querySelectorAll('#quiz-filter .filter-btn');
+  for(var j=0;j<fbs.length;j++){
+    fbs[j].addEventListener('click',function(){
+      filterQuiz(this.getAttribute('data-filter'),this);
+    });
+  }
+  initAll();
+});
+</script>
+</body>
+</html>

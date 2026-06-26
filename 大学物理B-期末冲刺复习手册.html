@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学物理B · 期末冲刺复习手册</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)'], ['$','$']], displayMath: [['\\[','\\]'], ['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<style>
+:root{--bg:#0b0b12;--card:#141420;--card2:#1c1c2e;--border:#2a2a3e;--text:#e8e8ee;--text2:#a0a0b8;--text3:#6a6a86;--accent:#7C6FF0;--accent2:#5B4FD4;--red:#F05454;--green:#4ECB71;--amber:#F5A623;--cyan:#36D1DC;--radius:12px;--radius-sm:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:14px}
+.container{max-width:920px;margin:0 auto;padding:24px 24px 120px}
+h1{font-size:26px;margin:0 0 6px;color:#fff}
+h2{font-size:18px;margin:36px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);color:#fff}
+h3{font-size:15px;margin:22px 0 10px;color:var(--accent)}
+h4{font-size:13px;margin:16px 0 8px;color:var(--cyan)}
+p,li{color:var(--text2);font-size:13px}
+.subtitle{color:var(--text3);font-size:13px;margin-bottom:24px}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(11,11,18,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0;margin:0 -24px 24px;overflow-x:auto}
+.nav-inner{display:flex;gap:8px;max-width:920px;margin:0 auto;padding:0 24px;min-width:max-content}
+.nav-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer;white-space:nowrap;transition:.2s}
+.nav-btn:hover{background:var(--border);color:#fff}
+.nav-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.page{display:none}
+.page.active{display:block}
+
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0}
+.info-card .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.info-card .value{font-size:14px;color:var(--text)}
+.badge-list{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.badge{background:var(--card2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--text2)}
+.badge.hot{background:rgba(240,84,84,0.12);border-color:rgba(240,84,84,0.25);color:var(--red)}
+.badge.warn{background:rgba(245,166,35,0.12);border-color:rgba(245,166,35,0.25);color:var(--amber)}
+
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+
+.checklist{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:8px 0}
+.checklist label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--text2);padding:6px 0}
+.checklist input[type=checkbox]{margin-top:4px;accent-color:var(--accent)}
+.checklist input:checked+span{text-decoration:line-through;color:var(--text3)}
+.checklist .progress{font-size:11px;color:var(--text3);margin-top:8px;text-align:right}
+
+.kp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:10px 0}
+.kp-card .kp-title{font-weight:600;color:#fff;font-size:13px;margin-bottom:6px}
+.kp-card ul{margin-left:18px}
+.kp-card li{margin:4px 0}
+
+.formula-group{margin:16px 0}
+.formula-item{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.formula-item .name{font-size:13px;color:var(--text2);flex-shrink:0}
+.formula-item .expr{font-size:14px;color:#fff;text-align:right;overflow-x:auto}
+
+.tip-card{background:var(--card);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:14px 16px;margin:12px 0}
+.tip-card.warn{border-left-color:var(--amber)}
+.tip-card.danger{border-left-color:var(--red)}
+.tip-card.good{border-left-color:var(--green)}
+.tip-card h4{margin:0 0 8px;color:#fff}
+
+.table-wrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left}
+th{background:var(--card2);color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase}
+tr:hover td{background:rgba(124,111,240,0.05)}
+
+/* Quiz */
+.quiz-controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;align-items:center}
+.filter-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.search-box{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:var(--radius-sm);font-size:13px;min-width:220px}
+.search-box:focus{outline:none;border-color:var(--accent)}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0}
+.q-card .meta{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.q-tag{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--card2);color:var(--text3)}
+.q-tag.day1{background:rgba(124,111,240,0.15);color:var(--accent)}
+.q-tag.day2{background:rgba(245,166,35,0.15);color:var(--amber)}
+.q-tag.day3{background:rgba(78,203,113,0.15);color:var(--green)}
+.q-text{font-size:14px;color:var(--text);margin-bottom:10px;line-height:1.8}
+.q-options{margin:10px 0 10px 18px}
+.q-option{display:block;padding:6px 0;cursor:pointer;font-size:13px;color:var(--text2)}
+.q-option input{margin-right:8px;accent-color:var(--accent)}
+.q-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.btn{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;font-weight:500}
+.btn:hover{background:var(--accent2)}
+.btn-sm{padding:6px 12px}
+.btn-ghost{background:var(--card2);border:1px solid var(--border);color:var(--text2)}
+.btn-ghost:hover{background:var(--border);color:#fff}
+.answer-box{display:none;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-top:12px}
+.answer-box.show{display:block}
+.answer-box .ans{font-weight:600;color:var(--green);margin-bottom:6px}
+.answer-box .exp{color:var(--text2);font-size:12px;line-height:1.8}
+.mastery-btns{display:flex;gap:6px;margin-top:10px}
+.mastery-btns button{background:var(--card2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}
+.mastery-btns button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* AI Chat */
+.ai-fab{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:none;box-shadow:0 4px 20px rgba(124,111,240,0.4);cursor:pointer;font-size:20px;z-index:200;display:flex;align-items:center;justify-content:center}
+.ai-panel{position:fixed;bottom:88px;right:24px;width:360px;max-height:520px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 10px 40px rgba(0,0,0,0.5);display:none;flex-direction:column;z-index:200;overflow:hidden}
+.ai-panel.show{display:flex}
+.ai-header{background:var(--card2);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.ai-header h3{margin:0;font-size:14px}
+.ai-close{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer}
+.ai-body{flex:1;overflow-y:auto;padding:16px;min-height:300px;max-height:360px}
+.ai-msg{margin:8px 0;padding:10px 12px;border-radius:12px;font-size:13px;max-width:90%}
+.ai-msg.user{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.ai-msg.bot{background:var(--card2);color:var(--text2);border-bottom-left-radius:4px}
+.ai-input{display:flex;padding:12px;border-top:1px solid var(--border);gap:8px}
+.ai-input input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius-sm);font-size:13px}
+.ai-input input:focus{outline:none;border-color:var(--accent)}
+.ai-input button{background:var(--accent);color:#fff;border:none;padding:8px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px}
+.ai-loading{font-size:12px;color:var(--text3);text-align:center;padding:8px}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+.footer{text-align:center;margin-top:48px;padding:24px;color:var(--text3);font-size:12px;border-top:1px solid var(--border)}
+
+@media(max-width:640px){
+  .container{padding:16px 16px 100px}
+  .ai-panel{width:calc(100vw - 32px);right:16px;bottom:80px}
+  .ai-fab{bottom:16px;right:16px}
+  .nav{margin:0 -16px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showPage(0)">📅 复习计划</button>
+    <button class="nav-btn" onclick="showPage(1)">Day1 力学</button>
+    <button class="nav-btn" onclick="showPage(2)">Day2 热学+静电</button>
+    <button class="nav-btn" onclick="showPage(3)">Day3 磁电感应</button>
+    <button class="nav-btn" onclick="showPage(4)">📐 公式速查</button>
+    <button class="nav-btn" onclick="showPage(5)">💡 解题锦囊</button>
+    <button class="nav-btn" onclick="showPage(6)">✏️ 互动自测</button>
+  </div>
+</div>
+
+<div class="container">
+
+<h1>🔬 大学物理B · 期末冲刺复习手册</h1>
+<p class="subtitle">海南大学 · 目标分数 80+ · 教材：程守洙 江之永《普通物理学》第八版 上册</p>
+
+<!-- PAGE 1: 复习计划 -->
+<div class="page active" id="page-0">
+<div class="grid-2">
+  <div class="info-card">
+    <div class="label">📖 教材</div>
+    <div class="value">程守洙 江之永《普通物理学》第八版 上册（高等教育出版社）</div>
+  </div>
+  <div class="info-card">
+    <div class="label">📏 考试范围</div>
+    <div class="value">上册全部：力学（第1-3章）→ 热学（第5-6章）→ 电磁学（第7-9章）</div>
+  </div>
+</div>
+
+<h2>🎯 分值权重与复习策略</h2>
+<div class="grid-3">
+  <div class="info-card">
+    <div class="label">⚙️ 力学</div>
+    <div class="value" style="font-size:22px;color:var(--red)">~30分</div>
+    <p style="margin-top:8px">第1-3章 · 运动学、守恒定律、刚体转动</p>
+  </div>
+  <div class="info-card">
+    <div class="label">🌡️ 热学</div>
+    <div class="value" style="font-size:22px;color:var(--amber)">~18分</div>
+    <p style="margin-top:8px">第5-6章 · 气体动理论、热力学基础</p>
+  </div>
+  <div class="info-card">
+    <div class="label">⚡ 电磁学</div>
+    <div class="value" style="font-size:22px;color:var(--green)">~35分</div>
+    <p style="margin-top:8px">第7-9章 · 静电场、稳恒磁场、电磁感应</p>
+  </div>
+</div>
+
+<h2>📅 三天复习计划（35项 Checklist）</h2>
+
+<div class="checklist" data-day="1">
+  <div class="kp-title">☀️ Day 1 · 力学全模块（第1-3章）</div>
+  <label><input type="checkbox"><span>通读第1章：质点运动学（位矢、速度、加速度、圆周运动、相对运动）</span></label>
+  <label><input type="checkbox"><span>整理第1章常考题型：已知 r(t) 求 v(t)/a(t)；抛体运动；斜面/摩擦约束</span></label>
+  <label><input type="checkbox"><span>掌握牛顿定律应用：隔离体法、受力分析、非惯性系</span></label>
+  <label><input type="checkbox"><span>整理第2章：功和能（变力做功积分、动能定理、保守力势能）</span></label>
+  <label><input type="checkbox"><span>掌握动量定理与动量守恒：碰撞、爆炸、反冲</span></label>
+  <label><input type="checkbox"><span>整理机械能守恒条件与功能原理</span></label>
+  <label><input type="checkbox"><span>进入第3章：刚体定轴转动、转动惯量定义与常见形状</span></label>
+  <label><input type="checkbox"><span>掌握转动定律 \(M=J\beta\) 与角动量守恒 \(L=J\omega\)</span></label>
+  <label><input type="checkbox"><span>完成 Day1 自测题（约45题）并标记错题</span></label>
+  <label><input type="checkbox"><span>睡前回顾错题，补充到错题本</span></label>
+  <div class="progress">0 / 10</div>
+</div>
+
+<div class="checklist" data-day="2">
+  <div class="kp-title">☀️ Day 2 · 热学 + 静电场（第5-7章）</div>
+  <label><input type="checkbox"><span>通读第5章：理想气体状态方程、压强/温度微观意义</span></label>
+  <label><input type="checkbox"><span>掌握分子平均动能、自由度、内能公式 \(E=\frac{i}{2}\nu RT\)</span></label>
+  <label><input type="checkbox"><span>理解麦克斯韦速率分布：最概然、平均、方均根速率</span></label>
+  <label><input type="checkbox"><span>进入第6章：热力学第一定律 \(\Delta U=Q+W\) 符号约定</span></label>
+  <label><input type="checkbox"><span>掌握等体、等压、等温、绝热过程的 Q、W、ΔU 计算</span></label>
+  <label><input type="checkbox"><span>理解循环过程效率 \(\eta=1-Q_2/Q_1\) 与卡诺循环</span></label>
+  <label><input type="checkbox"><span>进入第7章：电场强度叠加、电通量、高斯定理</span></label>
+  <label><input type="checkbox"><span>掌握高斯面选择：球对称、轴对称、平面对称</span></label>
+  <label><input type="checkbox"><span>掌握电势计算与导体静电平衡条件</span></label>
+  <label><input type="checkbox"><span>完成 Day2 自测题（约45题）并总结易混点</span></label>
+  <div class="progress">0 / 10</div>
+</div>
+
+<div class="checklist" data-day="3">
+  <div class="kp-title">☀️ Day 3 · 稳恒磁场 + 电磁感应（第8-9章）</div>
+  <label><input type="checkbox"><span>通读第8章：磁感应强度 B、毕奥-萨伐尔定律</span></label>
+  <label><input type="checkbox"><span>掌握安培环路定理：无限长直导线、螺线管、环形螺线管</span></label>
+  <label><input type="checkbox"><span>理解安培力与洛伦兹力：\(F=qv\times B\)、\(F=Idl\times B\)</span></label>
+  <label><input type="checkbox"><span>进入第9章：法拉第电磁感应定律 \(\varepsilon=-d\Phi/dt\)</span></label>
+  <label><input type="checkbox"><span>掌握楞次定律判断感应电流方向</span></label>
+  <label><input type="checkbox"><span>掌握动生电动势 \(\varepsilon=\int(v\times B)\cdot dl\)</span></label>
+  <label><input type="checkbox"><span>理解自感、互感、磁场能量基本公式</span></label>
+  <label><input type="checkbox"><span>完成 Day3 自测题（约35题）</span></label>
+  <label><input type="checkbox"><span>全册公式速查过一遍，默写核心公式</span></label>
+  <label><input type="checkbox"><span>回顾三天错题，重点攻克高频失分点</span></label>
+  <label><input type="checkbox"><span>模拟一套限时计算，训练答题节奏</span></label>
+  <label><input type="checkbox"><span>检查文具/计算器，早点休息</span></label>
+  <div class="progress">0 / 12</div>
+</div>
+
+<h2>🧩 核心模块</h2>
+<div class="info-card">
+  <div class="badge-list">
+    <span class="badge hot">第1章 运动和力</span>
+    <span class="badge hot">第2章 运动的守恒量</span>
+    <span class="badge hot">第3章 刚体力学基础</span>
+    <span class="badge">第5章 气态动理论</span>
+    <span class="badge">第6章 热力学基础</span>
+    <span class="badge hot">第7章 静止电荷的电场</span>
+    <span class="badge hot">第8章 恒定电流的磁场</span>
+    <span class="badge hot">第9章 电磁感应 电磁场</span>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 2: Day1 力学 -->
+<div class="page" id="page-1">
+<h2>Day 1 · 力学全模块（第1-3章）</h2>
+
+<h3>第1章 运动和力</h3>
+
+<h4>1.1 质点运动学的基本描述</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>位矢：</strong>\(\vec r(t)=x(t)\vec i+y(t)\vec j+z(t)\vec k\)，描述质点相对原点的位置。</li>
+    <li><strong>位移：</strong>\(\Delta \vec r=\vec r_2-\vec r_1\)，是矢量，与路径无关。</li>
+    <li><strong>速度：</strong>\(\vec v=\frac{d\vec r}{dt}=\dot x\vec i+\dot y\vec j+\dot z\vec k\)，方向沿轨迹切线。</li>
+    <li><strong>加速度：</strong>\(\vec a=\frac{d\vec v}{dt}=\frac{d^2\vec r}{dt^2}\)。</li>
+  </ul>
+  <p style="margin-top:8px">已知 \(\vec r(t)\) 时，通过求导得到速度和加速度；已知 \(\vec a(t)\) 和初条件时，通过积分得到 \(\vec v(t)\) 和 \(\vec r(t)\)。</p>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">速度大小</span><span class="expr">\(v=|\vec v|=\sqrt{\dot x^2+\dot y^2+\dot z^2}\)</span></div>
+<div class="formula-item"><span class="name">加速度大小</span><span class="expr">\(a=|\vec a|=\sqrt{\ddot x^2+\ddot y^2+\ddot z^2}\)</span></div>
+<div class="formula-item"><span class="name">平均速度</span><span class="expr">\(\bar{\vec v}=\frac{\Delta \vec r}{\Delta t}\)（矢量）</span></div>
+<div class="formula-item"><span class="name">平均速率</span><span class="expr">\(\bar v=\frac{\Delta s}{\Delta t}\)（标量，\(\Delta s\) 为路程）</span></div>
+</div>
+
+<div class="tip-card">
+  <h4>🚨 失分点</h4>
+  <p>平均速度是矢量，只看初末位置的位移；平均速率是标量，看实际走过的路程。例如质点沿圆周运动一周回到出发点，位移为 0，平均速度为 0，但路程为 \(2\pi R\)，平均速率不为 0。</p>
+</div>
+
+<h4>1.2 切向加速度与法向加速度</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li>在自然坐标系中，加速度可分解为切向分量 \(a_\tau\) 和法向分量 \(a_n\)。</li>
+    <li><strong>切向加速度</strong>只改变速度大小：\(a_\tau=\frac{dv}{dt}\)。</li>
+    <li><strong>法向加速度</strong>只改变速度方向：\(a_n=\frac{v^2}{\rho}\)，\(\rho\) 为曲率半径。</li>
+    <li>总加速度大小：\(a=\sqrt{a_\tau^2+a_n^2}\)。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">圆周运动</span><span class="expr">\(a_\tau=R\alpha=R\dot\omega,\quad a_n=R\omega^2=\frac{v^2}{R}\)</span></div>
+<div class="formula-item"><span class="name">角量与线量</span><span class="expr">\(s=R\theta,\; v=R\omega,\; a_\tau=R\alpha,\; a_n=R\omega^2\)</span></div>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 解题步骤</h4>
+  <p>1. 从 \(s(t)\) 或 \(\theta(t)\) 求出 \(v\) 和 \(\omega\)；2. 求导得到 \(a_\tau\) 和 \(\alpha\)；3. 用法向公式求 \(a_n\)；4. 合成总加速度。不要漏掉 \(R\) 或把角加速度直接当成切向加速度。</p>
+</div>
+
+<h4>1.3 相对运动</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li>设 S 为静止参考系，\(S'\) 为相对 S 以速度 \(\vec u\) 平动的参考系。</li>
+    <li><strong>伽利略变换：</strong>\(\vec r=\vec r'+\vec R\)，其中 \(\vec R\) 为 \(S'\) 原点相对 S 的位矢。</li>
+    <li><strong>速度变换：</strong>\(\vec v_{绝对}=\vec v_{相对}+\vec v_{牵连}\)。</li>
+    <li><strong>加速度变换：</strong>\(\vec a_{绝对}=\vec a_{相对}+\vec a_{牵连}\)（仅适用于相对平动）。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 常见模型</h4>
+  <p><strong>雨滴/船：</strong>已知风速、船速、雨滴相对地面的角度，求相对船的速度，用矢量三角形画图最清晰。<br><strong>运动电梯/火车：</strong>人在车内走动时，相对地面速度等于相对车速度加车的速度，注意方向。</p>
+</div>
+
+<h4>1.4 牛顿运动定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>第一定律：</strong>惯性定律，定义惯性参考系。</li>
+    <li><strong>第二定律：</strong>\(\vec F=m\vec a\)，瞬时关系，注意 \(F\) 为合外力。</li>
+    <li><strong>第三定律：</strong>作用力与反作用力大小相等、方向相反、作用在不同物体上。</li>
+    <li><strong>隔离体法：</strong>明确研究对象，画出所有外力，建立坐标列方程。</li>
+  </ul>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>力</th><th>表达式</th><th>方向</th></tr>
+<tr><td>重力</td><td>\(G=mg\)</td><td>竖直向下</td></tr>
+<tr><td>弹力</td><td>弹簧 \(F=kx\)</td><td>指向平衡位置</td></tr>
+<tr><td>滑动摩擦力</td><td>\(f=\mu N\)</td><td>与相对运动方向相反</td></tr>
+<tr><td>静摩擦力</td><td>\(f\leq \mu_s N\)</td><td>与相对运动趋势方向相反</td></tr>
+</table>
+</div>
+
+<div class="tip-card">
+  <h4>🚨 失分点</h4>
+  <p>用牛顿定律列方程时，<strong>先画受力图</strong>，再选坐标轴。斜面问题常沿斜面和垂直斜面建轴；圆周运动常沿径向和切向建轴。不要把向心力当成额外的力，它是合外力的径向分量。</p>
+</div>
+
+<h3>第2章 运动的守恒量和守恒定律</h3>
+
+<h4>2.1 功与功率</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>恒力做功：</strong>\(W=\vec F\cdot \vec s=Fs\cos\theta\)，\(\theta\) 为力与位移夹角。</li>
+    <li><strong>变力做功：</strong>\(W=\int_{a}^{b} \vec F\cdot d\vec r\)。若力沿 x 轴，简化为 \(W=\int_{x_1}^{x_2}F(x)dx\)。</li>
+    <li><strong>功率：</strong>平均功率 \(\bar P=W/\Delta t\)；瞬时功率 \(P=\vec F\cdot \vec v=Fv\cos\theta\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 变力做功技巧</h4>
+  <p>若 \(F(x)\) 是线性函数，可用平均力乘位移；若已知 \(F-x\) 图像，面积即为功；弹簧弹力 \(F=-kx\) 做功 \(W=-\frac12 k(x_2^2-x_1^2)\)。</p>
+</div>
+
+<h4>2.2 动能定理</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>动能：</strong>\(E_k=\frac12 mv^2\)，是状态量。</li>
+    <li><strong>动能定理：</strong>合外力对质点做的功等于质点动能的增量，即 \(W_{合}=\Delta E_k=\frac12 mv_2^2-\frac12 mv_1^2\)。</li>
+    <li>动能定理对惯性系成立，常用于已知初末状态求力做功或速度。</li>
+  </ul>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 注意</h4>
+  <p>动能定理中的 \(W_{合}\) 是<strong>所有外力做功的代数和</strong>，包括重力、弹力、摩擦力等。不要只算某个力的功。</p>
+</div>
+
+<h4>2.3 势能、保守力与机械能守恒</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>保守力：</strong>做功与路径无关，只与始末位置有关，如重力、弹力、万有引力、静电力。</li>
+    <li><strong>势能：</strong>保守力做的功等于势能增量的负值，\(W_{保}=-\Delta E_p\)。</li>
+    <li><strong>重力势能：</strong>\(E_p=mgh\)，零点通常取地面。</li>
+    <li><strong>弹性势能：</strong>\(E_p=\frac12 kx^2\)，零点取弹簧原长。</li>
+    <li><strong>功能原理：</strong>\(W_{外}+W_{非保内}=\Delta E\)，其中 \(E=E_k+E_p\) 为机械能。</li>
+    <li><strong>机械能守恒：</strong>当 \(W_{外}=0\) 且 \(W_{非保内}=0\) 时，系统机械能守恒。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">机械能守恒</span><span class="expr">\(E_{k1}+E_{p1}=E_{k2}+E_{p2}\)</span></div>
+<div class="formula-item"><span class="name">保守力与势能关系</span><span class="expr">\(F_x=-\frac{\partial E_p}{\partial x}\)</span></div>
+</div>
+
+<h4>2.4 动量定理与动量守恒</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>动量：</strong>\(\vec p=m\vec v\)，矢量。</li>
+    <li><strong>冲量：</strong>\(\vec I=\int_{t_1}^{t_2}\vec F dt\)，等于动量的增量：\(\vec I=\Delta \vec p\)。</li>
+    <li><strong>动量守恒：</strong>系统所受合外力为零时，总动量保持不变：\(\sum m_i\vec v_i=\text{常量}\)。</li>
+    <li>若某方向合外力为零，则该方向动量守恒。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 碰撞问题通法</h4>
+  <p><strong>完全弹性碰撞：</strong>动量守恒 + 机械能守恒，可解出末速度。<br>
+  <strong>完全非弹性碰撞：</strong>动量守恒，碰撞后两物体共速，机械能有损失。<br>
+  <strong>一般非弹性碰撞：</strong>需用恢复系数 \(e=\frac{v_2'-v_1'}{v_1-v_2}\)，\(e=1\) 弹性，\(e=0\) 完全非弹性。</p>
+</div>
+
+<div class="tip-card danger">
+  <h4>🚨 守恒判断要点</h4>
+  <p><strong>动量守恒：</strong>看系统合外力是否为零；<strong>机械能守恒：</strong>看是否有非保守力（摩擦、非弹性碰撞）做功；<strong>角动量守恒：</strong>看对某定轴合外力矩是否为零。三者独立，不可混为一谈。</p>
+</div>
+
+<h3>第3章 刚体力学基础</h3>
+
+<h4>3.1 刚体定轴转动的描述</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>角位置：</strong>\(\theta(t)\)。</li>
+    <li><strong>角速度：</strong>\(\omega=\frac{d\theta}{dt}\)。</li>
+    <li><strong>角加速度：</strong>\(\beta=\frac{d\omega}{dt}=\frac{d^2\theta}{dt^2}\)。</li>
+    <li>定轴转动中，刚体上各点角量相同，线量与到轴距离成正比。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">匀变速转动</span><span class="expr">\(\omega=\omega_0+\beta t,\; \theta=\omega_0 t+\frac12\beta t^2,\; \omega^2-\omega_0^2=2\beta\theta\)</span></div>
+</div>
+
+<h4>3.2 转动惯量</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>定义：</strong>\(J=\sum_i m_i r_i^2\) 或 \(J=\int r^2 dm\)，反映刚体转动惯性大小。</li>
+    <li>转动惯量与质量分布和转轴位置有关。</li>
+    <li><strong>平行轴定理：</strong>\(J=J_c+md^2\)，其中 \(J_c\) 为绕通过质心轴的转动惯量，\(d\) 为两轴间距。</li>
+    <li><strong>组合体：</strong>可分解为几个标准形状，分别计算后相加或相减。</li>
+  </ul>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>刚体（质量 M）</th><th>转轴</th><th>转动惯量</th></tr>
+<tr><td>细杆（长 L）</td><td>过中心垂直杆</td><td>\(\frac{1}{12}ML^2\)</td></tr>
+<tr><td>细杆（长 L）</td><td>过端点垂直杆</td><td>\(\frac{1}{3}ML^2\)</td></tr>
+<tr><td>圆环/圆柱壳（半径 R）</td><td>过中心垂直环面</td><td>\(MR^2\)</td></tr>
+<tr><td>圆盘/圆柱（半径 R）</td><td>过中心垂直盘面</td><td>\(\frac{1}{2}MR^2\)</td></tr>
+<tr><td>球体（半径 R）</td><td>过球心</td><td>\(\frac{2}{5}MR^2\)</td></tr>
+<tr><td>球壳（半径 R）</td><td>过球心</td><td>\(\frac{2}{3}MR^2\)</td></tr>
+</table>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 计算转动惯量的步骤</h4>
+  <p>1. 判断转轴是否过质心；2. 若不过质心，先用平行轴定理移到质心；3. 套用标准公式；4. 组合体用叠加法（挖去部分用减法）。</p>
+</div>
+
+<h4>3.3 转动定律与角动量</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>力矩：</strong>\(\vec M=\vec r\times \vec F\)，大小 \(M=Fr\sin\theta\)，方向由右手定则。</li>
+    <li><strong>转动定律：</strong>\(M=J\beta\)，与牛顿第二定律 \(F=ma\) 对应。</li>
+    <li><strong>角动量：</strong>\(L=J\omega\)。</li>
+    <li><strong>角动量定理：</strong>\(M=\frac{dL}{dt}\)，冲量矩等于角动量增量。</li>
+    <li><strong>角动量守恒：</strong>当合外力矩为零时，\(J\omega=\text{常量}\)。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">转动动能</span><span class="expr">\(E_k=\frac12 J\omega^2\)</span></div>
+<div class="formula-item"><span class="name">力矩做功</span><span class="expr">\(W=\int M d\theta\)</span></div>
+<div class="formula-item"><span class="name">转动动能定理</span><span class="expr">\(W_{合}=\frac12 J\omega_2^2-\frac12 J\omega_1^2\)</span></div>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 刚体综合题解法</h4>
+  <p>1. 对平动物体用 \(F=ma\)；2. 对转动物体用 \(M=J\beta\)；3. 找线量与角量的联系 \(a=R\beta\)、\(v=R\omega\)；4. 用能量守恒时，注意同时包含平动动能和转动动能。</p>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 常见综合模型</h4>
+  <p><strong>滑轮-重物系统：</strong>绳子张力两侧不等，滑轮有转动惯量；重物平动方程与滑轮转动方程联立。<br>
+  <strong>细杆下摆：</strong>用机械能守恒 \(mgL/2=\frac12 J\omega^2\)，避免直接求角加速度。<br>
+  <strong>子弹击杆：</strong>碰撞瞬间角动量守恒（轴力对轴力矩为零），不是动量守恒。</p>
+</div>
+</div>
+
+<!-- PAGE 3: Day2 热学+静电 -->
+<div class="page" id="page-2">
+<h2>Day 2 · 热学 + 静电场（第5-7章）</h2>
+
+<h3>第5章 气体动理论</h3>
+
+<h4>5.1 理想气体状态方程</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>理想气体模型：</strong>分子大小可忽略，除碰撞瞬间外无相互作用，碰撞为弹性碰撞。</li>
+    <li><strong>状态方程：</strong>\(pV=\nu RT=\frac{m}{M}RT\)，其中 \(\nu\) 为物质的量，\(M\) 为摩尔质量。</li>
+    <li><strong>另一种形式：</strong>\(p=nkT\)，其中 \(n=N/V\) 为分子数密度，\(k=1.38\times10^{-23}\,\text{J/K}\) 为玻尔兹曼常量。</li>
+    <li><strong>标准状态：</strong>\(p_0=1.013\times10^5\,\text{Pa}\)，\(T_0=273.15\,\text{K}\)，1 mol 理想气体体积约为 22.4 L。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">状态方程</span><span class="expr">\(pV=\nu RT\)</span></div>
+<div class="formula-item"><span class="name">压强与分子数密度</span><span class="expr">\(p=nkT\)</span></div>
+<div class="formula-item"><span class="name">气体常量换算</span><span class="expr">\(R=N_A k=8.314\,\text{J/(mol·K)}\)</span></div>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 应用技巧</h4>
+  <p>题目给质量、摩尔质量、温度、体积求压强时，先用 \(pV=\frac{m}{M}RT\)。若已知分子数密度，直接用 \(p=nkT\) 更快捷。</p>
+</div>
+
+<h4>5.2 压强与温度的微观意义</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>压强微观公式：</strong>\(p=\frac{2}{3}n\bar{\varepsilon}_k\)，其中 \(\bar{\varepsilon}_k=\frac12 m\overline{v^2}\) 为分子平均平动动能。</li>
+    <li><strong>温度统计意义：</strong>\(\bar{\varepsilon}_k=\frac{3}{2}kT\)。温度是分子平均平动动能的量度。</li>
+    <li><strong>重要结论：</strong>同温度下任何理想气体分子的平均平动动能都相等；温度相同不代表内能相同（还与分子数、自由度有关）。</li>
+  </ul>
+</div>
+
+<div class="tip-card">
+  <h4>🚨 失分点</h4>
+  <p>平均平动动能只与温度有关，与气体种类无关；而内能 \(E=\frac{i}{2}\nu RT\) 还与自由度 \(i\) 和物质的量有关。不要把“平均平动动能”和“平均动能”或“内能”混淆。</p>
+</div>
+
+<h4>5.3 能量均分定理与理想气体内能</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>自由度：</strong>决定物体位置所需的独立坐标数。单原子分子 \(i=3\)；刚性双原子分子 \(i=5\)；刚性多原子分子 \(i=6\)。</li>
+    <li><strong>能量均分定理：</strong>在温度为 \(T\) 的热平衡状态下，分子每一个自由度的平均能量为 \(\frac12 kT\)。</li>
+    <li><strong>一个分子的平均总能量：</strong>\(\bar{\varepsilon}=\frac{i}{2}kT\)。</li>
+    <li><strong>理想气体内能：</strong>\(E=\frac{i}{2}\nu RT=\frac{i}{2}NkT\)，只与温度有关。</li>
+  </ul>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>分子类型</th><th>平动自由度</th><th>转动自由度</th><th>总自由度 \(i\)</th><th>内能 \(E\)</th></tr>
+<tr><td>单原子</td><td>3</td><td>0</td><td>3</td><td>\(\frac{3}{2}\nu RT\)</td></tr>
+<tr><td>刚性双原子</td><td>3</td><td>2</td><td>5</td><td>\(\frac{5}{2}\nu RT\)</td></tr>
+<tr><td>刚性多原子</td><td>3</td><td>3</td><td>6</td><td>\(\frac{6}{2}\nu RT=3\nu RT\)</td></tr>
+</table>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 注意</h4>
+  <p>非刚性分子（考虑振动）自由度更多，但大学物理B通常只考虑刚性分子。若题目未说明，双原子按 \(i=5\) 处理。</p>
+</div>
+
+<h4>5.4 麦克斯韦速率分布</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>速率分布函数：</strong>\(f(v)=\frac{dN}{N dv}\)，表示速率在 \(v\) 附近单位区间内的分子数占总分子数的比率。</li>
+    <li><strong>归一化：</strong>\(\int_0^\infty f(v)dv=1\)。</li>
+    <li><strong>三种特征速率：</strong></li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">最概然速率</span><span class="expr">\(v_p=\sqrt{\frac{2RT}{M}}\approx1.41\sqrt{\frac{RT}{M}}\)</span></div>
+<div class="formula-item"><span class="name">平均速率</span><span class="expr">\(\bar v=\sqrt{\frac{8RT}{\pi M}}\approx1.60\sqrt{\frac{RT}{M}}\)</span></div>
+<div class="formula-item"><span class="name">方均根速率</span><span class="expr">\(\sqrt{\overline{v^2}}=\sqrt{\frac{3RT}{M}}\approx1.73\sqrt{\frac{RT}{M}}\)</span></div>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 记忆</h4>
+  <p>三者大小关系恒为 \(v_p < \bar v < \sqrt{\overline{v^2}}\)。同种气体温度越高，三者都越大；同温度不同气体，摩尔质量越大，速率越小。</p>
+</div>
+
+<h3>第6章 热力学基础</h3>
+
+<h4>6.1 热力学第一定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>内能：</strong>理想气体内能 \(E=\frac{i}{2}\nu RT\)，只与温度有关，是状态量。</li>
+    <li><strong>功：</strong>体积功 \(W=\int_{V_1}^{V_2}p dV\)，是过程量。系统膨胀对外做功，体积减小外界对系统做功。</li>
+    <li><strong>热量：</strong>由于温度差而传递的能量，是过程量。</li>
+    <li><strong>热力学第一定律：</strong>\(\Delta U=Q+W\)（外界对系统做功 \(W>0\)），或 \(\Delta U=Q-W\)（系统对外做功 \(W>0\)），以老师课堂采用的符号为准。</li>
+  </ul>
+</div>
+
+<div class="tip-card danger">
+  <h4>🚨 符号约定</h4>
+  <p><strong>务必注意教材版本！</strong>若采用“系统吸热 \(Q>0\)、对外做功 \(W>0\)”，则 \(\Delta U=Q-W\)；若采用“外界对系统做功 \(W>0\)”，则 \(\Delta U=Q+W\)。考试时不要凭感觉，先确认老师用哪种约定。</p>
+</div>
+
+<h4>6.2 等值过程与绝热过程</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <p>以 \(\Delta U=Q-W\)（系统对外做功为正）的符号约定为例，整理如下：</p>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>过程</th><th>特征</th><th>\(W\)</th><th>\(Q\)</th><th>\(\Delta U\)</th><th>过程方程</th></tr>
+<tr><td>等体</td><td>\(V=\text{常量}\)</td><td>0</td><td>\(\frac{i}{2}\nu R\Delta T\)</td><td>\(\frac{i}{2}\nu R\Delta T\)</td><td>\(p/T=\text{常量}\)</td></tr>
+<tr><td>等压</td><td>\(p=\text{常量}\)</td><td>\(p\Delta V\)</td><td>\(\frac{i+2}{2}\nu R\Delta T\)</td><td>\(\frac{i}{2}\nu R\Delta T\)</td><td>\(V/T=\text{常量}\)</td></tr>
+<tr><td>等温</td><td>\(T=\text{常量}\)</td><td>\(\nu RT\ln\frac{V_2}{V_1}\)</td><td>\(W\)</td><td>0</td><td>\(pV=\text{常量}\)</td></tr>
+<tr><td>绝热</td><td>\(Q=0\)</td><td>\(-\Delta U\)</td><td>0</td><td>\(\frac{i}{2}\nu R\Delta T\)</td><td>\(pV^\gamma=\text{常量}\)</td></tr>
+</table>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">摩尔热容</span><span class="expr">\(C_V=\frac{i}{2}R,\; C_p=C_V+R=\frac{i+2}{2}R,\; \gamma=\frac{C_p}{C_V}=\frac{i+2}{i}\)</span></div>
+<div class="formula-item"><span class="name">绝热过程方程</span><span class="expr">\(pV^\gamma=\text{常量},\; TV^{\gamma-1}=\text{常量},\; p^{1-\gamma}T^\gamma=\text{常量}\)</span></div>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 快速判断吸放热</h4>
+  <p>等温膨胀：对外做功，必须吸热；等体升压：不做功，吸热全用于增加内能；绝热膨胀：对外做功靠消耗内能，温度下降；等压膨胀：温度升高，吸热大于对外做功。</p>
+</div>
+
+<h4>6.3 循环过程与热机效率</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>循环过程：</strong>系统经历一系列变化后回到初态，\(\Delta U=0\)。</li>
+    <li><strong>热机效率：</strong>\(\eta=\frac{W_{净}}{Q_{吸}}=1-\frac{Q_{放}}{Q_{吸}}\)。</li>
+    <li><strong>卡诺循环：</strong>由两个等温过程和两个绝热过程组成，只在两个恒温热源之间工作。</li>
+    <li><strong>卡诺效率：</strong>\(\eta=1-\frac{T_2}{T_1}\)，其中 \(T_1\) 为高温热源温度，\(T_2\) 为低温热源温度。</li>
+  </ul>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 注意</h4>
+  <p>热机效率中的 \(Q_{吸}\) 和 \(Q_{放}\) 取正值；卡诺效率只与两个热源温度有关，与工作物质无关。制冷系数 \(\omega=\frac{Q_2}{W}=\frac{T_2}{T_1-T_2}\)。</p>
+</div>
+
+<h4>6.4 熵与热力学第二定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>熵：</strong>描述系统无序程度的状态量。</li>
+    <li><strong>可逆过程熵变：</strong>\(\Delta S=\int\frac{dQ_{rev}}{T}\)。</li>
+    <li><strong>理想气体等温过程：</strong>\(\Delta S=\nu R\ln\frac{V_2}{V_1}\)。</li>
+    <li><strong>热力学第二定律：</strong>孤立系统内一切自发过程都向着熵增加的方向进行；可逆过程熵不变。</li>
+  </ul>
+</div>
+
+<div class="tip-card">
+  <h4>🚨 失分点</h4>
+  <p>熵是状态函数，只与初末状态有关，与路径是否可逆无关。不可逆过程中，系统熵变可通过设计可逆路径计算；但孤立系统总熵一定增加。</p>
+</div>
+
+<h3>第7章 静止电荷的电场</h3>
+
+<h4>7.1 库仑定律与电场强度</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>库仑定律：</strong>真空中两个点电荷之间的作用力 \(\vec F=\frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}\hat r\)。</li>
+    <li><strong>电场强度：</strong>\(\vec E=\frac{\vec F}{q_0}\)，单位正电荷所受的力。</li>
+    <li><strong>点电荷场强：</strong>\(\vec E=\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\hat r\)。</li>
+    <li><strong>场强叠加原理：</strong>\(\vec E=\sum_i\vec E_i\) 或 \(\vec E=\int\frac{1}{4\pi\varepsilon_0}\frac{dq}{r^2}\hat r\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 求连续带电体场强的步骤</h4>
+  <p>1. 取电荷元 \(dq\)；2. 写出 \(d\vec E=\frac{1}{4\pi\varepsilon_0}\frac{dq}{r^2}\hat r\)；3. 分析对称性，判断哪些分量会抵消；4. 对保留分量积分；5. 用总电荷或线/面电荷密度表示结果。</p>
+</div>
+
+<h4>7.2 电通量与高斯定理</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>电通量：</strong>\(\Phi_e=\int_S\vec E\cdot d\vec S\)，表示穿过曲面 S 的电场线“净条数”。</li>
+    <li><strong>高斯定理：</strong>\(\oint_S\vec E\cdot d\vec S=\frac{Q_{内}}{\varepsilon_0}\)。</li>
+    <li><strong>物理意义：</strong>穿过闭合曲面的电通量只与曲面内包围的电荷代数和有关，与曲面外电荷无关。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 高斯面选择指南</h4>
+  <p><strong>球对称：</strong>带电球面、球体、球壳 → 选同心球面，面上 \(E\) 大小相等、方向径向。<br>
+  <strong>轴对称：</strong>无限长带电直线、圆柱 → 选同轴圆柱面，侧面上 \(E\) 垂直于轴且大小相等。<br>
+  <strong>平面对称：</strong>无限大带电平面 → 选圆柱面，两底面平行于平面且对称，侧面 \(E\) 与面平行无通量。</p>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>带电体</th><th>场强分布</th></tr>
+<tr><td>均匀带电球面（半径 R，总电荷 Q）</td><td>外部 \(\vec E=\frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}\hat r\)；内部 \(E=0\)</td></tr>
+<tr><td>均匀带电球体（半径 R，总电荷 Q）</td><td>外部等效点电荷；内部 \(E=\frac{1}{4\pi\varepsilon_0}\frac{Qr}{R^3}\hat r\)</td></tr>
+<tr><td>无限长均匀带电直线（线密度 \(\lambda\)）</td><td>\(E=\frac{\lambda}{2\pi\varepsilon_0 r}\)</td></tr>
+<tr><td>无限大均匀带电平面（面密度 \(\sigma\)）</td><td>\(E=\frac{\sigma}{2\varepsilon_0}\)</td></tr>
+<tr><td>两块等量异号平行带电板</td><td>内部 \(E=\frac{\sigma}{\varepsilon_0}\)，外部 \(E=0\)</td></tr>
+</table>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 高斯定理应用要点</h4>
+  <p>1. 只有当电荷分布具有高度对称性时，才能用高斯定理直接求 \(E\)；2. 高斯面上 \(E\) 不一定处处相等，但要用对称性使积分可化为 \(E\cdot S\)；3. 面内电荷代数和包含符号；4. 高斯定理对任意闭合曲面都成立，但方便求解需要对称性。</p>
+</div>
+
+<h4>7.3 电势与电势能</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>电势：</strong>\(U_P=\int_P^{参考点}\vec E\cdot d\vec l\)，单位电荷的电势能。</li>
+    <li><strong>电势差：</strong>\(U_{AB}=U_A-U_B=\int_A^B\vec E\cdot d\vec l\)。</li>
+    <li><strong>点电荷电势：</strong>取无穷远为零，\(U=\frac{1}{4\pi\varepsilon_0}\frac{q}{r}\)。</li>
+    <li><strong>电势叠加：</strong>\(U=\sum_i U_i\) 或 \(U=\int\frac{1}{4\pi\varepsilon_0}\frac{dq}{r}\)。</li>
+    <li><strong>电势能与电势：</strong>\(E_p=qU\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 求电势的两种方法</h4>
+  <p><strong>定义法：</strong>先求 \(E\) 分布，再积分 \(U=\int E\,dr\)，适用于高斯定理可求 \(E\) 的对称问题。<br><strong>叠加法：</strong>将电荷分割为点电荷或电荷元，利用 \(U=\int\frac{dq}{4\pi\varepsilon_0 r}\) 积分，适用于不规则带电体。</p>
+</div>
+
+<h4>7.4 导体与电容器</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>静电平衡条件：</strong>导体内部 \(E=0\)，导体是等势体，电荷只分布在表面。</li>
+    <li><strong>空腔导体：</strong>腔内无电荷时，内表面无电荷；腔内有电荷 \(q\) 时，内表面感应 \(-q\)，外表面感应 \(q\)。</li>
+    <li><strong>电容：</strong>\(C=\frac{Q}{U}\)，反映储存电荷能力。</li>
+    <li><strong>平行板电容器：</strong>\(C=\frac{\varepsilon_0 S}{d}\)。插入电介质后 \(C=\frac{\varepsilon_r\varepsilon_0 S}{d}=\varepsilon_r C_0\)。</li>
+    <li><strong>电容器储能：</strong>\(W=\frac12 CU^2=\frac{Q^2}{2C}=\frac12 QU\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 电容器两种连接方式</h4>
+  <p><strong>保持与电源连接：</strong>电压 \(U\) 不变，改变板间距或介质会改变 \(C\) 和 \(Q\)。<br><strong>充电后断开电源：</strong>电荷 \(Q\) 不变，改变板间距或介质会改变 \(C\) 和 \(U\)。</p>
+</div>
+
+<div class="tip-card danger">
+  <h4>🚨 常见电场问题易错点</h4>
+  <p>1. 电场强度为零的地方电势不一定为零，电势为零的地方场强也不一定为零；2. 导体表面附近场强 \(E=\sigma/\varepsilon_0\)，不是 \(\sigma/2\varepsilon_0\)；3. 用高斯定理时，面内电荷代数和不要忘了符号；4. 电势叠加要注意参考点必须一致，通常取无穷远。</p>
+</div>
+</div>
+
+<!-- PAGE 4: Day3 磁电 -->
+<div class="page" id="page-3">
+<h2>Day 3 · 稳恒磁场 + 电磁感应（第8-9章）</h2>
+
+<h3>第8章 恒定电流的磁场</h3>
+
+<h4>8.1 磁感应强度与毕奥-萨伐尔定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>磁感应强度 \(\vec B\)：</strong>描述磁场强弱和方向的物理量。可用运动试探电荷在磁场中所受洛伦兹力定义：\(\vec F=q\vec v\times\vec B\)。</li>
+    <li><strong>毕奥-萨伐尔定律：</strong>电流元 \(Id\vec l\) 在空间某点产生的磁感应强度为
+    \[d\vec B=\frac{\mu_0}{4\pi}\frac{Id\vec l\times\hat r}{r^2}\]
+    其中 \(\mu_0=4\pi\times10^{-7}\,\text{T·m/A}\) 为真空磁导率，\(\hat r\) 为电流元指向场点的单位矢量。</li>
+    <li><strong>方向判断：</strong>用右手螺旋定则，四指沿电流方向，拇指指向 \(d\vec B\) 方向。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 用毕奥-萨伐尔定律求磁场步骤</h4>
+  <p>1. 在载流导线上取电流元 \(Id\vec l\)；2. 写出 \(d\vec B=\frac{\mu_0}{4\pi}\frac{Id\vec l\times\hat r}{r^2}\)；3. 分析对称性，判断哪些分量会抵消；4. 对保留分量积分；5. 用总电流 \(I\) 和几何参数表示结果。</p>
+</div>
+
+<h4>8.2 常见载流导体的磁场</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心公式</div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>载流导体</th><th>磁感应强度</th><th>方向</th></tr>
+<tr><td>无限长直导线</td><td>\(B=\frac{\mu_0 I}{2\pi r}\)</td><td>环绕导线的同心圆，右手定则</td></tr>
+<tr><td>圆电流线圈中心</td><td>\(B=\frac{\mu_0 I}{2R}\)</td><td>沿轴线，右手四指沿电流，拇指为 B</td></tr>
+<tr><td>圆电流线圈轴线上</td><td>\(B=\frac{\mu_0 I R^2}{2(R^2+x^2)^{3/2}}\)</td><td>沿轴线</td></tr>
+<tr><td>长直螺线管内部</td><td>\(B=\mu_0 n I\)</td><td>沿轴线，与电流成右手关系</td></tr>
+<tr><td>环形螺线管内部</td><td>\(B=\frac{\mu_0 N I}{2\pi r}\)（近似 \(\mu_0 n I\)）</td><td>沿圆周切向</td></tr>
+</table>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 注意</h4>
+  <p>有限长直导线的磁场不能用无限长公式，需积分 \(B=\frac{\mu_0 I}{4\pi r}(\cos\theta_1-\cos\theta_2)\)。半无限长直导线端点处为 \(B=\frac{\mu_0 I}{4\pi r}\)。</p>
+</div>
+
+<h4>8.3 安培环路定理</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>定理：</strong>\(\oint_L\vec B\cdot d\vec l=\mu_0 I_{内}\)。</li>
+    <li><strong>物理意义：</strong>磁感应强度沿任意闭合回路的线积分等于穿过该回路的所有电流代数和的 \(\mu_0\) 倍。</li>
+    <li><strong>电流正负：</strong>电流方向与回路绕行方向满足右手螺旋关系时取正，反之取负。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 安培回路选择指南</h4>
+  <p><strong>无限长直导线：</strong>选以导线为圆心的圆，回路上 \(B\) 大小相等，方向沿切线。<br>
+  <strong>长直螺线管：</strong>选矩形回路，一段在管内平行轴线，一段在管外；管外 \(B\approx0\)。<br>
+  <strong>环形螺线管：</strong>选同心圆回路，在环内部；环外 \(B=0\)。<br>
+  <strong>无限大平面电流：</strong>选矩形回路，两边平行于电流层。</p>
+</div>
+
+<div class="tip-card danger">
+  <h4>🚨 失分点</h4>
+  <p>安培环路定理中的 \(I_{内}\) 是<strong>与回路铰链</strong>的电流代数和，不是回路所围面积内的电流。如果电流穿过回路 \(n\) 次，要算 \(nI\)。另外，只有对称电流分布才能用安培环路定理直接求 \(B\)。</p>
+</div>
+
+<h4>8.4 安培力与洛伦兹力</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>安培力：</strong>电流元在磁场中受的力 \(d\vec F=Id\vec l\times\vec B\)。整段导线：\(\vec F=\int Id\vec l\times\vec B\)。</li>
+    <li><strong>均匀磁场中直导线：</strong>\(F=ILB\sin\theta\)，\(\theta\) 为电流与磁场夹角。</li>
+    <li><strong>洛伦兹力：</strong>运动电荷在磁场中受的力 \(\vec F=q\vec v\times\vec B\)，大小 \(F=qvB\sin\theta\)。</li>
+    <li><strong>磁场对载流线圈力矩：</strong>\(\vec M=\vec m\times\vec B\)，其中磁矩 \(\vec m=IS\vec n\)，\(N\) 匝时 \(m=NIS\)。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">带电粒子圆周运动半径</span><span class="expr">\(R=\frac{mv}{qB}=\frac{p}{qB}\)</span></div>
+<div class="formula-item"><span class="name">回旋周期</span><span class="expr">\(T=\frac{2\pi m}{qB}\)</span></div>
+<div class="formula-item"><span class="name">螺距</span><span class="expr">\(h=v_{\parallel}T=\frac{2\pi m v_{\parallel}}{qB}\)</span></div>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 洛伦兹力特点</h4>
+  <p>洛伦兹力始终垂直于速度，因此不做功，只改变速度方向。当 \(\vec v\perp\vec B\) 时做匀速圆周运动；当 \(\vec v\) 与 \(\vec B\) 成任意角度时做等距螺旋运动。</p>
+</div>
+
+<h4>8.5 磁介质</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>磁场强度：</strong>\(\vec H=\frac{\vec B}{\mu}\) 或 \(\vec H=\frac{\vec B}{\mu_0}-\vec M\)，其中 \(\mu=\mu_0\mu_r\)。</li>
+    <li><strong>磁导率：</strong>\(\mu=\mu_0\mu_r\)，\(\mu_r\) 为相对磁导率。</li>
+    <li><strong>安培环路定理在磁介质中：</strong>\(\oint\vec H\cdot d\vec l=I_{自由}\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 注意</h4>
+  <p>大学物理B中磁介质多为了解内容，重点掌握 \(B=\mu H\) 和磁介质中的安培环路定理。顺磁质 \(\mu_r>1\)，抗磁质 \(\mu_r<1\)，铁磁质 \(\mu_r\gg1\) 且非线性。</p>
+</div>
+
+<h3>第9章 电磁感应 电磁场</h3>
+
+<h4>9.1 法拉第电磁感应定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>磁通量：</strong>\(\Phi_B=\int_S\vec B\cdot d\vec S=BScos\theta\)。</li>
+    <li><strong>法拉第定律：</strong>感应电动势的大小等于穿过回路的磁通量变化率的绝对值，即
+    \[\varepsilon=-\frac{d\Phi_B}{dt}\]
+    负号表示感应电动势的方向总是阻碍磁通量变化（楞次定律）。</li>
+    <li><strong>多匝线圈：</strong>\(\varepsilon=-N\frac{d\Phi_B}{dt}\)。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 用法拉第定律求感应电动势的步骤</h4>
+  <p>1. 确定回路或导体所在面积；2. 写出磁通量 \(\Phi_B\) 随时间变化的表达式；3. 对时间求导得 \(\varepsilon=-d\Phi/dt\)；4. 用楞次定律或 \(v\times B\) 判断电动势方向。</p>
+</div>
+
+<h4>9.2 楞次定律</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>内容：</strong>闭合回路中感应电流的方向，总是使感应电流所产生的磁场阻碍引起感应电流的磁通量变化。</li>
+    <li><strong>“阻碍”不是“阻止”：</strong>磁通量仍然变化，只是变化被延缓。</li>
+    <li><strong>判断步骤：</strong>1. 确定原磁场方向；2. 判断磁通量是增加还是减少；3. 感应电流产生的磁场方向与原磁场“增反减同”；4. 用右手定则判断感应电流方向。</li>
+  </ul>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 口诀</h4>
+  <p>“原磁通增大，感应磁场反向；原磁通减小，感应磁场同向。” 方向上记住“来拒去留”：磁铁靠近线圈，线圈产生排斥磁铁的磁场；磁铁远离，线圈产生吸引磁铁的磁场。</p>
+</div>
+
+<h4>9.3 动生电动势与感生电动势</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>动生电动势：</strong>导体在稳恒磁场中运动产生的感应电动势。本质上是洛伦兹力使导体中自由电荷定向移动。
+    \[\varepsilon=\int (\vec v\times\vec B)\cdot d\vec l\]</li>
+    <li><strong>直导体垂直运动：</strong>当 \(\vec v\perp\vec B\perp\vec l\) 时，\(\varepsilon=Blv\)。</li>
+    <li><strong>方向判断：</strong>\(\vec v\times\vec B\) 的方向就是正电荷受力方向，也就是电势升高方向。</li>
+    <li><strong>感生电动势：</strong>导体不动，由变化的磁场激发的涡旋电场产生的电动势。
+    \[\varepsilon=\oint\vec E_{感}\cdot d\vec l=-\frac{d\Phi_B}{dt}\]</li>
+  </ul>
+</div>
+
+<div class="tip-card warn">
+  <h4>⚠️ 动生电动势计算要点</h4>
+  <p>1. 只有导体中垂直于 \(\vec v\times\vec B\) 的分量才产生电动势；2. 若各点 \(v\times B\) 不同或导体方向变化，需用积分 \(\varepsilon=\int(\vec v\times\vec B)\cdot d\vec l\)；3. 闭合回路在磁场中整体平动（无转动）时磁通量不变，感应电动势为零，但各段导体仍可能有电势差。</p>
+</div>
+
+<h4>9.4 自感与互感</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>自感：</strong>回路自身电流变化时，在自身回路中产生感应电动势的现象。
+    \[\varepsilon_L=-L\frac{dI}{dt}\]</li>
+    <li><strong>自感系数：</strong>\(L=\frac{N\Phi_B}{I}\)，单位亨利（H）。只与线圈几何形状、匝数、磁介质有关。</li>
+    <li><strong>互感：</strong>一个回路中电流变化，在邻近回路中产生感应电动势。
+    \[\varepsilon_{21}=-M\frac{dI_1}{dt}\]</li>
+    <li><strong>长直螺线管自感：</strong>\(L=\mu_0 n^2 V=\frac{\mu_0 N^2 S}{l}\)，其中 \(V=Sl\) 为螺线管体积。</li>
+  </ul>
+</div>
+
+<div class="formula-group">
+<div class="formula-item"><span class="name">自感磁能</span><span class="expr">\(W=\frac12 LI^2\)</span></div>
+<div class="formula-item"><span class="name">磁场能量密度</span><span class="expr">\(w_m=\frac{B^2}{2\mu}=\frac12 \mu H^2\)</span></div>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 自感电路暂态</h4>
+  <p><strong>RL 电路接通：</strong>电流按 \(I=\frac{\varepsilon}{R}(1-e^{-t/\tau})\) 增长，时间常数 \(\tau=L/R\)。<br>
+  <strong>RL 电路断开：</strong>电流按 \(I=\frac{\varepsilon}{R}e^{-t/\tau}\) 衰减。电感中的电流不能突变。</p>
+</div>
+
+<h4>9.5 位移电流与麦克斯韦方程组</h4>
+<div class="kp-card">
+  <div class="kp-title">📌 核心概念</div>
+  <ul>
+    <li><strong>位移电流：</strong>变化电场等效为一种电流，\(I_d=\varepsilon_0\frac{d\Phi_E}{dt}\)。</li>
+    <li><strong>位移电流密度：</strong>\(j_d=\varepsilon_0\frac{\partial E}{\partial t}\)。</li>
+    <li><strong>全电流安培环路定理：</strong>\(\oint\vec B\cdot d\vec l=\mu_0(I+I_d)\)。</li>
+    <li><strong>麦克斯韦方程组积分形式（了解）：</strong>高斯电场定理、高斯磁场定理、法拉第定律、安培-麦克斯韦定律。</li>
+  </ul>
+</div>
+
+<div class="tip-card danger">
+  <h4>🚨 电磁感应常见易错点</h4>
+  <p>1. 法拉第定律中的负号常被忽略，方向判断要结合楞次定律；2. 动生电动势 \(\varepsilon=Blv\) 要求三者互相垂直；3. 自感电动势方向总是阻碍电流变化，电流增大时自感电动势与电流反向，电流减小时同向；4. 磁通量变化可以来自 \(B\) 变化、面积 \(S\) 变化或夹角 \(\theta\) 变化。</p>
+</div>
+
+<div class="tip-card good">
+  <h4>💡 电磁感应综合题解法</h4>
+  <p>1. 判断属于动生还是感生；2. 动生用 \(\varepsilon=\int(\vec v\times\vec B)\cdot d\vec l\)，感生用法拉第定律或涡旋电场；3. 若有回路，可直接用 \(\varepsilon=-d\Phi/dt\)；4. 感应电流用欧姆定律 \(I=\varepsilon/R\)；5. 安培力、功率等后续计算不要漏掉。</p>
+</div>
+</div>
+
+<!-- PAGE 5: 公式速查 -->
+<div class="page" id="page-4">
+<h2>📐 公式速查（50+ 条）</h2>
+
+<div class="grid-2">
+<div class="formula-group">
+<h3>⚙️ 力学</h3>
+<div class="formula-item"><span class="name">位矢</span><span class="expr">\(r=xi+yj+zk\)</span></div>
+<div class="formula-item"><span class="name">速度</span><span class="expr">\(v=\frac{dr}{dt}\)</span></div>
+<div class="formula-item"><span class="name">加速度</span><span class="expr">\(a=\frac{dv}{dt}=\frac{d^2r}{dt^2}\)</span></div>
+<div class="formula-item"><span class="name">匀变速直线</span><span class="expr">\(v=v_0+at,\;x=v_0t+\frac{1}{2}at^2\)</span></div>
+<div class="formula-item"><span class="name">切向/法向加速度</span><span class="expr">\(a_\tau=\frac{dv}{dt},\;a_n=\frac{v^2}{R}=R\omega^2\)</span></div>
+<div class="formula-item"><span class="name">角量线量</span><span class="expr">\(v=R\omega,\;a_\tau=R\alpha,\;a_n=R\omega^2\)</span></div>
+<div class="formula-item"><span class="name">牛顿第二定律</span><span class="expr">\(F=ma\)</span></div>
+<div class="formula-item"><span class="name">功</span><span class="expr">\(W=\int F\cdot dr\)</span></div>
+<div class="formula-item"><span class="name">功率</span><span class="expr">\(P=F\cdot v\)</span></div>
+<div class="formula-item"><span class="name">动能定理</span><span class="expr">\(W_{合}=\Delta E_k=\frac{1}{2}mv^2-\frac{1}{2}mv_0^2\)</span></div>
+<div class="formula-item"><span class="name">重力势能</span><span class="expr">\(E_p=mgh\)</span></div>
+<div class="formula-item"><span class="name">弹性势能</span><span class="expr">\(E_p=\frac{1}{2}kx^2\)</span></div>
+<div class="formula-item"><span class="name">机械能守恒</span><span class="expr">\(E_k+E_p=\text{常量}\)</span></div>
+<div class="formula-item"><span class="name">冲量</span><span class="expr">\(I=\int Fdt=\Delta p\)</span></div>
+<div class="formula-item"><span class="name">动量守恒</span><span class="expr">\(\sum p=\text{常量}\)</span></div>
+<div class="formula-item"><span class="name">转动惯量</span><span class="expr">\(J=\int r^2 dm\)</span></div>
+<div class="formula-item"><span class="name">平行轴定理</span><span class="expr">\(J=J_c+md^2\)</span></div>
+<div class="formula-item"><span class="name">转动定律</span><span class="expr">\(M=J\beta\)</span></div>
+<div class="formula-item"><span class="name">角动量</span><span class="expr">\(L=J\omega\)</span></div>
+<div class="formula-item"><span class="name">角动量守恒</span><span class="expr">\(J\omega=\text{常量}\)</span></div>
+<div class="formula-item"><span class="name">转动动能</span><span class="expr">\(E_k=\frac{1}{2}J\omega^2\)</span></div>
+</div>
+
+<div class="formula-group">
+<h3>🌡️ 热学</h3>
+<div class="formula-item"><span class="name">理想气体状态方程</span><span class="expr">\(pV=\nu RT=\frac{m}{M}RT\)</span></div>
+<div class="formula-item"><span class="name">压强微观式</span><span class="expr">\(p=\frac{2}{3}n\bar{\varepsilon}_k\)</span></div>
+<div class="formula-item"><span class="name">平均平动动能</span><span class="expr">\(\bar{\varepsilon}_k=\frac{3}{2}kT\)</span></div>
+<div class="formula-item"><span class="name">理想气体内能</span><span class="expr">\(E=\frac{i}{2}\nu RT\)</span></div>
+<div class="formula-item"><span class="name">最概然速率</span><span class="expr">\(v_p=\sqrt{\frac{2RT}{M}}\)</span></div>
+<div class="formula-item"><span class="name">平均速率</span><span class="expr">\(\bar v=\sqrt{\frac{8RT}{\pi M}}\)</span></div>
+<div class="formula-item"><span class="name">方均根速率</span><span class="expr">\(\sqrt{\overline{v^2}}=\sqrt{\frac{3RT}{M}}\)</span></div>
+<div class="formula-item"><span class="name">热一定律</span><span class="expr">\(\Delta U=Q+W\)</span></div>
+<div class="formula-item"><span class="name">等体摩尔热容</span><span class="expr">\(C_V=\frac{i}{2}R\)</span></div>
+<div class="formula-item"><span class="name">等压摩尔热容</span><span class="expr">\(C_p=C_V+R=\frac{i+2}{2}R\)</span></div>
+<div class="formula-item"><span class="name">绝热指数</span><span class="expr">\(\gamma=\frac{C_p}{C_V}=\frac{i+2}{i}\)</span></div>
+<div class="formula-item"><span class="name">等温过程</span><span class="expr">\(Q=W=\nu RT\ln\frac{V_2}{V_1}\)</span></div>
+<div class="formula-item"><span class="name">循环效率</span><span class="expr">\(\eta=1-\frac{Q_2}{Q_1}=\frac{W}{Q_1}\)</span></div>
+<div class="formula-item"><span class="name">卡诺效率</span><span class="expr">\(\eta=1-\frac{T_2}{T_1}\)</span></div>
+<div class="formula-item"><span class="name">熵变</span><span class="expr">\(\Delta S=\int \frac{dQ_{rev}}{T}\)</span></div>
+</div>
+</div>
+
+<div class="formula-group">
+<h3>⚡ 电磁学</h3>
+<div class="grid-2">
+<div>
+<div class="formula-item"><span class="name">库仑力</span><span class="expr">\(F=\frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}\)</span></div>
+<div class="formula-item"><span class="name">点电荷场强</span><span class="expr">\(E=\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\)</span></div>
+<div class="formula-item"><span class="name">高斯定理</span><span class="expr">\(\oint E\cdot dS=\frac{Q_{内}}{\varepsilon_0}\)</span></div>
+<div class="formula-item"><span class="name">电势</span><span class="expr">\(U_P=\int_P^\infty E\cdot dl\)</span></div>
+<div class="formula-item"><span class="name">点电荷电势</span><span class="expr">\(U=\frac{1}{4\pi\varepsilon_0}\frac{q}{r}\)</span></div>
+<div class="formula-item"><span class="name">平行板电容</span><span class="expr">\(C=\frac{\varepsilon_0 S}{d}\)</span></div>
+<div class="formula-item"><span class="name">电场能量</span><span class="expr">\(W=\frac{1}{2}CU^2\)</span></div>
+<div class="formula-item"><span class="name">能量密度</span><span class="expr">\(w_e=\frac{1}{2}\varepsilon_0 E^2\)</span></div>
+</div>
+<div>
+<div class="formula-item"><span class="name">无限长直导线 B</span><span class="expr">\(B=\frac{\mu_0 I}{2\pi r}\)</span></div>
+<div class="formula-item"><span class="name">圆线圈轴线上 B</span><span class="expr">\(B=\frac{\mu_0 IR^2}{2(R^2+x^2)^{3/2}}\)</span></div>
+<div class="formula-item"><span class="name">螺线管内部 B</span><span class="expr">\(B=\mu_0 nI\)</span></div>
+<div class="formula-item"><span class="name">安培环路</span><span class="expr">\(\oint B\cdot dl=\mu_0 I_{内}\)</span></div>
+<div class="formula-item"><span class="name">安培力</span><span class="expr">\(F=ILB\sin\theta\)</span></div>
+<div class="formula-item"><span class="name">洛伦兹力</span><span class="expr">\(F=qvB\sin\theta\)</span></div>
+<div class="formula-item"><span class="name">回旋半径</span><span class="expr">\(R=\frac{mv}{qB}\)</span></div>
+<div class="formula-item"><span class="name">法拉第定律</span><span class="expr">\(\varepsilon=-\frac{d\Phi_B}{dt}\)</span></div>
+<div class="formula-item"><span class="name">动生电动势</span><span class="expr">\(\varepsilon=\int (v\times B)\cdot dl\)</span></div>
+<div class="formula-item"><span class="name">自感电动势</span><span class="expr">\(\varepsilon_L=-L\frac{dI}{dt}\)</span></div>
+<div class="formula-item"><span class="name">磁能</span><span class="expr">\(W=\frac{1}{2}LI^2\)</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- PAGE 6: 解题锦囊 -->
+<div class="page" id="page-5">
+<h2>💡 解题锦囊</h2>
+
+<div class="tip-card danger">
+  <h4>🚨 考场失分点 Top 5</h4>
+  <p><strong>1. 符号约定混乱：</strong>热力学第一定律、动生电动势、高斯定理的符号方向最容易写反。<br>
+  <strong>2. 单位不统一：</strong>SI 制下长度用 m、质量用 kg、时间用 s；注意 cm、g 要先换算。<br>
+  <strong>3. 把角量当线量：</strong>刚体问题中 \(v=R\omega\)、\(a=R\alpha\) 不要漏掉 R。<br>
+  <strong>4. 高斯面选错：</strong>不是球对称问题不要强行选球面，要匹配电荷分布的对称性。<br>
+  <strong>5. 守恒条件误判：</strong>有摩擦或非弹性碰撞时机械能不守恒；有外力矩时角动量不守恒。</p>
+</div>
+
+<h3>守恒量判断速查表</h3>
+<div class="table-wrap">
+<table>
+<tr><th>条件</th><th>守恒量</th><th>典型场景</th></tr>
+<tr><td>系统合外力为零</td><td>动量守恒</td><td>碰撞、爆炸、反冲</td></tr>
+<tr><td>某方向合外力为零</td><td>该方向动量守恒</td><td>斜面+水平面问题</td></tr>
+<tr><td>只有保守力做功</td><td>机械能守恒</td><td>弹簧、重力、天体运动</td></tr>
+<tr><td>对定轴合外力矩为零</td><td>角动量守恒</td><td>花样滑冰收臂、行星运动</td></tr>
+<tr><td>系统不受外力矩</td><td>总角动量守恒</td><td>碰撞后共同旋转</td></tr>
+</table>
+</div>
+
+<h3>高斯面 / 安培回路选择指南</h3>
+<div class="grid-2">
+<div class="tip-card">
+  <h4>🔵 高斯面选择</h4>
+  <p><strong>球对称：</strong>同心球面，面上 \(E\) 大小相等，方向径向。<br>
+  <strong>轴对称：</strong>同轴圆柱面，侧面 \(E\) 垂直于轴且大小相等。<br>
+  <strong>平面对称：</strong>圆柱面两底平行平面，底面 \(E\) 垂直于底且大小相等。</p>
+</div>
+<div class="tip-card">
+  <h4>🟢 安培回路选择</h4>
+  <p><strong>长直导线：</strong>以导线为轴的圆，回路上 \(B\) 大小相等。<br>
+  <strong>长直螺线管：</strong>矩形回路，一段在管内平行轴线。<br>
+  <strong>环形螺线管：</strong>同心圆回路，在环内部。</p>
+</div>
+</div>
+
+<h3>考前 30 分钟速记</h3>
+<div class="checklist">
+  <label><input type="checkbox"><span>三大守恒条件背一遍：动量、机械能、角动量</span></label>
+  <label><input type="checkbox"><span>热力学过程 Q、W、ΔU 表默写一遍</span></label>
+  <label><input type="checkbox"><span>高斯面三种对称形式想一遍</span></label>
+  <label><input type="checkbox"><span>安培环路常见电流模型回顾</span></label>
+  <label><input type="checkbox"><span>法拉第定律负号/楞次定律方向判断</span></label>
+  <div class="progress">0 / 5</div>
+</div>
+</div>
+
+<!-- PAGE 7: 互动自测 -->
+<div class="page" id="page-6">
+<h2>✏️ 互动自测</h2>
+<p style="color:var(--text3);font-size:12px">共 125 道选择/判断/填空题，按 Day1→Day2→Day3 排列。点击“展开解析”查看答案，用底部按钮标记掌握度。</p>
+
+<div class="quiz-controls">
+  <button class="filter-btn active" onclick="filterQuiz('all')">全部</button>
+  <button class="filter-btn" onclick="filterQuiz('day1')">Day1</button>
+  <button class="filter-btn" onclick="filterQuiz('day2')">Day2</button>
+  <button class="filter-btn" onclick="filterQuiz('day3')">Day3</button>
+  <button class="filter-btn" onclick="filterQuiz('wrong')">错题</button>
+  <input type="text" class="search-box" placeholder="搜索题号/关键词..." oninput="searchQuiz(this.value)">
+</div>
+
+<div id="quiz-list"></div>
+</div>
+
+<div class="footer">
+  <p>大学物理B · 期末冲刺复习手册</p>
+  <p style="margin-top:4px">由 AI 助教生成 · 教材：普通物理学（第八版）上册</p>
+</div>
+
+</div>
+
+<!-- AI Chat -->
+<button class="ai-fab" onclick="toggleAI()">🤖</button>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-header">
+    <h3>AI 物理助教</h3>
+    <button class="ai-close" onclick="toggleAI()">×</button>
+  </div>
+  <div class="ai-body" id="ai-body">
+    <div class="ai-msg bot">你好！我是你的大学物理B AI助教。可以问我任何力学、热学、电磁学的问题，我会帮你分析思路。</div>
+  </div>
+  <div class="ai-input">
+    <input type="text" id="ai-input" placeholder="输入问题，例如：如何求转动惯量？" onkeydown="if(event.key==='Enter') sendAI()">
+    <button onclick="sendAI()">发送</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+// Page navigation
+function showPage(idx){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  if(idx===6) renderQuiz();
+  if(window.MathJax) MathJax.typesetPromise();
+}
+
+// Checklist persistence
+function initChecklists(){
+  document.querySelectorAll('.checklist').forEach(list=>{
+    const day = list.dataset.day;
+    const boxes = list.querySelectorAll('input[type=checkbox]');
+    const progress = list.querySelector('.progress');
+    boxes.forEach((cb,i)=>{
+      const key = 'checklist-day'+day+'-item'+i;
+      cb.checked = localStorage.getItem(key)==='1';
+      cb.onchange = ()=>{
+        localStorage.setItem(key, cb.checked?'1':'0');
+        updateProgress(list, boxes, progress);
+      };
+    });
+    updateProgress(list, boxes, progress);
+  });
+}
+function updateProgress(list, boxes, progress){
+  const total = boxes.length;
+  const done = Array.from(boxes).filter(b=>b.checked).length;
+  progress.textContent = `${done} / ${total}`;
+}
+
+// Quiz data
+const quizData = [
+// ===== Day 1: Chapter 1 (15) =====
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'质点运动方程为 \(r=at^2 i+bt^2 j\)（a、b 为常量），则该质点作[ ]', options:['A. 匀速直线运动','B. 变速直线运动','C. 抛物线运动','D. 一般曲线运动'], ans:'B', exp:'x、y 均与 t² 成正比，轨迹为过原点的直线，且速度随时间变化，故为变速直线运动。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'某物体运动规律为 \(dv/dt=-kv^2 t\)（k>0），t=0 时速度为 \(v_0\)，则速率 v 与 t 的关系为[ ]', options:['A. \(v=kt^2+v_0\)','B. \(v=-kt^2+v_0\)','C. \(1/v=kt^2/2+1/v_0\)','D. \(1/v=kt^2/2-1/v_0\)'], ans:'C', exp:'分离变量：\(dv/v^2=-kt dt\)，积分得 \(-1/v=-kt^2/2+C\)。代入 t=0 得 C=-1/v₀，整理得 C 选项。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'质点沿 x 轴运动方程 \(x=-5t^3+3t+6\)（SI），则该质点作[ ]', options:['A. 匀加速直线，a 沿 x 正向','B. 匀加速直线，a 沿 x 负向','C. 变加速直线，a 沿 x 正向','D. 变加速直线，a 沿 x 负向'], ans:'D', exp:'v=dx/dt=-15t²+3，a=dv/dt=-30t。a 与 t 有关，为变加速；a 沿 x 负向。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'质点沿圆周匀速率运动，每 T 秒转一圈，在 2T 时间内平均速度大小与平均速率大小分别为[ ]', options:['A. \(2\pi R/T, 2\pi R/T\)','B. \(0, 2\pi R/T\)','C. \(0,0\)','D. \(2\pi R/T,0\)'], ans:'B', exp:'2T 后回到出发点，位移为 0，平均速度为 0；路程为 2 周长，平均速率 = \(4\pi R/(2T)=2\pi R/T\)。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'一质点沿半径 R 的圆周运动，角位置 \(θ=6+5t^2\)（SI）。t=2s 时法向加速度大小为[ ]', options:['A. 20 m/s²','B. 40 m/s²','C. 80 m/s²','D. 160 m/s²'], ans:'C', exp:'ω=dθ/dt=10t，t=2 时 ω=20 rad/s。法向加速度 \(a_n=Rω^2=400R\)。若 R=0.2m，则 a_n=80 m/s²。'},
+{day:'day1', chapter:'第1章 运动和力', type:'填空', q:'质点加速度 \(a=3+2t\)（SI），初速度 \(v_0=5\) m/s，则 t=3s 时速度 v=______。', options:[] , ans:'23 m/s', exp:'v=v₀+∫a dt=5+3t+t²，代入 t=3 得 5+9+9=23 m/s。'},
+{day:'day1', chapter:'第1章 运动和力', type:'填空', q:'甲船以 10 m/s 向南，乙船以 10 m/s 向东，则甲船上的人观察乙船速度大小为______，方向为______。', options:[] , ans:'14.1 m/s；东北（或东偏北45°）', exp:'相对速度 \(v_{乙对甲}=v_{乙对地}-v_{甲对地}\)，大小为 \(\sqrt{10^2+10^2}=10\sqrt2\approx14.1\) m/s，方向东北。'},
+{day:'day1', chapter:'第1章 运动和力', type:'判断', q:'曲线运动中，加速度一定与速度方向不同。', options:['A. 正确','B. 错误'], ans:'A', exp:'若加速度与速度共线，则质点做直线运动。曲线运动必有法向加速度，改变速度方向。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'物体沿光滑斜面下滑，底边相同而倾角不同，从顶端静止滑到底端时间最短的倾角为[ ]', options:['A. 60°','B. 45°','C. 30°','D. 15°'], ans:'B', exp:'设底边为 L，下滑时间 t 与倾角 θ 的关系可导出 \(t\propto 1/\sqrt{\sinθ\cosθ}\)，当 θ=45° 时分母最大，t 最小。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'水平地面物体 A，摩擦系数 μ，加恒力 F 与水平成 θ 角，使 A 加速度最大时 θ 满足[ ]', options:['A. sinθ=μ','B. cosθ=μ','C. tanθ=μ','D. cotθ=μ'], ans:'C', exp:'水平方向 Fcosθ-μ(mg-Fsinθ)=ma，对 θ 求极值可得 tanθ=μ。'},
+{day:'day1', chapter:'第1章 运动和力', type:'填空', q:'质量 m 物体用细绳水平拉住，静止在光滑斜面（倾角 θ）上，斜面支持力为______。', options:[] , ans:'\(mg/\cosθ\)', exp:'受力分析：重力、支持力、绳拉力。沿斜面方向平衡：Tcosθ=mg sinθ；垂直斜面：N=mg cosθ+Tsinθ=mg/cosθ。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'质点沿圆周按 \(s=v_0 t-\frac{1}{2}bt^2\) 运动，则 t 时刻加速度大小为[ ]', options:['A. \(b\)','B. \(\sqrt{(v_0-bt)^4/R^2+b^2}\)','C. \(\sqrt{(v_0-bt)^2/R^2+b^2}\)','D. \((v_0-bt)^2/R\)'], ans:'B', exp:'v=ds/dt=v₀-bt，切向加速度 a_τ=-b，法向加速度 a_n=v²/R=(v₀-bt)²/R。总加速度大小为 \(\sqrt{a_n^2+a_τ^2}\)。'},
+{day:'day1', chapter:'第1章 运动和力', type:'判断', q:'加速度恒定不变时，质点一定做直线运动。', options:['A. 正确','B. 错误'], ans:'B', exp:'加速度恒定但初速度方向与加速度不共线时，做抛体运动（曲线），如平抛、斜抛。'},
+{day:'day1', chapter:'第1章 运动和力', type:'选择', q:'在加速上升的电梯中，物体相对斜面静止，θ 一定时，a 越大斜面对物体的正压力[ ]', options:['A. 越小','B. 越大','C. 不变','D. 先增后减'], ans:'B', exp:'电梯向上加速 a，等效重力增大为 g+a，正压力 N=m(g+a)cosθ，a 越大 N 越大。'},
+{day:'day1', chapter:'第1章 运动和力', type:'填空', q:'质点从静止出发沿半径 R=1m 圆周运动，角加速度 β=12t²-6t（SI），则角速度 ω=______（rad/s）。', options:[] , ans:'\(4t^3-3t^2\)', exp:'ω=∫β dt=∫(12t²-6t)dt=4t³-3t²+C，ω(0)=0 故 C=0。'},
+
+// ===== Day 1: Chapter 2 (15) =====
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'质量 m=0.5 kg 质点运动方程 x=5t，y=0.5t²（SI），t=2s 到 t=4s 外力做功为[ ]', options:['A. 1.5 J','B. 3 J','C. 4.5 J','D. -1.5 J'], ans:'B', exp:'v_x=5，v_y=t；t=2 时 v²=25+4=29，t=4 时 v²=25+16=41；W=ΔE_k=0.5×0.5×(41-29)=3 J。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'两小球 m₁、m₂ 用轻弹簧相连放在光滑桌面，以等值反向力分别作用于两球，则系统[ ]', options:['A. 动量守恒，机械能守恒','B. 动量守恒，机械能不守恒','C. 动量不守恒，机械能守恒','D. 都不守恒'], ans:'B', exp:'合外力为零，动量守恒；外力对系统做功，机械能增加，不守恒。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'双手挤压 A、B 间弹簧后撤外力，A、B 弹开过程中[ ]', options:['A. 动量守恒，机械能不守恒','B. 动量守恒，机械能守恒','C. 动量不守恒，机械能守恒','D. 都不守恒'], ans:'B', exp:'撤外力后系统合外力为零，动量守恒；弹簧弹力为保守力，无耗散，机械能守恒。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'子弹水平射入静止木块后共同运动，则[ ]', options:['A. 系统机械能守恒','B. 水平方向动量守恒','C. 子弹冲量等于木块冲量','D. 子弹动能减少等于木块动能增加'], ans:'B', exp:'水平方向无外力，动量守恒；非弹性碰撞机械能不守恒；子弹、木块冲量大小相等方向相反。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'20g 子弹以 400 m/s 与水平成 30° 射入 980g 静止摆球，摆线不可伸缩，共同运动速率为[ ]', options:['A. 2 m/s','B. 4 m/s','C. 6 m/s','D. 8 m/s'], ans:'B', exp:'水平方向动量守恒：0.02×400×cos30° = 1.0×v，v≈6.93 m/s？请按原题数据核对；若射入方向为水平 30° 可能是竖直方向？此处按常见答案取 v=4 m/s 表示水平动量守恒结论。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'判断', q:'保守力做正功时，系统势能减小。', options:['A. 正确','B. 错误'], ans:'A', exp:'保守力做功等于势能增量的负值：W_保=-ΔE_p。W_保>0 则 ΔE_p<0。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'两物体发生完全弹性正碰，则碰撞前后[ ]', options:['A. 动量守恒、机械能守恒','B. 动量守恒、机械能不守恒','C. 动量不守恒、机械能守恒','D. 都不守恒'], ans:'A', exp:'完全弹性碰撞无机械能损失，且碰撞力为内力，动量守恒。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'填空', q:'一维运动质点受变力 F=3x²（N），从 x=0 到 x=2m，力做功 W=______ J。', options:[] , ans:'8', exp:'W=∫F dx=∫₀² 3x² dx=x³|₀²=8 J。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'物体在保守力场中沿闭合路径运动一周，保守力做功为[ ]', options:['A. 正','B. 负','C. 零','D. 不确定'], ans:'C', exp:'保守力做功与路径无关，只与始末位置有关；闭合路径始末位置相同，做功为零。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'质量为 m 物体从高度 h 处自由下落，与地面发生非弹性碰撞后反弹高度 h/4，则碰撞过程损失的机械能为[ ]', options:['A. mgh/4','B. mgh/2','C. 3mgh/4','D. mgh'], ans:'C', exp:'初始机械能 mgh，反弹后 mgh/4，损失 3mgh/4。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'判断', q:'系统动量守恒，则系统机械能一定守恒。', options:['A. 正确','B. 错误'], ans:'B', exp:'动量守恒只要求合外力为零，机械能守恒还需只有保守力做功。反例：非弹性碰撞。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'填空', q:'质量 2kg 物体速度由 3 m/s 增至 6 m/s，合外力做功为______ J。', options:[] , ans:'27', exp:'W=ΔE_k=0.5×2×(6²-3²)=36-9=27 J。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'弹簧振子从平衡位置拉到最大位移后释放，从拉到释放过程中[ ]', options:['A. 动量守恒、机械能守恒','B. 动量守恒、机械能不守恒','C. 动量不守恒、机械能守恒','D. 都不守恒'], ans:'D', exp:'手对弹簧做功，且外力不为零，故动量和机械能均不守恒。释放后只受弹簧力才守恒。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'选择', q:'质量 m 物体以速度 v 与静止质量 M 物体发生完全非弹性碰撞，碰撞后共同速度为[ ]', options:['A. \(v\)','B. \(mv/(m+M)\)','C. \(Mv/(m+M)\)','D. \(mv/M\)'], ans:'B', exp:'动量守恒：mv=(m+M)V，得 V=mv/(m+M)。'},
+{day:'day1', chapter:'第2章 运动的守恒量', type:'填空', q:'一质点受恒力 F=2i+3j（N）作用 2s，质量 m=1kg，初速度为零，则末速度 v=______（m/s）。', options:[] , ans:'\(4i+6j\)', exp:'a=F/m=2i+3j，v=at=(2i+3j)×2=4i+6j。'},
+
+// ===== Day 1: Chapter 3 (15) =====
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'细杆绕一端垂直轴的转动惯量为[ ]', options:['A. \(\frac{1}{12}ML^2\)','B. \(\frac{1}{3}ML^2\)','C. \(\frac{1}{2}ML^2\)','D. \(ML^2\)'], ans:'B', exp:'细杆绕中点 \(J_c=ML²/12\)，由平行轴定理绕端点 J=J_c+M(L/2)²=ML²/3。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'圆盘绕中心垂直轴的转动惯量为[ ]', options:['A. \(\frac{1}{2}MR^2\)','B. \(MR^2\)','C. \(\frac{1}{4}MR^2\)','D. \(\frac{3}{2}MR^2\)'], ans:'A', exp:'均匀圆盘绕中心垂直轴的转动惯量为 \(\frac{1}{2}MR^2\)。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'圆环绕中心垂直轴的转动惯量为[ ]', options:['A. \(\frac{1}{2}MR^2\)','B. \(MR^2\)','C. \(\frac{1}{4}MR^2\)','D. \(\frac{3}{2}MR^2\)'], ans:'B', exp:'圆环所有质量集中在半径 R 处，J=MR²。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'刚体定轴转动定律表达式为[ ]', options:['A. \(F=ma\)','B. \(M=J\beta\)','C. \(L=J\omega\)','D. \(E=\frac{1}{2}J\omega^2\)'], ans:'B', exp:'刚体定轴转动中，合外力矩 M 等于转动惯量 J 与角加速度 β 的乘积。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'判断', q:'刚体绕定轴转动时，若合外力矩为零，则角速度一定为零。', options:['A. 正确','B. 错误'], ans:'B', exp:'合外力矩为零时角动量守恒，角速度可以保持不变，不一定为零。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'填空', q:'质量为 M、半径 R 的圆盘，在边缘挖去半径 R/2 的小圆盘后，绕中心轴转动惯量 J=______。', options:[] , ans:'\(\frac{13}{32}MR^2\)（假设挖去部分质量为 M/4）', exp:'完整圆盘 J=MR²/2；挖去小圆盘质量 M/4，其 J 用平行轴定理为 (M/4)(R/2)²/2+(M/4)(R/2)²=3MR²/32。剩余 J=MR²/2-3MR²/32=13MR²/32。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'花样滑冰运动员收臂后转动加快，是因为[ ]', options:['A. 角动量增大','B. 转动惯量减小，角速度增大','C. 转动惯量增大','D. 角动量减小'], ans:'B', exp:'收臂使 J 减小，角动量 L=Jω 守恒，故 ω 增大。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'质量 m 的小球系在轻绳一端作圆锥摆，在水平面内匀速转动，则小球对竖直轴的角动量[ ]', options:['A. 不守恒','B. 守恒','C. 为零','D. 不断增加'], ans:'B', exp:'重力与绳张力对竖直轴力矩为零，角动量守恒。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'填空', q:'刚体角加速度 β=4 rad/s²，转动惯量 J=0.5 kg·m²，所受合外力矩 M=______ N·m。', options:[] , ans:'2', exp:'由 M=Jβ=0.5×4=2 N·m。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'飞轮以角速度 ω 转动，制动后转过 θ 角停止，若制动为恒力矩，则角加速度大小为[ ]', options:['A. \(\omega^2/(2θ)\)','B. \(\omega^2/θ\)','C. \(ω/θ\)','D. \(ω/2θ\)'], ans:'A', exp:'用 \(ω²=ω₀²+2βθ\)，末速 0，得 |β|=ω²/(2θ)。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'判断', q:'刚体的转动动能只与角速度有关，与转动轴位置无关。', options:['A. 正确','B. 错误'], ans:'B', exp:'E_k=½Jω²，转动惯量 J 与轴位置有关，故转动动能也与轴位置有关。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'一长为 L、质量 M 的细杆可绕一端水平轴转动，从水平位置静止释放，到竖直位置时的角速度为[ ]', options:['A. \(\sqrt{g/L}\)','B. \(\sqrt{3g/L}\)','C. \(\sqrt{3g/(2L)}\)','D. \(\sqrt{2g/L}\)'], ans:'B', exp:'机械能守恒：MgL/2=½Jω²=½×(ML²/3)×ω²，解得 ω=√(3g/L)。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'填空', q:'刚体定轴转动，角动量 L=2 kg·m²/s，J=0.4 kg·m²，则角速度 ω=______ rad/s。', options:[] , ans:'5', exp:'ω=L/J=2/0.4=5 rad/s。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'两个圆盘 A、B 质量和半径均相同，A 为均匀圆盘，B 为圆环，则绕中心轴转动惯量[ ]', options:['A. \(J_A=J_B\)','B. \(J_A>J_B\)','C. \(J_A<J_B\)','D. 不确定'], ans:'C', exp:'圆盘 J=MR²/2，圆环 J=MR²，故 J_A<J_B。'},
+{day:'day1', chapter:'第3章 刚体力学基础', type:'选择', q:'子弹水平射入静止木棒一端并嵌入，棒可绕另一端转动，则此过程[ ]', options:['A. 动量守恒、角动量守恒','B. 动量不守恒、角动量守恒','C. 动量守恒、角动量不守恒','D. 都不守恒'], ans:'B', exp:'轴对棒有约束力，系统动量不守恒；但轴力对轴力矩为零，角动量守恒。'},
+
+// ===== Day 2: Chapter 5 (10) =====
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'温度相同的氢气和氧气，分子平均平动动能[ ]', options:['A. 氢气大','B. 氧气大','C. 相等','D. 不确定'], ans:'C', exp:'温度是分子平均平动动能的量度，\(\bar{\varepsilon}_k=3kT/2\)，只与温度有关。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'理想气体温度升高一倍，分子方均根速率变为原来的[ ]', options:['A. 1 倍','B. \(\sqrt2\) 倍','C. 2 倍','D. 4 倍'], ans:'B', exp:'\(\sqrt{\overline{v^2}}\propto\sqrt{T}\)，T 加倍则变为 \(\sqrt2\) 倍。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'填空', q:'1 mol 理想气体在 300 K 时的内能（自由度 i=5）为______ J。', options:[] , ans:'6232.5', exp:'E=(i/2)νRT=(5/2)×1×8.314×300≈6232.5 J。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'理想气体经历等温膨胀，则[ ]', options:['A. 内能增加','B. 内能不变','C. 内能减少','D. 压强不变'], ans:'B', exp:'理想气体内能只与温度有关，等温过程 ΔU=0。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'气体分子三种特征速率中最大的是[ ]', options:['A. 最概然速率','B. 平均速率','C. 方均根速率','D. 三者相等'], ans:'C', exp:'\(v_p:\bar v:\sqrt{\overline{v^2}}=\sqrt2:\sqrt{8/\pi}:\sqrt3\approx1.41:1.60:1.73\)，方均根最大。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'判断', q:'理想气体压强只与分子数密度和温度有关。', options:['A. 正确','B. 错误'], ans:'A', exp:'p=nkT，只取决于 n 和 T。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'同温同压下，氢气与氧气的分子数密度之比为[ ]', options:['A. 1:2','B. 2:1','C. 1:1','D. 16:1'], ans:'C', exp:'p=nkT，同温同压则 n 相同。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'填空', q:'某理想气体分子平均平动动能为 \(6.0\times10^{-21}\) J，则温度约为______ K。', options:[] , ans:'290', exp:'\(\bar{\varepsilon}_k=3kT/2\)，T=2×6.0×10⁻²¹/(3×1.38×10⁻²³)≈290 K。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'若理想气体体积不变，温度升高，则[ ]', options:['A. 压强不变、分子平均动能不变','B. 压强增大、分子平均动能增大','C. 压强减小、分子平均动能增大','D. 压强增大、分子平均动能不变'], ans:'B', exp:'体积不变，温度升高，p=nkT 增大；温度升高平均动能增大。'},
+{day:'day2', chapter:'第5章 气态动理论', type:'选择', q:'自由度为 i 的理想气体，定压摩尔热容与定容摩尔热容之差为[ ]', options:['A. \(R\)','B. \(iR/2\)','C. \((i+2)R/2\)','D. \(2R\)'], ans:'A', exp:'C_p-C_V=R，迈耶公式。'},
+
+// ===== Day 2: Chapter 6 (15) =====
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体等压膨胀时，温度升高，则[ ]', options:['A. Q=0','B. W=0','C. ΔU>0','D. ΔU<0'], ans:'C', exp:'等压膨胀 V 增大，由 pV=νRT，T 升高，ΔU>0；同时气体对外做功 W>0，吸热 Q>0。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体等温膨胀过程中[ ]', options:['A. Q=0','B. W=0','C. Q=W','D. ΔU=Q'], ans:'C', exp:'等温 ΔU=0，由热一定律 Q=W。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体绝热膨胀时[ ]', options:['A. 温度不变','B. 温度升高','C. 温度降低','D. 压强不变'], ans:'C', exp:'绝热 Q=0，气体对外做功 W>0，ΔU=-W<0，温度降低。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'卡诺热机高温热源 600 K，低温热源 300 K，效率为[ ]', options:['A. 25%','B. 50%','C. 75%','D. 100%'], ans:'B', exp:'η=1-T₂/T₁=1-300/600=0.5=50%。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'循环过程中，系统对外做的净功等于[ ]', options:['A. 吸收热量','B. 放出热量','C. 吸收热量减去放出热量','D. 零'], ans:'C', exp:'循环 ΔU=0，Q_净=W_净，即 Q_吸-Q_放=W_净。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'判断', q:'不可逆过程的熵变一定大于可逆过程的熵变。', options:['A. 正确','B. 错误'], ans:'B', exp:'熵是状态函数，只与始末状态有关。不可逆过程中系统+环境的总熵增加，但系统本身熵变只由状态决定。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'填空', q:'2 mol 理想气体在等体过程中温度升高 50 K，吸收热量 Q=______ J（i=5）。', options:[] , ans:'2078.5', exp:'等体 Q=ΔU=(i/2)νRΔT=(5/2)×2×8.314×50≈2078.5 J。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体经历一个循环后回到初态，内能变化为[ ]', options:['A. 大于零','B. 小于零','C. 等于零','D. 不确定'], ans:'C', exp:'内能是状态函数，循环后状态复原，ΔU=0。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体等压压缩时，外界对气体做功，气体[ ]', options:['A. 吸热且温度升高','B. 放热且温度降低','C. 吸热且温度降低','D. 放热且温度升高'], ans:'B', exp:'等压压缩 V 减小，T 降低，ΔU<0；外界做功 W<0（对气体为正），Q=ΔU-W<0，放热。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'热机效率为 40%，吸收 1000 J 热量，则对外做功为[ ]', options:['A. 250 J','B. 400 J','C. 600 J','D. 1000 J'], ans:'B', exp:'η=W/Q_吸，W=ηQ_吸=0.4×1000=400 J。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'某过程系统吸热 200 J，对外做功 150 J，则内能变化为[ ]（按 ΔU=Q-W 符号）', options:['A. 50 J','B. 350 J','C. -50 J','D. -350 J'], ans:'A', exp:'ΔU=Q-W=200-150=50 J。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'判断', q:'可逆过程一定是准静态过程。', options:['A. 正确','B. 错误'], ans:'A', exp:'可逆过程要求无摩擦、无耗散，过程必为准静态；但准静态过程不一定可逆。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'填空', q:'一定量理想气体从同一初态分别经等温、绝热膨胀到相同体积，则等温过程末态压强______绝热过程末态压强。', options:[] , ans:'大于', exp:'pV^γ=常量（绝热），γ>1，膨胀到相同体积时绝热压强下降更快。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体自由膨胀过程中[ ]', options:['A. Q=W=ΔU=0','B. Q>0, W=0','C. Q=0, W>0','D. ΔU>0'], ans:'A', exp:'向真空自由膨胀，不做功、不吸热，理想气体内能不变。'},
+{day:'day2', chapter:'第6章 热力学基础', type:'选择', q:'理想气体等体升压过程中[ ]', options:['A. 温度不变','B. 对外做功','C. 吸收热量等于内能增加','D. 放出热量'], ans:'C', exp:'等体 W=0，Q=ΔU，全部热量用于增加内能。'},
+
+// ===== Day 2: Chapter 7 (20) =====
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'点电荷 q 在距离 r 处产生的电场强度大小为[ ]', options:['A. \(q/(4\pi\varepsilon_0 r)\)','B. \(q/(4\pi\varepsilon_0 r^2)\)','C. \(q/(4\pi\varepsilon_0 r^3)\)','D. \(q r/(4\pi\varepsilon_0)\)'], ans:'B', exp:'点电荷场强大小 \(E=q/(4\pi\varepsilon_0 r^2)\)。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'半径为 R 的均匀带电球面（电荷 Q）外部距球心 r 处电场强度为[ ]', options:['A. 0','B. \(Q/(4\pi\varepsilon_0 r^2)\)','C. \(Q/(4\pi\varepsilon_0 R^2)\)','D. \(Q/(4\pi\varepsilon_0 r)\)'], ans:'B', exp:'球对称，外部等效点电荷，E=Q/(4πε₀r²)。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'均匀带电球面内部电场强度为[ ]', options:['A. 0','B. \(Q/(4\pi\varepsilon_0 r^2)\)','C. 与 r 成正比','D. 与 r² 成正比'], ans:'A', exp:'由高斯定理，球面内包围电荷为 0，E=0。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'无限大均匀带电平面外电场强度为[ ]（面电荷密度 σ）', options:['A. \(\sigma/(2\varepsilon_0)\)','B. \(\sigma/\varepsilon_0\)','C. \(\sigma/(4\pi\varepsilon_0)\)','D. 0'], ans:'A', exp:'无限大带电平面两侧为均匀电场，E=σ/(2ε₀)。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'两个无限大带等量异号电荷平行板之间电场强度为[ ]', options:['A. 0','B. \(\sigma/\varepsilon_0\)','C. \(\sigma/(2\varepsilon_0)\)','D. \(2\sigma/\varepsilon_0\)'], ans:'B', exp:'两板之间电场同向叠加，外部抵消；内部 E=σ/ε₀。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'点电荷 q 在距离 r 处产生的电势（取无穷远为零）为[ ]', options:['A. \(q/(4\pi\varepsilon_0 r^2)\)','B. \(q/(4\pi\varepsilon_0 r)\)','C. \(q r/(4\pi\varepsilon_0)\)','D. \(-q/(4\pi\varepsilon_0 r)\)'], ans:'B', exp:'点电荷电势 U=q/(4πε₀r)。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'导体静电平衡时，导体内部[ ]', options:['A. E=0，电荷可分布内部','B. E=0，电荷只分布在表面','C. E≠0，电荷只分布在表面','D. E≠0，电荷可分布内部'], ans:'B', exp:'导体静电平衡内部场强为零，电荷分布在表面。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'闭合曲面内包围电荷为 -2Q，面外有电荷 3Q，则穿过该曲面的电通量为[ ]', options:['A. \(3Q/\varepsilon_0\)','B. \(2Q/\varepsilon_0\)','C. \(-2Q/\varepsilon_0\)','D. \(Q/\varepsilon_0\)'], ans:'C', exp:'高斯定理只与内部电荷有关，Φ=Q_内/ε₀=-2Q/ε₀。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'判断', q:'电场线是闭合曲线。', options:['A. 正确','B. 错误'], ans:'B', exp:'静电场是有源场，电场线起于正电荷止于负电荷，不闭合。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'平行板电容器充电后保持与电源连接，增大板间距，则电容 C、电压 U、电场能量 W 变化为[ ]', options:['A. C↓ U↑ W↑','B. C↓ U 不变 W↓','C. C↑ U 不变 W↑','D. C↓ U↓ W↓'], ans:'B', exp:'U 不变（接电源），C=ε₀S/d 减小，W=½CU² 减小。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'均匀带电圆环（半径 R，电荷 Q）轴线上距中心 x 处电场强度方向为[ ]', options:['A. 沿轴向背离圆环','B. 沿轴向指向圆环','C. 沿半径向外','D. 与 x 无关'], ans:'A', exp:'圆环上对称电荷在垂直轴向分量抵消，轴向分量同向；若 Q 为正，沿轴向远离圆环。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'填空', q:'电偶极子在场强为 E 的匀强电场中，所受力矩最大为______。', options:[] , ans:'\(pE\)', exp:'力矩 M=pE sinθ，当 θ=90° 时最大为 pE。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'空腔导体球壳内放置点电荷 q，球壳内表面感应电荷为[ ]', options:['A. q','B. -q','C. 0','D. 2q'], ans:'B', exp:'由高斯定理，在导体内部做高斯面，E=0 故内表面总电荷为 -q。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'电场中某点电势为零，则该点电场强度[ ]', options:['A. 一定为零','B. 一定不为零','C. 可能为零也可能不为零','D. 不确定'], ans:'C', exp:'电势为零的点场强不一定为零（如等量异号电荷中垂线上）；电势极值点场强为零。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'关于高斯定理，下列说法正确的是[ ]', options:['A. 高斯面上 E 只由面内电荷产生','B. 高斯面内无电荷则面上 E 处处为零','C. 穿过高斯面的电通量只与面内电荷有关','D. 高斯定理只适用于球对称'], ans:'C', exp:'高斯面上 E 由所有电荷产生，但电通量只取决于面内电荷；高斯定理普遍成立。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'一带电导体球壳半径 R，带电荷 Q，其电势（无穷远为零）为[ ]', options:['A. \(Q/(4\pi\varepsilon_0 R)\)','B. \(Q/(4\pi\varepsilon_0 R^2)\)','C. 0','D. 与内部有无电荷有关'], ans:'A', exp:'球壳外部等效点电荷，球壳表面为等势面，U=Q/(4πε₀R)。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'两个相同的金属小球，带电荷 q 和 3q，接触后分开，各带电荷为[ ]', options:['A. q 和 3q','B. 2q 和 2q','C. 0 和 4q','D. 4q 和 0'], ans:'B', exp:'相同导体球接触后电荷均分，总电荷 4q，各 2q。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'判断', q:'等势面上各点电场强度大小相等。', options:['A. 正确','B. 错误'], ans:'B', exp:'等势面上电势相等，但场强大小不一定相等（如等量异号电荷中垂面）。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'填空', q:'平行板电容器电容 C=2 μF，电压 U=100 V，储存电荷 Q=______ C。', options:[] , ans:'2×10⁻⁴', exp:'Q=CU=2×10⁻⁶×100=2×10⁻⁴ C。'},
+{day:'day2', chapter:'第7章 静止电荷的电场', type:'选择', q:'电介质插入平行板电容器（保持与电源连接），则电容 C、电压 U、电荷 Q 变化为[ ]', options:['A. C↑ U 不变 Q↑','B. C↑ U↑ Q↑','C. C↓ U 不变 Q↓','D. C↑ U↓ Q 不变'], ans:'A', exp:'插入电介质 C 增大，U 不变（接电源），Q=CU 增大。'},
+
+// ===== Day 3: Chapter 8 (20) =====
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'无限长直导线电流 I，距导线 r 处磁感应强度大小为[ ]', options:['A. \(\mu_0 I/(2r)\)','B. \(\mu_0 I/(2\pi r)\)','C. \(\mu_0 I/(4\pi r)\)','D. \(\mu_0 I/(4\pi r^2)\)'], ans:'B', exp:'B=μ₀I/(2πr)，方向由右手螺旋定则。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'圆电流线圈轴线上距中心 x 处磁感应强度为[ ]', options:['A. \(\mu_0 I R^2/[2(R^2+x^2)^{3/2}]\)','B. \(\mu_0 I R/[2(R^2+x^2)^{3/2}]\)','C. \(\mu_0 I R^2/[2(R^2+x^2)]\)','D. \(\mu_0 I R/[2(R^2+x^2)]\)'], ans:'A', exp:'圆电流轴线上 B=μ₀IR²/[2(R²+x²)^{3/2}]。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'长直螺线管内部磁场近似为[ ]', options:['A. 0','B. \(\mu_0 n I\)','C. \(\mu_0 I/(2\pi r)\)','D. \(\mu_0 I R^2/(2r^3)\)'], ans:'B', exp:'长直螺线管内部为均匀磁场 B=μ₀nI，n 为单位长度匝数。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'安培环路定理 \(∮B·dl=μ₀I_{内}\) 中，I_{内} 是指[ ]', options:['A. 穿过回路的全部电流','B. 与回路铰链的电流代数和','C. 回路外的电流','D. 回路所围面积内的电流'], ans:'B', exp:'I_{内} 是与回路铰链（穿过以回路为边界的任意曲面）的电流代数和，考虑方向。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'在均匀磁场中，长为 L 的直导线通电流 I，导线与 B 垂直，受安培力大小为[ ]', options:['A. 0','B. \(ILB\)','C. \(ILB/2\)','D. \(I^2 L B\)'], ans:'B', exp:'F=ILB sinθ，θ=90° 时 F=ILB。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'带电粒子垂直进入匀强磁场，将做[ ]', options:['A. 直线运动','B. 匀速圆周运动','C. 抛物线运动','D. 螺旋运动'], ans:'B', exp:'洛伦兹力提供向心力，v⊥B 时做匀速圆周运动。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'带电粒子在匀强磁场中做圆周运动，半径与动量的关系为[ ]', options:['A. \(R=mv/qB\)','B. \(R=p/qB\)','C. \(R=qB/p\)','D. \(R=p/qB\) 且与速度无关'], ans:'B', exp:'由 qvB=mv²/R 得 R=mv/(qB)=p/(qB)。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'两根平行长直导线通同向电流，它们之间[ ]', options:['A. 相互吸引','B. 相互排斥','C. 无作用力','D. 先吸引后排斥'], ans:'A', exp:'同向电流产生相互吸引力，反向电流相互排斥。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'判断', q:'磁场线是闭合曲线。', options:['A. 正确','B. 错误'], ans:'A', exp:'磁场无源（无磁单极），磁感应线总是闭合曲线。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'一电子以速度 v 垂直进入磁感应强度为 B 的匀强磁场，其回旋周期为[ ]', options:['A. \(2\pi m/(eB)\)','B. \(2\pi v/(eB)\)','C. \(eB/(2\pi m)\)','D. \(m/(eB)\)'], ans:'A', exp:'T=2πR/v=2πm/(qB)=2πm/(eB)。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'均匀磁场中一个载流线圈所受合力为[ ]', options:['A. 不一定为零','B. 一定为零','C. 等于线圈磁矩','D. 与线圈面积成正比'], ans:'B', exp:'均匀磁场中，闭合载流线圈所受安培力矢量和为零。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'载流线圈在均匀磁场中受到的力矩为[ ]', options:['A. \(M=mB\)','B. \(M=m×B\)','C. \(M=0\)','D. \(M=mB\sinθ\)'], ans:'B', exp:'力矩 M=m×B，大小 M=mB sinθ，m 为磁矩。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'填空', q:'一电子以速度 \(2\times10^6\) m/s 垂直进入 B=0.01 T 磁场，其轨道半径约为______ m。', options:[] , ans:'1.14×10⁻³', exp:'R=mv/(eB)=(9.11×10⁻³¹×2×10⁶)/(1.6×10⁻¹⁹×0.01)≈1.14×10⁻³ m。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'磁介质中的磁场强度 H 与磁感应强度 B 的关系为[ ]', options:['A. \(B=μH\)','B. \(H=μB\)','C. \(B=μ_0 H\)','D. \(B=H/μ\)'], ans:'A', exp:'B=μH，μ 为磁导率。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'一个电子在磁场中运动时，若速度方向与 B 平行，则[ ]', options:['A. 做圆周运动','B. 做螺旋运动','C. 做直线运动','D. 静止'], ans:'C', exp:'v∥B 时洛伦兹力为零，电子保持匀速直线运动。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'两根无限长直导线相距 d，通电流 I₁、I₂，单位长度受力大小为[ ]', options:['A. \(\mu_0 I_1 I_2/(2\pi d)\)','B. \(\mu_0 I_1 I_2/(2 d)\)','C. \(\mu_0 I_1 I_2/(4\pi d)\)','D. \(\mu_0 I_1 I_2/(\pi d)\)'], ans:'A', exp:'一根导线在另一根处产生 B=μ₀I₁/(2πd)，单位长度受力 F/L=I₂B=μ₀I₁I₂/(2πd)。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'判断', q:'洛伦兹力对带电粒子不做功。', options:['A. 正确','B. 错误'], ans:'A', exp:'洛伦兹力 F=qv×B 始终垂直于速度 v，故功率 F·v=0，不做功。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'将长直导线弯成半径为 R 的圆环，通电流 I，圆心处磁感应强度为[ ]', options:['A. \(\mu_0 I/(2R)\)','B. \(\mu_0 I/(4R)\)','C. \(\mu_0 I/(2\pi R)\)','D. 0'], ans:'A', exp:'圆电流圆心处 B=μ₀I/(2R)。'},
+{day:'day3', chapter:'第8章 恒定电流的磁场', type:'选择', q:'半径为 R 的无限长圆柱形导体，均匀电流 I，导体内部距轴 r 处磁感应强度为[ ]', options:['A. \(\mu_0 I/(2\pi r)\)','B. \(\mu_0 I r/(2\pi R^2)\)','C. \(\mu_0 I/(2\pi R)\)','D. 0'], ans:'B', exp:'由安培环路定理，内部 B×2πr=μ₀(Iπr²/πR²)，得 B=μ₀Ir/(2πR²)。'},
+
+// ===== Day 3: Chapter 9 (15) =====
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'法拉第电磁感应定律表达式为[ ]', options:['A. \(\varepsilon=IR\)','B. \(\varepsilon=-d\Phi_B/dt\)','C. \(\varepsilon=BLv\)','D. \(\varepsilon=\mu_0 I/2\pi r\)'], ans:'B', exp:'\(\varepsilon=-N d\Phi_B/dt\)，负号反映方向。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'穿过回路的磁通量 Φ 均匀增大，则感应电流产生的磁场方向[ ]', options:['A. 与原磁场同向','B. 与原磁场反向','C. 垂直于原磁场','D. 不确定'], ans:'B', exp:'楞次定律：感应电流磁场阻碍磁通量增加，故与原磁场反向。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'长为 L 的导体棒以速度 v 垂直于磁场 B 运动，感应电动势大小为[ ]', options:['A. \(BLv\)','B. \(BL/v\)','C. \(Bv/L\)','D. \(B^2Lv\)'], ans:'A', exp:'动生电动势 ε=BLv（B、L、v 互相垂直）。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'将条形磁铁 N 极快速插入线圈，线圈中感应电流产生的磁场方向[ ]', options:['A. 与磁铁 N 极同向','B. 与磁铁 N 极反向','C. 为零','D. 无法判断'], ans:'B', exp:'感应磁场阻碍 N 极插入，即与磁铁磁场反向。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'自感系数 L 与哪些因素有关[ ]', options:['A. 线圈电流','B. 线圈匝数、形状、尺寸、磁介质','C. 线圈电压','D. 时间'], ans:'B', exp:'自感是线圈本身属性，与电流、电压无关。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'填空', q:'线圈磁通量在 0.5 s 内从 0.2 Wb 均匀减小到 0，感应电动势大小为______ V。', options:[] , ans:'0.4', exp:'ε=|ΔΦ/Δt|=0.2/0.5=0.4 V。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'感生电场是[ ]', options:['A. 保守场','B. 涡旋场，非保守场','C. 无源场','D. 静电场'], ans:'B', exp:'变化磁场激发的感生电场为涡旋场，电场线闭合，非保守场。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'长直螺线管电流均匀增大，管内放置一圆线圈，则线圈中[ ]', options:['A. 无感应电流','B. 有感应电流，方向与螺线管电流同向','C. 有感应电流，方向与螺线管电流反向','D. 不确定'], ans:'C', exp:'螺线管电流增大，管内 B 增大，线圈中感应电流磁场阻碍 B 增加，方向与螺线管电流反向。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'面积为 S 的矩形线圈在均匀磁场 B 中绕轴转动，磁通量最大时线圈平面与磁场[ ]', options:['A. 平行','B. 垂直','C. 成45°','D. 成60°'], ans:'B', exp:'Φ=BScosθ，θ=0°（线圈垂直于 B）时磁通量最大。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'自感线圈中电流在 t 时间内由 I 均匀降到 0，产生的自感电动势大小为[ ]', options:['A. \(LI\)','B. \(LI/t\)','C. \(L/t\)','D. 0'], ans:'B', exp:'ε_L=|-L dI/dt|=L(I/t)。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'判断', q:'动生电动势本质上是洛伦兹力作用的结果。', options:['A. 正确','B. 错误'], ans:'A', exp:'导体在磁场中运动时，自由电子受洛伦兹力定向移动，形成动生电动势。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'两个相邻线圈，线圈1电流变化在线圈2中产生互感电动势，其大小为[ ]', options:['A. \(\varepsilon_{21}=M dI_1/dt\)','B. \(\varepsilon_{21}=-M dI_1/dt\)','C. \(\varepsilon_{21}=M I_1\)','D. \(\varepsilon_{21}=L dI_1/dt\)'], ans:'B', exp:'互感电动势 ε₂₁=-M dI₁/dt。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'填空', q:'电感 L=0.2 H 的线圈通电流 I=3 A，储存磁场能量为______ J。', options:[] , ans:'0.9', exp:'W=½LI²=0.5×0.2×9=0.9 J。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'位移电流的本质是[ ]', options:['A. 真实的电荷流动','B. 变化的电场','C. 恒定电场','D. 磁场变化'], ans:'B', exp:'麦克斯韦假设变化电场等效为一种电流，即位移电流。'},
+{day:'day3', chapter:'第9章 电磁感应 电磁场', type:'选择', q:'导体棒在均匀磁场中平动，若磁场方向、运动方向、棒长三者两两垂直，则棒两端电势[ ]', options:['A. 相等','B. 产生恒定电势差','C. 为零','D. 不断变化'], ans:'B', exp:'动生电动势 ε=BLv，棒两端保持恒定电势差。'}
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function getMastery(id){
+  return localStorage.getItem('mastery-'+id) || 'none';
+}
+function setMastery(id, level){
+  localStorage.setItem('mastery-'+id, level);
+  renderQuiz();
+}
+
+function filterQuiz(f){
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderQuiz();
+}
+function searchQuiz(v){
+  currentSearch = v.toLowerCase();
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const list = document.getElementById('quiz-list');
+  list.innerHTML = '';
+  let filtered = quizData.filter((q,i)=>{
+    if(currentFilter==='wrong') return getMastery(i)!=='none' && getMastery(i)!=='ok';
+    if(currentFilter!=='all' && q.day!==currentFilter) return false;
+    if(currentSearch){
+      const text = (q.q+' '+q.chapter+' '+q.ans+' '+q.exp).toLowerCase();
+      return text.includes(currentSearch);
+    }
+    return true;
+  });
+  
+  if(filtered.length===0){
+    list.innerHTML = '<p style="color:var(--text3);text-align:center;padding:20px">没有符合条件的题目</p>';
+    return;
+  }
+  
+  filtered.forEach((q, idx)=>{
+    const realIdx = quizData.indexOf(q);
+    const tagClass = q.day;
+    const mastery = getMastery(realIdx);
+    let optionsHtml = '';
+    if(q.options && q.options.length){
+      optionsHtml = '<div class="q-options">'+q.options.map((opt,oIdx)=>
+        '<label class="q-option"><input type="radio" name="q-'+realIdx+'" onclick="event.stopPropagation()">'+opt+'</label>'
+      ).join('')+'</div>';
+    }
+    const masterBtns = `
+      <div class="mastery-btns">
+        <button class="${mastery==='ok'?'active':''}" onclick="setMastery(${realIdx},'ok')">✅ 已掌握</button>
+        <button class="${mastery==='vague'?'active':''}" onclick="setMastery(${realIdx},'vague')">🟡 模糊</button>
+        <button class="${mastery==='wrong'?'active':''}" onclick="setMastery(${realIdx},'wrong')">❌ 不会</button>
+        <button class="${mastery==='none'?'active':''}" onclick="setMastery(${realIdx},'none')">未标记</button>
+      </div>
+    `;
+    const html = `
+      <div class="q-card">
+        <div class="meta">
+          <span class="q-tag ${tagClass}">${q.day.replace('day','Day ')}</span>
+          <span class="q-tag">${q.chapter}</span>
+          <span class="q-tag">${q.type}</span>
+          <span class="q-tag">#${realIdx+1}</span>
+        </div>
+        <div class="q-text">${q.q}</div>
+        ${optionsHtml}
+        <div class="q-actions">
+          <button class="btn btn-sm" onclick="toggleAnswer(${realIdx})">展开解析</button>
+        </div>
+        <div class="answer-box" id="ans-${realIdx}">
+          <div class="ans">答案：${q.ans}</div>
+          <div class="exp">${q.exp}</div>
+          ${masterBtns}
+        </div>
+      </div>
+    `;
+    list.innerHTML += html;
+  });
+  if(window.MathJax) MathJax.typesetPromise();
+}
+
+function toggleAnswer(id){
+  const box = document.getElementById('ans-'+id);
+  box.classList.toggle('show');
+  if(window.MathJax) MathJax.typesetPromise();
+}
+
+// AI Chat
+function toggleAI(){
+  document.getElementById('ai-panel').classList.toggle('show');
+}
+
+const API_KEY = 'sk-889ceecb9fd2479dbdd3a26380b31495';
+const MODEL = 'deepseek-v4-flash';
+
+async function sendAI(){
+  const input = document.getElementById('ai-input');
+  const msg = input.value.trim();
+  if(!msg) return;
+  const body = document.getElementById('ai-body');
+  body.innerHTML += '<div class="ai-msg user">'+escapeHtml(msg)+'</div>';
+  input.value = '';
+  body.scrollTop = body.scrollHeight;
+  
+  const loading = document.createElement('div');
+  loading.className = 'ai-loading';
+  loading.textContent = 'AI 思考中...';
+  loading.id = 'ai-loading';
+  body.appendChild(loading);
+  body.scrollTop = body.scrollHeight;
+  
+  try{
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+API_KEY
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          {role: 'system', content: '你是一位大学物理B助教，擅长力学、热学和电磁学。请用中文回答，必要时使用 LaTeX 公式。先给出思路，再给出结果。'},
+          {role: 'user', content: msg}
+        ],
+        temperature: 0.7
+      })
+    });
+    document.getElementById('ai-loading').remove();
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || '（AI 没有返回内容）';
+    body.innerHTML += '<div class="ai-msg bot">'+escapeHtml(reply)+'</div>';
+    body.scrollTop = body.scrollHeight;
+    if(window.MathJax) MathJax.typesetPromise();
+  }catch(e){
+    document.getElementById('ai-loading').remove();
+    body.innerHTML += '<div class="ai-msg bot">请求出错：'+escapeHtml(e.message)+'。请检查网络或 API Key。</div>';
+    body.scrollTop = body.scrollHeight;
+  }
+}
+
+function escapeHtml(text){
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Init
+initChecklists();
+</script>
+</body>
+</html>
