@@ -1246,3 +1246,73 @@ tr:hover td{background:rgba(124,111,240,0.05)}
     <div class="quiz-item" data-chapter="ch9">
       <div class="quiz-q" onclick="toggleAnswer(this)">58. 【简答】简述人民公社化运动的内容及其教训？<span style="font-size:11px;color:var(--text3);margin-left:auto">点击展开答案 ▼</span></div>
       <div class="quiz-a"><b>内容：</b>1958年开始，将原来的农业生产合作社合并为"人民公社"，实行"一大二公"（规模大、公有化程度高），搞平均主义"大锅饭"，甚至实行"吃饭不要钱"。<br><b>危害：</b>严重挫伤了农民的生产积极性，破坏了农村生产力，导致1959-1961年国民经济严重困难。<br><b>教训：</b>生产关系必须适应生产力发展水平，不能超越阶段；经济建设必须按客观规律办事，不能搞主观臆断的"大跃进
+"（"大跃进"运动）的教训。</div>
+      <div class="quiz-meta">
+        <button class="quiz-tag" onclick="markQuiz(this,'mastered')">✅ 已掌握</button>
+        <button class="quiz-tag" onclick="markQuiz(this,'wrong')">❌ 需复习</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// 页面切换
+const pages = document.querySelectorAll('.page');
+const navBtns = document.querySelectorAll('.top-nav btn');
+navBtns.forEach((btn,i) => {
+  btn.addEventListener('click',() => {
+    navBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pages.forEach(p => p.classList.remove('active'));
+    if(pages[i]) pages[i].classList.add('active');
+  });
+});
+
+// 答案折叠
+function toggleAnswer(el) {
+  const a = el.nextElementSibling;
+  if(a && a.classList.contains('quiz-a')){
+    a.style.display = (a.style.display === 'block') ? 'none' : 'block';
+  }
+}
+
+// 打勾
+function toggleCheck(el,id){
+  el.classList.toggle('checked');
+  updateProgress();
+}
+
+// 标记掌握
+function markQuiz(btn,status){
+  const item = btn.closest('.quiz-item');
+  if(status==='mastered'){
+    item.style.borderLeft = '3px solid var(--green)';
+  } else {
+    item.style.borderLeft = '3px solid var(--red)';
+  }
+  btn.closest('.quiz-meta').querySelectorAll('.quiz-tag').forEach(b=>b.style.opacity='0.5');
+  btn.style.opacity='1';
+}
+
+// 章节筛选
+function filterQuiz(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.quiz-item').forEach(item=>{
+    item.style.display = (ch==='all'||item.dataset.chapter===ch) ? 'block' : 'none';
+  });
+}
+
+// 进度
+function updateProgress(){
+  const total = document.querySelectorAll('.card li').length;
+  const done = document.querySelectorAll('.card li.checked').length;
+  const p = document.getElementById('overallProgress');
+  if(p) p.style.width = total ? (done/total*100)+'%' : '0%';
+}
+
+// 初始化：隐藏所有答案
+document.querySelectorAll('.quiz-a').forEach(a=>a.style.display='none');
+</script>
+</body>
+</html>
