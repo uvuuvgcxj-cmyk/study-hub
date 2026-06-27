@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高数可视化 · ODE 斜率场 + 级数</title>
+<style>
+:root{--bg:#f8f7f4;--card:#fff;--border:#e5e2db;--purple600:#534AB7;--purple800:#3C3489;--purple50:#EEEDFE;--red600:#A32D2D;--green600:#3B6D11;--amber600:#854F0B;--text:#2C2C2A;--text2:#5F5E5A;--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);padding:20px}
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:14px;transition:all .15s}
+.tab.active{background:var(--purple600);color:#fff;border-color:var(--purple600)}
+.tab:hover:not(.active){background:var(--purple50)}
+.panel{display:none}
+.panel.active{display:block}
+h2{margin-bottom:12px;font-size:18px;color:var(--purple600)}
+h3{font-size:14px;margin:10px 0 6px;color:var(--text2)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.col{flex:1;min-width:300px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:4px;color:var(--text2)}
+input[type=text]{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;font-family:monospace;outline:none}
+input[type=text]:focus{border-color:var(--purple600)}
+.btn{padding:8px 16px;border-radius:6px;border:none;background:var(--purple600);color:#fff;cursor:pointer;font-size:13px;transition:opacity .15s}
+.btn:hover{opacity:.85}
+canvas{border:1px solid var(--border);border-radius:8px;width:100%;height:auto;cursor:crosshair}
+.presets{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.preset-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px;transition:all .1s}
+.preset-btn:hover{border-color:var(--purple600);color:var(--purple600)}
+.preset-btn.active{border-color:var(--purple600);background:var(--purple50);color:var(--purple600);font-weight:500}
+.info{font-size:13px;color:var(--text2);line-height:1.7;margin-top:8px;padding:10px;background:#f0f0f5;border-radius:6px}
+.info strong{color:var(--purple600)}
+.tag{display:inline-block;font-size:11px;padding:2px 6px;border-radius:4px;margin-right:4px;background:#fcebeb;color:var(--red600)}
+.tag.green{background:#eaf3de;color:var(--green600)}
+.tag.amber{background:#faeeda;color:var(--amber600)}
+.solution-list{max-height:300px;overflow-y:auto}
+.solution-item{padding:6px 8px;border-bottom:1px solid #f0f0f0;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.solution-item .del{color:#ccc;cursor:pointer;font-size:16px;padding:0 4px}
+.solution-item .del:hover{color:var(--red600)}
+.legend{display:flex;gap:16px;margin:8px 0;flex-wrap:wrap;font-size:12px;color:var(--text2)}
+.legend-item{display:flex;align-items:center;gap:6px}
+.legend-color{width:16px;height:4px;border-radius:2px}
+</style>
+</head>
+<body>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('ode')">📈 ODE 斜率场</div>
+  <div class="tab" onclick="switchTab('series')">📊 级数可视化</div>
+  <div class="tab" onclick="switchTab('help')">📖 使用说明</div>
+</div>
+<div class="panel active" id="panel-ode">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h2>📈 微分方程斜率场</h2>
+        <label>输入 dy/dx = f(x, y)：</label>
+        <div class="presets" id="odePresets"></div>
+        <input type="text" id="odeInput" value="2*x*y" placeholder="例如: 2*x*y, x/y, -y/x, x^2+y^2" style="margin-bottom:8px">
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <button class="btn" onclick="drawField()">🔄 绘制</button>
+          <button class="btn" onclick="clearTraces()">🧹 清除曲线</button>
+        </div>
+        <canvas id="odeCanvas" width="700" height="500"></canvas>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-color" style="background:#666"></div> 斜率场箭头</div>
+          <div class="legend-item"><div class="legend-color" style="background:var(--purple600)"></div> 解曲线</div>
+          <div class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--amber600)"></span> 初始点</div>
+        </div>
+        <div class="info" id="odeInfo"></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h3>📋 已追踪的解曲线</h3>
+        <div class="solution-list" id="solutionList">
+          <div style="color:var(--text2);font-size:13px">点击左侧画布添加曲线</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>💡 当前 ODE 分析</h3>
+        <div id="odeAnalysis" style="font-size:13px;line-height:1.8">等待输入...</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-series">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h2>📊 幂级数展开可视化</h2>
+        <label>选择函数：</label>
+        <div class="presets" id="seriesPresets"></div>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input type="text" id="seriesFunc" value="1/(1-x)" placeholder="函数表达式" style="flex:1">
+          <button class="btn" onclick="drawSeries()">绘制</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <label style="margin:0">展开到 n =</label>
+          <input type="range" id="seriesN" min="1" max="20" value="5" oninput="document.getElementById('seriesNVal').textContent=this.value; drawSeries()" style="flex:1">
+          <span id="seriesNVal" style="font-weight:500;min-width:24px">5</span>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:8px;font-size:12px">
+          <label style="margin:0;display:flex;align-items:center;gap:4px"><input type="checkbox" id="showOriginal" checked onchange="drawSeries()"> 原函数</label>
+          <label style="margin:0;display:flex;align-items:center;gap:4px"><input type="checkbox" id="showPartial" checked onchange="drawSeries()"> 部分和</label>
+          <label style="margin:0;display:flex;align-items:center;gap:4px"><input type="checkbox" id="showTerms" onchange="drawSeries()"> 各项</label>
+        </div>
+        <canvas id="seriesCanvas" width="700" height="400"></canvas>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-color" style="background:var(--purple600);height:2px"></div> 原函数</div>
+          <div class="legend-item"><div class="legend-color" style="background:var(--red600)"></div> 部分和 Sn(x)</div>
+          <div class="legend-item"><div class="legend-color" style="background:var(--green600);height:2px;border-top:2px dashed var(--green600)"></div> 各项</div>
+        </div>
+        <div class="info">
+          <strong id="seriesFormula">∑ xⁿ = 1/(1-x)</strong><br>
+          展开中心 x₀ = 0，<span id="seriesRadius">收敛半径 R = 1</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📋 8个常用泰勒展开</h3>
+        <div style="font-size:12px;line-height:2;columns:2">
+          <div>eˣ = ∑ xⁿ/n!</div>
+          <div>sin x = ∑ (-1)ⁿx²ⁿ⁺¹/(2n+1)!</div>
+          <div>cos x = ∑ (-1)ⁿx²ⁿ/(2n)!</div>
+          <div>1/(1-x) = ∑ xⁿ</div>
+          <div>ln(1+x) = ∑ (-1)ⁿ⁻¹xⁿ/n</div>
+          <div>arctan x = ∑ (-1)ⁿx²ⁿ⁺¹/(2n+1)</div>
+          <div>(1+x)ᵅ = ∑ C(α,n)xⁿ</div>
+          <div>1/(1+x²) = ∑ (-1)ⁿx²ⁿ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-help">
+  <div class="card">
+    <h2>📖 使用说明</h2>
+    <div style="line-height:2;font-size:14px">
+      <h3>📈 ODE 斜率场</h3>
+      <p>• 输入 dy/dx = f(x,y) 右侧表达式</p>
+      <p>• 支持运算符：+ - * / ^ sin cos tan exp log abs</p>
+      <p>• <strong>点击画布</strong> → 从该点追踪解曲线（RK4算法）</p>
+      <p>• 橙色点=初始点，紫色曲线=数值解</p>
+      <p>• 每条曲线 = 不同初始条件下的特解</p>
+      <h3>📊 级数可视化</h3>
+      <p>• 拖动滑块控制展开项数 n</p>
+      <p>• 紫色=原函数，红色=部分和，绿色虚线=各项</p>
+      <p>• 对比不同 n 下的逼近效果</p>
+      <h3>✨ 灵感来源</h3>
+      <p>• <strong>fieldplay</strong> (anvaka/fieldplay ⭐1315) — WebGL 向量场引擎</p>
+      <p>• <strong>鸢尾花书</strong> (Visualize-ML/Book3 ⭐7517) — 数学可视化教学</p>
+      <p>• <strong>3Blue1Brown</strong> (3b1b/manim ⭐87908) — 数学动画理念</p>
+    </div>
+  </div>
+</div>
+<script>
+function parseMath(expr) {
+  var f = expr.replace(/\^/g,'**').replace(/sin/g,'Math.sin').replace(/cos/g,'Math.cos').replace(/tan/g,'Math.tan').replace(/exp/g,'Math.exp').replace(/log/g,'Math.log').replace(/abs/g,'Math.abs').replace(/sqrt/g,'Math.sqrt').replace(/pi/gi,'Math.PI').replace(/π/g,'Math.PI');
+  return new Function('x','y','with(Math){return '+f+';}');
+}
+var canvas=document.getElementById('odeCanvas'),ctx=canvas.getContext('2d');
+var traces=[];
+var ODE_PRESETS=[
+  {label:'dy/dx=2xy',expr:'2*x*y',type:'可分离'},
+  {label:'dy/dx=x/y',expr:'x/y',type:'可分离'},
+  {label:'dy/dx=exp(x+y)',expr:'exp(x+y)',type:'可分离'},
+  {label:'dy/dx=-y/x',expr:'-y/x',type:'可分离'},
+  {label:'dy/dx=y（指数）',expr:'y',type:'可分离'},
+  {label:'dy/dx=x',expr:'x',type:'直接积分'},
+  {label:'dy/dx=y-x',expr:'y-x',type:'一阶线性'},
+  {label:'dy/dx=x²+y²',expr:'x*x+y*y',type:'非线性'},
+  {label:'dy/dx=sin(x)·y',expr:'Math.sin(x)*y',type:'可分离'},
+];
+function loadODEPresets(){
+  var c=document.getElementById('odePresets');c.innerHTML='';
+  ODE_PRESETS.forEach(function(p,i){
+    var btn=document.createElement('button');
+    btn.className='preset-btn'+(i===0?' active':'');
+    btn.textContent=p.label;
+    btn.onclick=function(){
+      document.querySelectorAll('#odePresets .preset-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      document.getElementById('odeInput').value=p.expr;
+      drawField();
+    };
+    c.appendChild(btn);
+  });
+}
+function updateODEInfo(expr){
+  var info=document.getElementById('odeInfo');
+  var analysis=document.getElementById('odeAnalysis');
+  var type='其他',tc='amber';
+  if(/^[xy*\/\^\d\-+]+$/.test(expr)||expr==='exp(x+y)'||expr==='Math.sin(x)*y'){type='可分离变量';tc='green';}
+  if(expr==='x'){type='直接积分';tc='green';}
+  if(expr==='y-x'){type='一阶线性';tc='red';}
+  if(/x\*x\+y\*y/.test(expr)){type='非线性/不可分离';tc='amber';}
+  info.innerHTML='<strong>dy/dx = '+expr+'</strong><br>';
+  info.innerHTML+='类型：<span class="tag '+tc+'">'+type+'</span><br>';
+  info.innerHTML+='👆 点击画布添加初始点，追踪解曲线';
+  var h='';
+  if(type==='可分离变量'){h='<strong>解法：</strong>分离变量→两边积分<br><strong>步骤：</strong><br>① 把y移到左边，x移到右边<br>② 两边分别积分<br>③ 解出 y=f(x)<br><span style="color:var(--text2)">💡 每条紫色曲线对应不同的C</span>';}
+  else if(type==='一阶线性'){h='<strong>解法：</strong>积分因子法<br><strong>步骤：</strong><br>① 化成 y'+P(x)y=Q(x)<br>② μ=e^(∫Pdx)<br>③ (μy)'=μQ→积分<br><span style="color:var(--text2)">💡 观察所有解曲线是否趋向某条线</span>';}
+  else{h='<span style="color:var(--text2)">💡 试试不同初始点，观察趋势</span>';}
+  analysis.innerHTML=h;
+}
+function rk4(f,x0,y0,h,steps){
+  var pts=[],x=x0,y=y0;pts.push({x:x,y:y});
+  for(var i=0;i<steps;i++){
+    var k1=f(x,y),k2=f(x+h/2,y+h/2*k1),k3=f(x+h/2,y+h/2*k2),k4=f(x+h,y+h*k3);
+    y=y+h/6*(k1+2*k2+2*k3+k4);x=x+h;
+    if(!isFinite(y)||Math.abs(y)>20)break;
+    pts.push({x:x,y:y});
+  }
+  return pts;
+}
+function rk4r(f,x0,y0,h,s){return rk4(f,x0,y0,-h,s).reverse();}
+function drawField(){
+  var expr=document.getElementById('odeInput').value.trim();if(!expr)return;
+  var f;try{f=parseMath(expr);f(0,0);}catch(e){document.getElementById('odeInfo').innerHTML='<span style="color:var(--red600)">❌ 表达式错误</span>';return;}
+  updateODEInfo(expr);
+  var W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);
+  var xM=-5,xX=5,yM=-5,yX=5,sx=W/(xX-xM),sy=H/(yX-yM);
+  var ts=function(x,y){return[(x-xM)*sx,(yX-y)*sy];};
+  var tw=function(px,py){return[px/sx+xM,yX-py/sy];};
+  window._ts=ts;window._tw=tw;window._f=f;window._sx=sx;window._sy=sy;window._xM=xM;window._xX=xX;window._yM=yM;window._yX=yX;
+  ctx.strokeStyle='#eee';ctx.lineWidth=0.5;
+  for(var x=-5;x<=5;x++){var p=ts(x,0);ctx.beginPath();ctx.moveTo(p[0],0);ctx.lineTo(p[0],H);ctx.stroke();}
+  for(var y=-5;y<=5;y++){var p=ts(0,y);ctx.beginPath();ctx.moveTo(0,p[1]);ctx.lineTo(W,p[1]);ctx.stroke();}
+  var o=ts(0,0);ctx.strokeStyle='#ccc';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,o[1]);ctx.lineTo(W,o[1]);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(o[0],0);ctx.lineTo(o[0],H);ctx.stroke();
+  var step=0.4;
+  for(var wx=xM+step/2;wx<=xX;wx+=step){for(var wy=yM+step/2;wy<=yX;wy+=step){
+    var sl;try{sl=f(wx,wy);}catch(e){continue;}
+    if(!isFinite(sl))continue;
+    var ang=Math.atan(sl),len=Math.min(Math.abs(sl)*0.15,0.3);
+    var dx=Math.cos(ang)*len*(sl>=0?1:-1),dy=Math.sin(ang)*len*(sl>=0?1:-1);
+    var p=ts(wx,wy),pe=ts(wx+dx,wy+dy);
+    ctx.strokeStyle='rgba(100,100,100,0.4)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(pe[0],pe[1]);ctx.stroke();
+  }}
+  traces.forEach(function(tr){
+    ctx.strokeStyle=tr.color;ctx.lineWidth=2.5;ctx.beginPath();
+    tr.points.forEach(function(p,i){
+      var sp=ts(p.x,p.y);
+      if(i===0)ctx.moveTo(sp[0],sp[1]);else ctx.lineTo(sp[0],sp[1]);
+    });ctx.stroke();
+    var sp=ts(tr.start.x,tr.start.y);
+    ctx.fillStyle='#854F0B';ctx.beginPath();ctx.arc(sp[0],sp[1],4,0,Math.PI*2);ctx.fill();
+  });
+  updateSolutionList();
+}
+canvas.onclick=function(e){
+  if(!window._f)return;
+  var r=canvas.getBoundingClientRect(),sx=canvas.width/r.width,sy=canvas.height/r.height;
+  var px=(e.clientX-r.left)*sx,py=(e.clientY-r.top)*sy;
+  var w=window._tw(px,py),f=window._f;
+  var h=0.04,st=300,fw=rk4(f,w[0],w[1],h,st),bw=rk4r(f,w[0],w[1],h,st);
+  var tr=bw.slice(0,-1).concat(fw);
+  var cols=['#534AB7','#A32D2D','#3B6D11','#854F0B','#3182ce','#d53f8c'];
+  var c=cols[traces.length%cols.length];
+  traces.push({start:{x:w[0],y:w[1]},points:tr,color:c});
+  drawField();
+};
+function clearTraces(){traces=[];drawField();}
+function updateSolutionList(){
+  var list=document.getElementById('solutionList');
+  if(traces.length===0){list.innerHTML='<div style="color:var(--text2);font-size:13px">点击左侧画布添加曲线</div>';return;}
+  var html='';
+  traces.forEach(function(t,i){
+    html+='<div class="solution-item"><span style="color:'+t.color+';font-weight:500">曲线'+(i+1)+'</span><span>(x₀='+t.start.x.toFixed(2)+', y₀='+t.start.y.toFixed(2)+')</span><span class="del" onclick="deleteTrace('+i+')">×</span></div>';
+  });
+  list.innerHTML=html;
+}
+function deleteTrace(i){traces.splice(i,1);drawField();}
+var scanvas=document.getElementById('seriesCanvas'),sctx=scanvas.getContext('2d');
+var SERIES_PRESETS=[
+  {label:'1/(1-x)',expr:'1/(1-x)',expand:'∑ xⁿ',radius:1},
+  {label:'eˣ',expr:'exp(x)',expand:'∑ xⁿ/n!',radius:Infinity},
+  {label:'sin x',expr:'Math.sin(x)',expand:'∑ (-1)ⁿx²ⁿ⁺¹/(2n+1)!',radius:Infinity},
+  {label:'cos x',expr:'Math.cos(x)',expand:'∑ (-1)ⁿx²ⁿ/(2n)!',radius:Infinity},
+  {label:'ln(1+x)',expr:'Math.log(1+x)',expand:'∑ (-1)ⁿ⁻¹xⁿ/n',radius:1},
+  {label:'arctan x',expr:'Math.atan(x)',expand:'∑ (-1)ⁿx²ⁿ⁺¹/(2n+1)',radius:1},
+];
+function loadSeriesPresets(){
+  var c=document.getElementById('seriesPresets');c.innerHTML='';
+  SERIES_PRESETS.forEach(function(p,i){
+    var btn=document.createElement('button');
+    btn.className='preset-btn'+(i===0?' active':'');
+    btn.textContent=p.label;
+    btn.onclick=function(){
+      document.querySelectorAll('#seriesPresets .preset-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      document.getElementById('seriesFunc').value=p.expr;
+      document.getElementById('seriesFormula').textContent=p.expand;
+      document.getElementById('seriesRadius').textContent=p.radius===Infinity?'收敛半径 R=∞（整函数）':'收敛半径 R='+p.radius;
+      drawSeries();
+    };
+    c.appendChild(btn);
+  });
+}
+function fact(k){var r=1;for(var i=2;i<=k;i++)r*=i;return r;}
+function getTerms(fn,n){
+  var terms=[];
+  if(fn.includes('1/(1-x)')){for(var i=0;i<=n;i++){(function(j){terms.push({n:j,func:function(x){return Math.pow(x,j);}});})(i);}}
+  else if(fn.includes('exp')){for(var i=0;i<=n;i++){(function(j,c){terms.push({n:j,func:function(x){return c*Math.pow(x,j);}});})(i,1/fact(i));}}
+  else if(fn.includes('sin')){for(var i=0;i<=Math.floor(n/2);i++){(function(j,k){var c=(j%2===0?1:-1)/fact(k);terms.push({n:k,func:function(x){return c*Math.pow(x,k);}});})(i,2*i+1);}}
+  else if(fn.includes('cos')){for(var i=0;i<=Math.floor(n/2);i++){(function(j,k){var c=(j%2===0?1:-1)/fact(k);terms.push({n:k,func:function(x){return c*Math.pow(x,k);}});})(i,2*i);}}
+  else if(fn.includes('log')||fn.includes('ln')){for(var i=1;i<=n;i++){(function(j,c){terms.push({n:j,func:function(x){return c*Math.pow(x,j);}});})(i,(i%2===1?1:-1)/i);}}
+  else if(fn.includes('atan')){for(var i=0;i<=Math.floor((n-1)/2);i++){(function(j,k){var c=(j%2===0?1:-1)/k;terms.push({n:k,func:function(x){return c*Math.pow(x,k);}});})(i,2*i+1);}}
+  return terms;
+}
+function drawSeries(){
+  var expr=document.getElementById('seriesFunc').value.trim(),n=parseInt(document.getElementById('seriesN').value);
+  var so=document.getElementById('showOriginal').checked,sp=document.getElementById('showPartial').checked,st=document.getElementById('showTerms').checked;
+  var W=scanvas.width,H=scanvas.height;sctx.clearRect(0,0,W,H);
+  var f;try{f=parseMath(expr);f(0,0);}catch(e){return;}
+  var xM=-3,xX=3,yM=-3,yX=3,sx=W/(xX-xM),sy=H/(yX-yM),tsx=function(x){return(x-xM)*sx;},tsy=function(y){return(yX-y)*sy;},twx=function(px){return px/sx+xM;};
+  sctx.strokeStyle='#eee';sctx.lineWidth=0.5;
+  for(var x=-3;x<=3;x+=0.5){var px=tsx(x);sctx.beginPath();sctx.moveTo(px,0);sctx.lineTo(px,H);sctx.stroke();}
+  for(var y=-3;y<=3;y+=0.5){var py=tsy(y);sctx.beginPath();sctx.moveTo(0,py);sctx.lineTo(W,py);sctx.stroke();}
+  sctx.strokeStyle='#ccc';sctx.lineWidth=1;
+  sctx.beginPath();sctx.moveTo(0,tsy(0));sctx.lineTo(W,tsy(0));sctx.stroke();
+  sctx.beginPath();sctx.moveTo(tsx(0),0);sctx.lineTo(tsx(0),H);sctx.stroke();
+  var terms=getTerms(expr,n);
+  if(st){var cs=['#3B6D11','#2b8750','#1fa060','#70b530','#90c040'];terms.forEach(function(term,i){sctx.strokeStyle=cs[i%cs.length];sctx.lineWidth=1.5;sctx.setLineDash([4,4]);sctx.beginPath();var fi=true;for(var px=0;px<=W;px+=1){var wx=twx(px),wy=term.func(wx);if(isFinite(wy)&&Math.abs(wy)<10){if(fi){sctx.moveTo(px,tsy(wy));fi=false;}else sctx.lineTo(px,tsy(wy));}}sctx.stroke();sctx.setLineDash([]);});}
+  if(sp){sctx.strokeStyle='#A32D2D';sctx.lineWidth=2.5;sctx.beginPath();var fi=true;for(var px=0;px<=W;px+=1){var wx=twx(px),sum=0;for(var ti=0;ti<terms.length;ti++)sum+=terms[ti].func(wx);if(isFinite(sum)&&Math.abs(sum)<10){if(fi){sctx.moveTo(px,tsy(sum));fi=false;}else sctx.lineTo(px,tsy(sum));}}sctx.stroke();}
+  if(so){sctx.strokeStyle='#534AB7';sctx.lineWidth=2;sctx.beginPath();var fi=true;for(var px=0;px<=W;px+=1){var wx=twx(px),wy;try{wy=f(wx,0);}catch(e){continue;}if(isFinite(wy)&&Math.abs(wy)<10){if(fi){sctx.moveTo(px,tsy(wy));fi=false;}else sctx.lineTo(px,tsy(wy));}}sctx.stroke();}
+  sctx.fillStyle='rgba(255,255,255,0.9)';sctx.fillRect(8,8,180,st?80:55);sctx.strokeStyle='#ddd';sctx.lineWidth=0.5;sctx.strokeRect(8,8,180,st?80:55);sctx.font='12px sans-serif';var ly=22;
+  if(so){sctx.fillStyle='#534AB7';sctx.fillRect(14,ly-3,14,3);sctx.fillStyle='#333';sctx.fillText('f(x) 原函数',33,ly+2);ly+=16;}
+  if(sp){sctx.fillStyle='#A32D2D';sctx.fillRect(14,ly-3,14,3);sctx.fillStyle='#333';sctx.fillText('S_'+n+'(x) 部分和',33,ly+2);ly+=16;}
+  if(st){sctx.fillStyle='#3B6D11';sctx.fillRect(14,ly-3,14,3);sctx.fillStyle='#333';sctx.fillText('各项（虚线）',33,ly+2);}
+  var found=null;for(var i=0;i<SERIES_PRESETS.length;i++){if(SERIES_PRESETS[i].expr===expr){found=SERIES_PRESETS[i];break;}}
+  if(found)document.getElementById('seriesFormula').textContent=found.expand;
+}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++){
+    if(name==='ode'&&tabs[i].textContent.includes('ODE')){tabs[i].classList.add('active');break;}
+    if(name==='series'&&tabs[i].textContent.includes('级数')){tabs[i].classList.add('active');break;}
+    if(name==='help'&&tabs[i].textContent.includes('说明')){tabs[i].classList.add('active');break;}
+  }
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='series')drawSeries();
+  if(name==='ode')drawField();
+}
+loadODEPresets();loadSeriesPresets();drawField();drawSeries();
+</script>
+</body>
+</html>
