@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="240" viewBox="0 0 420 240">
+<defs>
+</defs>
+<path d="M50,40 L370,40" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,40 L80,55" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="73" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="75" y="69" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">+</text>
+<text x="75" y="79" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">−</text>
+<text x="80" y="97" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">U_S</text>
+<path d="M80,88 L80,115" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="115" r="3" fill="#000" />
+<path d="M80,115 L92,103" stroke="#000" stroke-width="1.2" fill="none" />
+<text x="96" y="99" font-size="11" fill="#000" font-family="Times New Roman" font-style="italic">t=0</text>
+<path d="M80,103 L140,103" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M140,103 L140,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M140,140 L148,145.0 L132,150.0 L148,155.0 L132,160.0 L148,165.0 L132,170.0 L148,175.0 L132,180.0 L148,185.0 L140,190" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M140,190 L140,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="40" r="3" fill="#000" stroke="none" />
+<circle cx="140" cy="103" r="3" fill="#000" stroke="none" />
+<path d="M260,40 L260,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M260,140 Q270,146.25 260,152.5 Q270,158.75 260,165.0 Q270,171.25 260,177.5 Q270,183.75 260,190.0" fill="none" stroke="#000" stroke-width="1.2" />
+<path d="M260,190 L260,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="260" cy="40" r="3" fill="#000" stroke="none" />
+<circle cx="260" cy="200" r="3" fill="#000" stroke="none" />
+<text x="248" y="30" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">i_L</text>
+</svg>

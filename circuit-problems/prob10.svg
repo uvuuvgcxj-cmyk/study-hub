@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="220" viewBox="0 0 420 220">
+<defs>
+</defs>
+<path d="M30,180 L380,180" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,180 L60,150" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="60" cy="132" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="55" y="128" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">+</text>
+<text x="55" y="138" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">−</text>
+<text x="60" y="156" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">U_1</text>
+<path d="M60,117 L60,80" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="60" cy="80" r="3" fill="#000" stroke="none" />
+<text x="48" y="72" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">I_1</text>
+<path d="M60,80 L105,80" stroke="#000" stroke-width="1.2" fill="none" />
+<rect x="105" y="45" width="110" height="90" fill="#fff" stroke="#000" stroke-width="1.2" />
+<text x="160" y="100" font-size="14" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">N</text>
+<path d="M215,80 L280,80" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="280" cy="80" r="3" fill="#000" stroke="none" />
+<text x="282" y="72" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">I_2</text>
+<path d="M280,80 L280,115" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M280,115 L288,120.0 L272,125.0 L288,130.0 L272,135.0 L288,140.0 L272,145.0 L288,150.0 L272,155.0 L288,160.0 L280,165" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M280,165 L280,180" stroke="#000" stroke-width="1.2" fill="none" />
+<text x="292" y="145" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">Z_L</text>
+<path d="M105,135 L60,135" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,135 L60,180" stroke="#000" stroke-width="1.2" fill="none" />
+</svg>

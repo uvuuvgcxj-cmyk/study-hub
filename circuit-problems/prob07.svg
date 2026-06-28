@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="240" viewBox="0 0 420 240">
+<defs>
+</defs>
+<path d="M50,40 L370,40" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M50,200 L370,200" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,40 L80,60" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="78" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="75" y="83" font-size="14" fill="#000" font-family="Times New Roman">~</text>
+<text x="80" y="102" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">u_s</text>
+<path d="M80,93 L80,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,140 L88,145.0 L72,150.0 L88,155.0 L72,160.0 L88,165.0 L72,170.0 L88,175.0 L72,180.0 L88,185.0 L80,190" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,190 L80,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="40" r="3" fill="#000" stroke="none" />
+<path d="M180,40 L180,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M180,140 Q190,146.25 180,152.5 Q190,158.75 180,165.0 Q190,171.25 180,177.5 Q190,183.75 180,190.0" fill="none" stroke="#000" stroke-width="1.2" />
+<path d="M180,190 L180,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="180" cy="40" r="3" fill="#000" stroke="none" />
+<path d="M320,40 L320,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M320,140 L320,160.0" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M308,160.0 L332,160.0" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M308,170.0 L332,170.0" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M320,170.0 L320,190" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M320,190 L320,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="320" cy="40" r="3" fill="#000" stroke="none" />
+</svg>

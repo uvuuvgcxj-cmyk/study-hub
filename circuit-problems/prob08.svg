@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="220" viewBox="0 0 420 220">
+<defs>
+</defs>
+<path d="M60,40 L360,40" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,200 L360,200" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M90,40 L90,55" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="90" cy="73" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="85" y="78" font-size="14" fill="#000" font-family="Times New Roman">~</text>
+<text x="90" y="97" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">A</text>
+<path d="M90,88 L90,135" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M90,135 L98,140.0 L82,145.0 L98,150.0 L82,155.0 L98,160.0 L82,165.0 L98,170.0 L82,175.0 L98,180.0 L90,185" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M90,185 L90,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="90" cy="40" r="3" fill="#000" stroke="none" />
+<path d="M210,40 L210,55" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="210" cy="73" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="205" y="78" font-size="14" fill="#000" font-family="Times New Roman">~</text>
+<text x="210" y="97" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">B</text>
+<path d="M210,88 L210,135" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M210,135 L218,140.0 L202,145.0 L218,150.0 L202,155.0 L218,160.0 L202,165.0 L218,170.0 L202,175.0 L218,180.0 L210,185" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M210,185 L210,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="210" cy="40" r="3" fill="#000" stroke="none" />
+<path d="M330,40 L330,55" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="330" cy="73" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="325" y="78" font-size="14" fill="#000" font-family="Times New Roman">~</text>
+<text x="330" y="97" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">C</text>
+<path d="M330,88 L330,135" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M330,135 L338,140.0 L322,145.0 L338,150.0 L322,155.0 L338,160.0 L322,165.0 L338,170.0 L322,175.0 L338,180.0 L330,185" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M330,185 L330,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="330" cy="40" r="3" fill="#000" stroke="none" />
+</svg>

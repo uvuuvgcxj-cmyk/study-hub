@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="240" viewBox="0 0 420 240">
+<defs>
+</defs>
+<path d="M50,40 L370,40" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M50,200 L370,200" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,40 L80,60" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="78" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="75" y="74" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">+</text>
+<text x="75" y="84" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">−</text>
+<text x="80" y="102" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">u_S</text>
+<path d="M80,93 L80,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,140 L88,145.0 L72,150.0 L88,155.0 L72,160.0 L88,165.0 L72,170.0 L88,175.0 L72,180.0 L88,185.0 L80,190" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M80,190 L80,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="80" cy="40" r="3" fill="#000" stroke="none" />
+<path d="M210,40 L210,140" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M210,140 L218,145.0 L202,150.0 L218,155.0 L202,160.0 L218,165.0 L202,170.0 L218,175.0 L202,180.0 L218,185.0 L210,190" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M210,190 L210,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="210" cy="40" r="3" fill="#000" stroke="none" />
+<circle cx="210" cy="200" r="3" fill="#000" stroke="none" />
+<path d="M210,200 L210,206" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M198,206 L222,206" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M202,211 L218,211" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M206,216 L214,216" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M340,40 L340,60" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="340" cy="78" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<path d="M335,80 L345,78 L335,76" stroke="#000" stroke-width="1.2" fill="none" />
+<text x="340" y="102" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">i_S</text>
+<path d="M340,93 L340,200" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="340" cy="40" r="3" fill="#000" stroke="none" />
+</svg>

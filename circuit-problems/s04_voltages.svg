@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="340" viewBox="0 0 660 340">
+<style>
+  .mi { font-family: "Times New Roman","STSong","SimSun",serif; font-style: italic; }
+  .rm { font-family: "Times New Roman","STSong","SimSun",serif; }
+  .cap { font-family: "Times New Roman","STSong","SimSun",serif; font-size: 11px; fill: #94A3B8; }
+</style>
+<line x1="162" y1="72" x2="488" y2="72" stroke="#1E293B" stroke-width="1.5"/>
+<line x1="72" y1="172" x2="488" y2="172" stroke="#1E293B" stroke-width="1.5"/>
+<line x1="325" y1="72" x2="325" y2="172" stroke="#1E293B" stroke-width="1.5"/>
+<line x1="488" y1="72" x2="488" y2="172" stroke="#1E293B" stroke-width="1.5"/>
+<path d="M162,72 L182.375,65 L202.75,79 L223.125,65 L243.5,79 L263.875,65 L284.25,79 L304.625,65 L325,72" stroke="#1E293B" stroke-width="1.5" fill="none"/>
+<path d="M325,72 L345.375,65 L365.75,79 L386.125,65 L406.5,79 L426.875,65 L447.25,79 L467.625,65 L488,72" stroke="#1E293B" stroke-width="1.5" fill="none"/>
+<path d="M325,72 L318,88.66666666666667 L332,105.33333333333334 L318,122 L332,138.66666666666669 L318,155.33333333333334 L325,172" stroke="#1E293B" stroke-width="1.5" fill="none"/>
+<path d="M488,72 L481,88.66666666666667 L495,105.33333333333334 L481,122 L495,138.66666666666669 L481,155.33333333333334 L488,172" stroke="#1E293B" stroke-width="1.5" fill="none"/>
+<line x1="325" y1="172" x2="325" y2="295" stroke="#1E293B" stroke-width="1.5"/>
+<line x1="311" y1="295" x2="339" y2="295" stroke="#1E293B" stroke-width="2"/>
+<line x1="315" y1="300" x2="335" y2="300" stroke="#1E293B" stroke-width="1.5"/>
+<line x1="319"  y1="305" x2="331"  y2="305" stroke="#1E293B" stroke-width="1"/>
+<text x="92" y="127" class="mi" text-anchor="start" font-size="13">uₛ</text>
+<text x="243.5" y="96" class="mi" text-anchor="middle" font-size="12">R₁</text>
+<text x="406.5" y="96" class="mi" text-anchor="middle" font-size="12">R₂</text>
+<text x="349" y="126" class="mi" text-anchor="start" font-size="12">R₃</text>
+<text x="512" y="126" class="mi" text-anchor="start" font-size="12">R₄</text>
+<circle cx="162" cy="72" r="3.5" fill="#1E293B" stroke="none"/>
+<text x="152" y="58" class="mi" text-anchor="middle" font-size="13">①</text>
+<circle cx="325" cy="72" r="3.5" fill="#1E293B" stroke="none"/>
+<text x="315" y="58" class="mi" text-anchor="middle" font-size="13">②</text>
+<circle cx="488" cy="72" r="3.5" fill="#1E293B" stroke="none"/>
+<text x="478" y="58" class="mi" text-anchor="middle" font-size="13">③</text>
+<line x1="123" y1="72" x2="123" y2="172" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="3,3"/>
+<polygon points="123,72 119,79 127,79" fill="#DC2626" stroke="none"/>
+<text x="117" y="126" class="mi" text-anchor="end" font-size="13" fill="#DC2626">u₁</text>
+<line x1="286" y1="72" x2="286" y2="172" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="3,3"/>
+<polygon points="286,72 282,79 290,79" fill="#DC2626" stroke="none"/>
+<text x="280" y="126" class="mi" text-anchor="end" font-size="13" fill="#DC2626">u₂</text>
+<line x1="449" y1="72" x2="449" y2="172" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="3,3"/>
+<polygon points="449,72 445,79 453,79" fill="#DC2626" stroke="none"/>
+<text x="443" y="126" class="mi" text-anchor="end" font-size="13" fill="#DC2626">u₃</text>
+<text x="330" y="330" class="cap" text-anchor="middle">图4  节点电压</text>
+</svg>

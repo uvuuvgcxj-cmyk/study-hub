@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="420" height="250" viewBox="0 0 420 250">
+<defs>
+</defs>
+<path d="M30,200 L180,200" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,200 L60,170" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="60" cy="152" r="15" fill="none" stroke="#000" stroke-width="1.2" />
+<text x="55" y="148" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">+</text>
+<text x="55" y="158" font-size="14" fill="#000" font-family="Times New Roman" font-weight="bold">−</text>
+<text x="60" y="176" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic" text-anchor="middle">u_i</text>
+<path d="M60,137 L60,115" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,115 L68,112.5 L52,110.0 L68,107.5 L52,105.0 L68,102.5 L52,100.0 L68,97.5 L52,95.0 L68,92.5 L60,90" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M60,90 L100,90" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="100" cy="90" r="3" fill="#000" stroke="none" />
+<text x="88" y="82" font-size="12" fill="#000" font-family="Times New Roman" font-style="italic">u_-</text>
+<path d="M130,55 L130,125 L190,90 Z" stroke="#000" stroke-width="1.2" fill="#fff" />
+<text x="148" y="95" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">A</text>
+<path d="M100,110 L130,110" stroke="#000" stroke-width="1.2" fill="none" />
+<text x="88" y="108" font-size="12" fill="#000" font-family="Times New Roman">+</text>
+<path d="M100,110 L100,200" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M190,90 L280,90" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="280" cy="90" r="3" fill="#000" stroke="none" />
+<text x="290" y="90" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">u_o</text>
+<path d="M280,90 L280,45" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M280,45 L288,47.5 L272,50.0 L288,52.5 L272,55.0 L288,57.5 L272,60.0 L288,62.5 L272,65.0 L288,67.5 L280,70" stroke="#000" stroke-width="1.2" fill="none" />
+<path d="M280,70 L100,70" stroke="#000" stroke-width="1.2" fill="none" />
+<circle cx="100" cy="70" r="3" fill="#000" stroke="none" />
+<text x="290" y="60" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">R_f</text>
+<text x="75" y="105" font-size="13" fill="#000" font-family="Times New Roman" font-style="italic">R_1</text>
+</svg>

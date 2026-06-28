@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电路原理 · 达标训练10题</title>
+<script>window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: "global" } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --bg:#1a1a2e; --card:#232347; --card2:#2a2a52; --border:#3a3a6a;
+  --text:#e0e0f0; --muted:#8a8aaa; --blue:#4A9EFF; --green:#4ECB71;
+  --amber:#F5A623; --red:#F05454; --purple:#7C6FF0; --cyan:#4ECDC4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.8;padding:20px}
+.container{max-width:960px;margin:0 auto;padding:20px}
+h1{font-size:28px;margin:16px 0 8px;color:var(--blue);text-align:center}
+h2{font-size:20px;margin:32px 0 16px;color:var(--green);border-bottom:2px solid var(--purple);padding-bottom:8px}
+h3{font-size:16px;margin:16px 0 8px;color:var(--amber)}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:24px}
+.tip-card{background:var(--card2);border-left:4px solid var(--blue);border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14px}
+.prob-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin:16px 0;overflow:hidden}
+.prob-header{background:var(--card2);padding:12px 16px;font-weight:600;color:var(--blue);font-size:15px}
+.prob-body{padding:16px}
+.prob-body p{margin:8px 0}
+.circuit-img{background:#fff;border-radius:8px;margin:12px auto;padding:8px;text-align:center;max-width:520px;border:1px solid var(--border)}
+.circuit-img img{max-width:100%;height:auto}
+.sol-btn{background:var(--purple);color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;margin:8px 0;transition:opacity .2s}
+.sol-btn:hover{opacity:.85}
+.solution{display:none;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:10px 0;font-size:14px}
+.solution.show{display:block}
+.sol-label{color:var(--green);font-weight:600;margin-bottom:8px}
+.q-box{background:rgba(78,129,255,.08);border:1px solid var(--blue);border-radius:8px;padding:12px 16px;margin:10px 0;font-size:14px}
+.q-box .q{color:var(--amber);font-weight:600}
+.ans-box{background:rgba(78,203,113,.08);border:1px solid var(--green);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:14px}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;margin:0 4px}
+.tag-easy{background:rgba(78,203,113,.2);color:var(--green)}
+.tag-medium{background:rgba(245,166,35,.2);color:var(--amber)}
+.tag-hard{background:rgba(240,84,84,.2);color:var(--red)}
+.nav-bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0;padding:10px;background:var(--card);border-radius:10px}
+.nav-bar a{color:var(--blue);text-decoration:none;padding:4px 12px;border-radius:6px;font-size:13px;transition:all .2s}
+.nav-bar a:hover{background:var(--card2);color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>⚡ 电路原理 · 达标训练10题</h1>
+<p class="subtitle">孙正田 · 海南大学 · 覆盖期末全部考点 · 附答案详解</p>
+
+<div class="nav-bar">
+<a href="#p1">①节点电压法</a>
+<a href="#p2">②网孔电流法</a>
+<a href="#p3">③叠加定理</a>
+<a href="#p4">④戴维南定理</a>
+<a href="#p5">⑤一阶动态电路</a>
+<a href="#p6">⑥正弦稳态</a>
+<a href="#p7">⑦功率计算</a>
+<a href="#p8">⑧三相电路</a>
+<a href="#p9">⑨运放</a>
+<a href="#p10">⑩二端口网络</a>
+</div>
+<!-- ===== 题目1: 节点电压法 ===== -->
+<h2 id="p1">① 节点电压法 <span class="tag tag-medium">中等</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 1</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob01.svg" alt="节点电压法电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示电路，已知 $R_1=2\Omega$, $R_2=4\Omega$, $R_3=2\Omega$, $V_{S1}=12V$, $V_{S2}=6V$。试用<strong>节点电压法</strong>求节点电压 $V_1$ 及各支路电流。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+<p><strong>第一步：选定参考节点（地），列节点1的KCL方程</strong></p>
+<p>以底边为参考节点(0V)，设节点①为 $V_1$。</p>
+<p>节点①流出电流之和为零：</p>
+<p>$$\frac{V_1 - V_{S1}}{R_1} + \frac{V_1}{R_2} + \frac{V_1 - V_{S2}}{R_3} = 0$$</p>
+<p><strong>第二步：代入数值</strong></p>
+<p>$$\frac{V_1 - 12}{2} + \frac{V_1}{4} + \frac{V_1 - 6}{2} = 0$$</p>
+<p>两边乘以4：</p>
+<p>$$2(V_1 - 12) + V_1 + 2(V_1 - 6) = 0$$</p>
+<p>$$2V_1 - 24 + V_1 + 2V_1 - 12 = 0$$</p>
+<p>$$5V_1 = 36 \quad\Rightarrow\quad \boxed{V_1 = 7.2V}$$</p>
+<p><strong>第三步：求各支路电流</strong></p>
+<p>$I_1 = \displaystyle\frac{V_1 - V_{S1}}{R_1} = \frac{7.2 - 12}{2} = -2.4A$（负号表示实际方向与假设方向相反）</p>
+<p>$I_2 = \displaystyle\frac{V_1}{R_2} = \frac{7.2}{4} = 1.8A$</p>
+<p>$I_3 = \displaystyle\frac{V_1 - V_{S2}}{R_3} = \frac{7.2 - 6}{2} = 0.6A$</p>
+<p><strong>第四步：验证KCL</strong></p>
+<p>$I_1 + I_2 + I_3 = -2.4 + 1.8 + 0.6 = 0$ ✓</p>
+<div class="ans-box"><strong>答案：</strong>$V_1 = 7.2V$, $I_1 = -2.4A$（向上）, $I_2 = 1.8A$（向下）, $I_3 = 0.6A$（向下）</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目2: 网孔电流法 ===== -->
+<h2 id="p2">② 网孔电流法 <span class="tag tag-medium">中等</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 2</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob02.svg" alt="网孔电流法电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示电路，$R_1=4\Omega$, $R_2=2\Omega$, $R_3=6\Omega$, $V_{S1}=10V$, $V_{S2}=8V$。试用<strong>网孔电流法</strong>求各支路电流。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+<p><strong>第一步：设定网孔电流</strong></p>
+<p>设左网孔电流 $i_1$（顺时针），右网孔电流 $i_2$（顺时针）。</p>
+<p><strong>第二步：列KVL方程</strong></p>
+<p><strong>左网孔：</strong></p>
+<p>$$(R_1 + R_2)i_1 - R_2 i_2 = V_{S1}$$</p>
+<p>$$(4 + 2)i_1 - 2i_2 = 10$$</p>
+<p>$$6i_1 - 2i_2 = 10 \quad\cdots\text{(1)}$$</p>
+<p><strong>右网孔：</strong></p>
+<p>$$-R_2 i_1 + (R_2 + R_3)i_2 = -V_{S2}$$</p>
+<p>$$-2i_1 + (2 + 6)i_2 = -8$$</p>
+<p>$$-2i_1 + 8i_2 = -8 \quad\cdots\text{(2)}$$</p>
+<p><strong>第三步：联立求解</strong></p>
+<p>由(1)：$i_1 = \displaystyle\frac{10 + 2i_2}{6}$</p>
+<p>代入(2)：</p>
+<p>$$-2 \cdot \frac{10 + 2i_2}{6} + 8i_2 = -8$$</p>
+<p>$$-\frac{10 + 2i_2}{3} + 8i_2 = -8$$</p>
+<p>$$-10 - 2i_2 + 24i_2 = -24$$</p>
+<p>$$22i_2 = -14$$</p>
+<p>$$\boxed{i_2 = -0.636A}$$</p>
+<p>代入(1)：$6i_1 - 2(-0.636) = 10$</p>
+<p>$6i_1 = 10 - 1.272 = 8.728$</p>
+<p>$$\boxed{i_1 = 1.455A}$$</p>
+<p><strong>第四步：求各支路电流</strong></p>
+<p>$I_{R1} = i_1 = 1.455A$（向下）</p>
+<p>$I_{R2} = i_1 - i_2 = 1.455 - (-0.636) = 2.091A$（从右到左）</p>
+<p>$I_{R3} = -i_2 = 0.636A$（向下）</p>
+<div class="ans-box"><strong>答案：</strong>$i_1=1.455A$, $i_2=-0.636A$, $I_{R1}=1.455A$, $I_{R2}=2.091A$, $I_{R3}=0.636A$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目3: 叠加定理 ===== -->
+<h2 id="p3">③ 叠加定理 <span class="tag tag-hard">较难</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 3</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob03.svg" alt="叠加定理电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示电路，$R_1=2\Omega$, $R_2=2\Omega$, $R_3=4\Omega$, $V_S=10V$, $I_S=3A$。试用<strong>叠加定理</strong>求电压 $V_x$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+<p><strong>核心思想：</strong>独立源单独作用，电压源短路、电流源开路。</p>
+
+<p><strong>Step 1：仅电压源作用（电流源开路）</strong></p>
+<p>$I_S$ 开路，电路变为电压源 $V_S=10V$ 串联 $R_1+R_3$，$R_2$ 悬空。</p>
+<p>$V_x' = V_S \cdot \displaystyle\frac{R_3}{R_1+R_3} = 10 \cdot \frac{4}{2+4} = 10 \cdot \frac{4}{6} = 6.67V$</p>
+
+<p><strong>Step 2：仅电流源作用（电压源短路）</strong></p>
+<p>$V_S$ 短路，$R_1//R_2$ 后与 $R_3$ 并联分流：</p>
+<p>$R_{12} = R_1 \parallel R_2 = 1\Omega$</p>
+<p>$V_x'' = I_S \cdot (R_{12} \parallel R_3) = 3 \cdot \frac{1 \times 4}{1+4} = 3 \cdot 0.8 = 2.4V$</p>
+<p>（注意电流方向与 $V_x$ 参考方向一致）</p>
+
+<p><strong>Step 3：叠加</strong></p>
+<p>$$V_x = V_x' + V_x'' = 6.67 + 2.4 = \boxed{9.07V}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$V_x = 9.07V$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目4: 戴维南定理 ===== -->
+<h2 id="p4">④ 戴维南定理 <span class="tag tag-medium">中等</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 4</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob04.svg" alt="戴维南定理电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示电路，$R_1=4\Omega$, $R_2=6\Omega$, $V_S=12V$, $R_L=5\Omega$。求：①戴维南等效电路；②负载 $R_L$ 上的电流 $I_L$ 和电压 $V_L$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>第一步：求开路电压 $V_{oc}$</strong></p>
+<p>断开 $R_L$，a-b端开路，$R_1$ 与 $R_2$ 串联分压：</p>
+<p>$$V_{oc} = V_S \cdot \frac{R_2}{R_1+R_2} = 12 \cdot \frac{6}{4+6} = 12 \cdot 0.6 = \boxed{7.2V}$$</p>
+
+<p><strong>第二步：求等效电阻 $R_{eq}$</strong></p>
+<p>电压源短路，从a-b端看进去：$R_1 \parallel R_2$</p>
+<p>$$R_{eq} = R_1 \parallel R_2 = \frac{4 \times 6}{4+6} = \frac{24}{10} = \boxed{2.4\Omega}$$</p>
+
+<p><strong>第三步：戴维南等效电路</strong></p>
+<p>一个 $V_{oc}=7.2V$ 的电压源与 $R_{eq}=2.4\Omega$ 串联。</p>
+
+<p><strong>第四步：接上 $R_L$ 求 $I_L$ 和 $V_L$</strong></p>
+<p>$$I_L = \frac{V_{oc}}{R_{eq}+R_L} = \frac{7.2}{2.4+5} = \frac{7.2}{7.4} = \boxed{0.973A}$$</p>
+<p>$$V_L = I_L \cdot R_L = 0.973 \times 5 = \boxed{4.865V}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$V_{oc}=7.2V$, $R_{eq}=2.4\Omega$, $I_L=0.973A$, $V_L=4.865V$</div>
+</div>
+</div>
+</div>
+<!-- ===== 题目5: 一阶动态电路 ===== -->
+<h2 id="p5">⑤ 一阶动态电路（RC + RL）<span class="tag tag-hard">较难</span></h2>
+
+<div class="prob-card">
+<div class="prob-header">题目 5A — RC 电路</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob05a.svg" alt="RC一阶电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示，$t=0$ 时开关闭合，$V_S=12V$, $R=2k\Omega$, $C=10\mu F$，电容初始电压 $V_C(0)=0$。求：①时间常数 $\tau$；②$t \ge 0$ 时 $V_C(t)$ 和 $I_C(t)$ 的表达式；③$t=5ms$ 时 $V_C$ 的值。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+<p><strong>第一步：时间常数 $\tau$</strong></p>
+<p>$$\tau = RC = 2000 \times 10 \times 10^{-6} = 0.02s = \boxed{20ms}$$</p>
+
+<p><strong>第二步：$V_C(t)$ 表达式</strong></p>
+<p>RC充电公式：$V_C(t) = V_S(1 - e^{-t/\tau})$</p>
+<p>$$\boxed{V_C(t) = 12(1 - e^{-t/0.02}) = 12(1 - e^{-50t})\,V}$$</p>
+
+<p><strong>第三步：$I_C(t)$ 表达式</strong></p>
+<p>$I_C(t) = C \cdot \displaystyle\frac{dV_C}{dt} = C \cdot \frac{V_S}{\tau}e^{-t/\tau} = \frac{V_S}{R}e^{-t/\tau}$</p>
+<p>$$\boxed{I_C(t) = \frac{12}{2000}e^{-50t} = 6e^{-50t}\,mA}$$</p>
+
+<p><strong>第四步：$t=5ms$ 时的 $V_C$</strong></p>
+<p>$t/\tau = 0.005/0.02 = 0.25$</p>
+<p>$$V_C(5ms) = 12(1 - e^{-0.25}) = 12(1 - 0.7788) = 12 \times 0.2212 = \boxed{2.65V}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$\tau=20ms$, $V_C(t)=12(1-e^{-50t})V$, $I_C(t)=6e^{-50t}mA$, $V_C(5ms)=2.65V$</div>
+</div>
+</div>
+</div>
+
+<div class="prob-card">
+<div class="prob-header">题目 5B — RL 电路</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob05b.svg" alt="RL一阶电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示，$t=0$ 时开关闭合，$V_S=6V$, $R=100\Omega$, $L=0.5H$，电感初始电流 $I_L(0)=0$。求：①时间常数 $\tau$；②$t \ge 0$ 时 $I_L(t)$ 和 $V_L(t)$ 的表达式；③$t=3ms$ 时 $I_L$ 的值。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+<p><strong>第一步：时间常数 $\tau$</strong></p>
+<p>$$\tau = \frac{L}{R} = \frac{0.5}{100} = 0.005s = \boxed{5ms}$$</p>
+
+<p><strong>第二步：$I_L(t)$ 表达式</strong></p>
+<p>RL充电公式：$I_L(t) = \displaystyle\frac{V_S}{R}(1 - e^{-t/\tau})$</p>
+<p>$$\boxed{I_L(t) = \frac{6}{100}(1 - e^{-200t}) = 0.06(1 - e^{-200t})\,A}$$</p>
+
+<p><strong>第三步：$V_L(t)$ 表达式</strong></p>
+<p>$V_L(t) = L \cdot \displaystyle\frac{dI_L}{dt} = L \cdot \frac{V_S}{L}e^{-t/\tau} = V_S e^{-t/\tau}$</p>
+<p>$$\boxed{V_L(t) = 6e^{-200t}\,V}$$</p>
+
+<p><strong>第四步：$t=3ms$ 时的 $I_L$</strong></p>
+<p>$t/\tau = 0.003/0.005 = 0.6$</p>
+<p>$$I_L(3ms) = 0.06(1 - e^{-0.6}) = 0.06(1 - 0.5488) = 0.06 \times 0.4512 = \boxed{27.1mA}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$\tau=5ms$, $I_L(t)=0.06(1-e^{-200t})A$, $V_L(t)=6e^{-200t}V$, $I_L(3ms)=27.1mA$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目6: 正弦稳态 / 相量法 ===== -->
+<h2 id="p6">⑥ 正弦稳态分析 <span class="tag tag-hard">较难</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 6</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob06.svg" alt="正弦稳态电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示RLC串联电路，已知 $v_s(t) = 10\sin(1000t)\,V$, $R=5\Omega$, $X_L=\omega L=3\Omega$, $X_C=1/(\omega C)=4\Omega$。求：①电路总阻抗 $\dot{Z}$；②电流相量 $\dot{I}$；③各元件电压 $V_R$, $V_L$, $V_C$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>第一步：总阻抗</strong></p>
+<p>$$\dot{Z} = R + jX_L - jX_C = 5 + j3 - j4 = 5 - j1\,\Omega$$</p>
+<p>$$\dot{Z} = \sqrt{5^2 + (-1)^2} \angle \arctan(-1/5) = \boxed{5.099\angle -11.31^\circ\, \Omega}$$</p>
+
+<p><strong>第二步：电流相量</strong></p>
+<p>相量法：$v_s(t) = 10\sin(1000t) \Rightarrow \dot{V}_S = 10\angle 0^\circ V$</p>
+<p>$$\dot{I} = \frac{\dot{V}_S}{\dot{Z}} = \frac{10\angle 0^\circ}{5.099\angle -11.31^\circ} = \boxed{1.961\angle 11.31^\circ\, A}$$</p>
+<p>时域形式：$i(t) = 1.961\sin(1000t + 11.31^\circ)\,A$</p>
+
+<p><strong>第三步：各元件电压</strong></p>
+<p>$$\dot{V}_R = \dot{I} \cdot R = 1.961\angle 11.31^\circ \times 5 = 9.805\angle 11.31^\circ\,V$$</p>
+<p>$$\dot{V}_L = \dot{I} \cdot jX_L = 1.961\angle 11.31^\circ \times 3\angle 90^\circ = 5.883\angle 101.31^\circ\,V$$</p>
+<p>$$\dot{V}_C = \dot{I} \cdot (-jX_C) = 1.961\angle 11.31^\circ \times 4\angle -90^\circ = 7.844\angle -78.69^\circ\,V$$</p>
+
+<p><strong>验证KVL：</strong> $\dot{V}_R + \dot{V}_L + \dot{V}_C \approx 10\angle 0^\circ = \dot{V}_S$ ✓</p>
+
+<div class="ans-box"><strong>答案：</strong>$\dot{Z}=5.099\angle -11.31^\circ\Omega$, $\dot{I}=1.961\angle 11.31^\circ A$, $V_R=9.805V$, $V_L=5.883V$, $V_C=7.844V$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目7: 功率计算 ===== -->
+<h2 id="p7">⑦ 功率计算 <span class="tag tag-medium">中等</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 7</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob07.svg" alt="功率计算电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> RLC串联电路，$v_s(t)=220\sqrt{2}\sin(314t)\,V$, $R=40\Omega$, $L=0.3H$, $C=50\mu F$（$\omega=314rad/s$）。求：①电路阻抗；②电流有效值；③有功功率 $P$、无功功率 $Q$、视在功率 $S$ 及功率因数 $\lambda$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>第一步：计算各元件阻抗</strong></p>
+<p>$X_L = \omega L = 314 \times 0.3 = 94.2\Omega$</p>
+<p>$X_C = \displaystyle\frac{1}{\omega C} = \frac{1}{314 \times 50 \times 10^{-6}} = 63.7\Omega$</p>
+
+<p><strong>第二步：总阻抗（有效值形式）</strong></p>
+<p>$$Z = \sqrt{R^2 + (X_L - X_C)^2} = \sqrt{40^2 + (94.2 - 63.7)^2} = \sqrt{1600 + 930.25} = \sqrt{2530.25} = \boxed{50.3\Omega}$$</p>
+<p>阻抗角：$\varphi = \arctan\displaystyle\frac{X_L - X_C}{R} = \arctan\frac{30.5}{40} = \arctan 0.7625 = \boxed{37.3^\circ}$（感性）</p>
+
+<p><strong>第三步：电流有效值</strong></p>
+<p>电压有效值：$V = 220V$</p>
+<p>$$I = \frac{V}{Z} = \frac{220}{50.3} = \boxed{4.37A}$$</p>
+
+<p><strong>第四步：功率计算</strong></p>
+<p>$$\cos\varphi = \frac{R}{Z} = \frac{40}{50.3} = 0.795$$</p>
+<p>有功功率：$P = VI\cos\varphi = 220 \times 4.37 \times 0.795 = \boxed{764W}$</p>
+<p>无功功率：$Q = VI\sin\varphi = 220 \times 4.37 \times \sin 37.3^\circ = 220 \times 4.37 \times 0.606 = \boxed{583Var}$</p>
+<p>视在功率：$S = VI = 220 \times 4.37 = \boxed{961.4VA}$</p>
+<p>功率因数：$\boxed{\lambda = \cos\varphi = 0.795}$（滞后）</p>
+
+<p><strong>验算：</strong>$S = \sqrt{P^2 + Q^2} = \sqrt{764^2 + 583^2} = \sqrt{925249} = 961.9 \approx S$ ✓</p>
+
+<div class="ans-box"><strong>答案：</strong>$Z=50.3\Omega$, $I=4.37A$, $P=764W$, $Q=583Var$, $S=961.4VA$, $\lambda=0.795$</div>
+</div>
+</div>
+</div>
+<!-- ===== 题目8: 三相电路 ===== -->
+<h2 id="p8">⑧ 三相电路 <span class="tag tag-hard">较难</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 8 — 对称Y形三相电路</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob08.svg" alt="三相电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 对称三相Y-Y系统，相电压 $V_p = 220V$, 负载阻抗 $Z = 30 + j40\Omega$。求：①线电压 $V_L$；②相电流 $I_p$（即线电流 $I_L$）；③三相总有功功率 $P_{total}$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>第一步：线电压</strong></p>
+<p>Y形连接：$V_L = \sqrt{3} \cdot V_p$</p>
+<p>$$V_L = \sqrt{3} \times 220 = \boxed{381V}$$</p>
+
+<p><strong>第二步：相电流（=线电流）</strong></p>
+<p>$$|Z| = \sqrt{30^2 + 40^2} = \sqrt{900 + 1600} = \sqrt{2500} = 50\Omega$$</p>
+<p>$$\varphi = \arctan\frac{40}{30} = \arctan 1.333 = 53.13^\circ$$</p>
+<p>$$I_p = \frac{V_p}{|Z|} = \frac{220}{50} = \boxed{4.4A}$$</p>
+
+<p><strong>第三步：三相总有功功率</strong></p>
+<p>方法一：$P_{total} = 3 \cdot V_p I_p \cos\varphi = 3 \times 220 \times 4.4 \times \cos 53.13^\circ$</p>
+<p>$\cos 53.13^\circ = 0.6$</p>
+<p>$$P_{total} = 3 \times 220 \times 4.4 \times 0.6 = \boxed{1742.4W}$$</p>
+
+<p>方法二（验算）：$P_{total} = 3 I_p^2 R = 3 \times 4.4^2 \times 30 = 3 \times 19.36 \times 30 = 1742.4W$ ✓</p>
+
+<p><strong>三相无功功率：</strong></p>
+<p>$$Q_{total} = 3 V_p I_p \sin\varphi = 3 \times 220 \times 4.4 \times \sin 53.13^\circ$$</p>
+<p>$\sin 53.13^\circ = 0.8$</p>
+<p>$$Q_{total} = 3 \times 220 \times 4.4 \times 0.8 = \boxed{2323.2Var}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$V_L=381V$, $I_p=4.4A$, $P_{total}=1742.4W$, $Q_{total}=2323.2Var$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目9: 运放 ===== -->
+<h2 id="p9">⑨ 运算放大器 <span class="tag tag-medium">中等</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 9 — 反相比例运放</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob09.svg" alt="运放电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 理想运放电路如图，$R_1=10k\Omega$, $R_f=100k\Omega$, $v_i=2V$。求：①闭环电压增益 $A_v$；②输出电压 $v_o$；③运放反相输入端电压 $v_-$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>关键概念：理想运放的"虚短"和"虚断"</strong></p>
+<p>虚短：$v_+ = v_-$；虚断：$i_+ = i_- = 0$</p>
+
+<p><strong>第一步：反相端电压</strong></p>
+<p>同相端接地 $\Rightarrow v_+ = 0V$</p>
+<p>由虚短：$v_- = v_+ = \boxed{0V}$（虚地）</p>
+
+<p><strong>第二步：求 $i_1$</strong></p>
+<p>$$i_1 = \frac{v_i - v_-}{R_1} = \frac{2 - 0}{10k} = 0.2mA$$</p>
+
+<p><strong>第三步：求 $v_o$</strong></p>
+<p>由虚断：$i_f = i_1 = 0.2mA$</p>
+<p>$$v_o = v_- - i_f \cdot R_f = 0 - 0.2mA \times 100k\Omega = \boxed{-20V}$$</p>
+
+<p><strong>第四步：闭环增益</strong></p>
+<p>$$A_v = \frac{v_o}{v_i} = -\frac{R_f}{R_1} = -\frac{100k}{10k} = \boxed{-10}$$</p>
+
+<div class="ans-box"><strong>答案：</strong>$A_v=-10$, $v_o=-20V$, $v_-=0V$（虚地）</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 题目10: 二端口网络 ===== -->
+<h2 id="p10">⑩ 二端口网络 <span class="tag tag-hard">较难</span></h2>
+<div class="prob-card">
+<div class="prob-header">题目 10</div>
+<div class="prob-body">
+<div class="circuit-img"><img src="circuit-problems/prob10.svg" alt="二端口网络电路图"></div>
+<div class="q-box"><span class="q">📌 题干：</span> 如图所示二端口网络，已知其 $Z$ 参数为：
+$$Z = \begin{bmatrix} 4 & 2 \\ 2 & 6 \end{bmatrix}\Omega$$
+输入端接 $V_1=10V$ 电压源，输出端接 $R_L=4\Omega$ 负载。求：①输入电流 $I_1$；②输出电流 $I_2$；③输出电压 $V_2$。</div>
+<button class="sol-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 查看解答</button>
+<div class="solution">
+<div class="sol-label">✅ 解答详解</div>
+
+<p><strong>第一步：写出二端口方程</strong></p>
+<p>$Z$参数定义：</p>
+<p>$$\begin{cases} V_1 = Z_{11}I_1 + Z_{12}I_2 \\ V_2 = Z_{21}I_1 + Z_{22}I_2 \end{cases}$$</p>
+<p>代入：</p>
+<p>$$\begin{cases} V_1 = 4I_1 + 2I_2 \quad\cdots(1) \\ V_2 = 2I_1 + 6I_2 \quad\cdots(2) \end{cases}$$</p>
+
+<p><strong>第二步：加入端口条件</strong></p>
+<p>$V_1 = 10V$（电压源输入）</p>
+<p>$V_2 = -I_2 \cdot R_L = -4I_2$（负载约束，注意参考方向）</p>
+
+<p><strong>第三步：联立求解</strong></p>
+<p>由(2)和负载约束：</p>
+<p>$$2I_1 + 6I_2 = -4I_2 \Rightarrow 2I_1 + 10I_2 = 0 \Rightarrow I_1 = -5I_2$$</p>
+<p>代入(1)：</p>
+<p>$$10 = 4(-5I_2) + 2I_2 = -20I_2 + 2I_2 = -18I_2$$</p>
+<p>$$\boxed{I_2 = -\frac{5}{9} = -0.556A}$$</p>
+<p>$$I_1 = -5 \times (-0.556) = \boxed{2.78A}$$</p>
+
+<p><strong>第四步：求输出电压</strong></p>
+<p>$$V_2 = -I_2 \cdot R_L = -(-0.556) \times 4 = \boxed{2.22V}$$</p>
+
+<p>或由(2)：$V_2 = 2 \times 2.78 + 6 \times (-0.556) = 5.56 - 3.336 = 2.224V$ ✓</p>
+
+<div class="ans-box"><strong>答案：</strong>$I_1 = 2.78A$, $I_2 = -0.556A$, $V_2 = 2.22V$</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 结语 ===== -->
+<div class="tip-card" style="margin-top:32px">
+<strong>💪 学习建议：</strong>
+<ol style="margin:8px 0 0 20px;font-size:14px">
+<li><strong>节点电压法 &amp; 网孔电流法</strong>：二选一即可，建议用节点法（手算更少出错）</li>
+<li><strong>戴维南定理</strong>：最常用技巧，求 $R_{eq}$ 时记得独立源置零</li>
+<li><strong>一阶动态电路</strong>：背熟三要素公式 $f(t) = f(\infty) + [f(0^+) - f(\infty)]e^{-t/\tau}$</li>
+<li><strong>正弦稳态</strong>：相量法是核心，阻抗三角形记牢</li>
+<li><strong>三相电路</strong>：记住Y-Δ转换关系 $V_L=\sqrt{3}V_p$, $I_L=I_p$（Y形）</li>
+<li><strong>运放</strong>：虚短虚断是灵魂，第一步永远先判断负反馈</li>
+</ol>
+</div>
+
+<div class="tip-card" style="border-left-color:var(--amber);margin-top:8px">
+<strong>⏱ 考场时间分配建议：</strong>
+选择填空15min + 计算大题80min + 检查15min。如果一道题思考超过10分钟没思路，先跳过去！
+</div>
+
+</div>
+</body>
+</html>
+
