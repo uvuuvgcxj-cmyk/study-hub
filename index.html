@@ -59,13 +59,12 @@ body{font-family:"Times New Roman",Georgia,serif;background:#f5f5f5;color:#333;d
 <div id="p1" class="pg"><div id="kg"></div></div>
 <div id="p2" class="pg"><div id="as"></div></div></div>
 <script>
-function tL(s){if(!s)return"";return s.replace(/∫/g,"\\\int ").replace(/∬/g,"\\\iint ").replace(/∭/g,"\\\iiint ").replace(/∑/g,"\\\sum ").replace(/∮/g,"\\\oint ").replace(/∂/g,"\\\partial ").replace(/π/g,"\\\pi ").replace(/√/g,"\\\sqrt{").replace(/∞/g,"\\\infty ").replace(/→/g,"\\\to ").replace(/≤/g,"\\\le ").replace(/≥/g,"\\\ge ").replace(/·/g,"\\\cdot ").replace(/½/g,"\\\frac12").replace(/¼/g,"\\\frac14").replace(/⅓/g,"\\\frac13").replace(/×/g,"\\times ");}
-function rM(s){if(!s)return"";try{if(typeof katex!=="undefined")return katex.renderToString(tL(s),{displayMode:false,throwOnError:false})}catch(e){}return s}
+catch(e){}return s}
 var chs=[{n:"全部",i:"📝",id:"all",t:Q.length},{n:"解析几何",i:"📐",id:"g"},{n:"微分方程",i:"🧮",id:"o"},{n:"多元微分",i:"📊",id:"m"},{n:"重积分",i:"🔲",id:"k"},{n:"曲线曲面积分",i:"🌀",id:"c"},{n:"级数",i:"∞",id:"s"},{n:"极限",i:"⚡",id:"x"}];
 var fm={g:["解析几何","旋转曲面"],o:["微分方程","一阶线性ODE","二阶线性ODE"],m:["全微分","隐函数偏导","复合偏导","应用","多元函数","方向导数"],k:["三重积分","极坐标","二重积分"],c:["格林公式","曲线积分","曲面积分"],s:["级数判敛","幂级数","傅里叶"],x:["极限"]};
 chs.forEach(function(c){if(c.id!="all"){var fs=fm[c.id];c.f=fs;c.t=Q.filter(function(q){return fs.indexOf(q[2])>=0}).length}});
 var cf=null;
-function rM(s){if(!s)return"";try{if(typeof katex!=="undefined")return katex.renderToString(s,{displayMode:false,throwOnError:false})}catch(e){}return s}
+function rM(s){if(!s)return"";if(typeof katex==="undefined")return s;if(s.indexOf("$")>=0){var p=s.split("$"),o="";for(var i=0;i<p.length;i++){if(i%2==0)o+=p[i];else{try{o+=katex.renderToString(p[i],{displayMode:false,throwOnError:false})}catch(e){o+=p[i]}}}return o}try{return katex.renderToString(s,{displayMode:false,throwOnError:false})}catch(e){return s}}catch(e){}return s}
 var chs=[{n:"全部",i:"📝",id:"all",t:Q.length},{n:"解析几何",i:"📐",id:"g"},{n:"微分方程",i:"🧮",id:"o"},{n:"多元微分",i:"📊",id:"m"},{n:"重积分",i:"🔲",id:"k"},{n:"曲线曲面积分",i:"🌀",id:"c"},{n:"级数",i:"∞",id:"s"},{n:"极限",i:"⚡",id:"x"}];
 var fm={g:["解析几何","旋转曲面"],o:["微分方程","一阶线性ODE","二阶线性ODE"],m:["全微分","隐函数偏导","复合偏导","应用","多元函数","方向导数"],k:["三重积分","极坐标","二重积分"],c:["格林公式","曲线积分","曲面积分"],s:["级数判敛","幂级数","傅里叶"],x:["极限"]};
 chs.forEach(function(c){if(c.id!="all"){var fs=fm[c.id];c.f=fs;c.t=Q.filter(function(q){return fs.indexOf(q[2])>=0}).length}});
