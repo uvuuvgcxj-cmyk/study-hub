@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>高数A1下·期末模拟刷题</title>
+<title>高数A1下 · 期末模拟刷题</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background:#f5f3f0;color:#2C2C2A;padding:16px;max-width:800px;margin:0 auto}
+body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background:#f5f3f0;color:#2C2C2A;padding:16px;max-width:860px;margin:0 auto}
 h2{font-size:19px;color:#4A3F8A;display:flex;align-items:center;gap:6px;margin-bottom:4px}
 .sub{font-size:12px;color:#999;margin-bottom:12px}
-.tabs{display:flex;gap:4px;margin-bottom:14px}
+.tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
 .tab{padding:8px 14px;border-radius:8px;border:1.5px solid #ddd;background:#fff;cursor:pointer;font-size:13px;transition:.15s;user-select:none}
 .tab:hover{background:#EDE9FE;border-color:#8B7FD8}
 .tab.act{background:#4A3F8A;color:#fff;border-color:#4A3F8A}
 .panel{display:none}
 .panel.act{display:block}
-.card{background:#fff;border:1px solid #e8e5e0;border-radius:10px;padding:12px 14px;margin-bottom:8px;border-left:4px solid #4A3F8A}
+.card{background:#fff;border:1px solid #e8e5e0;border-radius:10px;padding:12px 14px;margin-bottom:10px;border-left:4px solid #4A3F8A}
 .qtext{font-size:14px;line-height:1.7;margin-bottom:6px}
+.qtext .katex{font-size:1.05em}
 .badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:4px;background:#EDE9FE;color:#4A3F8A;margin-right:4px;font-weight:500}
 .badge.g{background:#E2F0D9;color:#2D6A0A}
 .badge.r{background:#FCE4E4;color:#B33030}
@@ -31,9 +34,14 @@ h2{font-size:19px;color:#4A3F8A;display:flex;align-items:center;gap:6px;margin-b
 .opt.no .lbl::after{content:' ✗';color:#B33030}
 .ansbox{display:none;margin-top:6px;padding:10px 12px;background:#F6F5FA;border-radius:8px;font-size:13px;line-height:1.8;border-left:3px solid #4A3F8A}
 .ansbox b{color:#4A3F8A}
-.btn{padding:3px 10px;border-radius:6px;border:1.5px solid #4A3F8A;background:transparent;color:#4A3F8A;cursor:pointer;font-size:11px;margin:2px;transition:.15s}
+.deepbox{display:none;margin-top:6px;padding:12px 14px;background:#FAF8FF;border-radius:8px;font-size:13px;line-height:1.8;border-left:3px solid #2D6A0A}
+.deepbox b{color:#2D6A0A}
+.btn{padding:3px 10px;border-radius:6px;border:1.5px solid #4A3F8A;background:transparent;color:#4A3F8A;cursor:pointer;font-size:11px;margin:2px 2px 2px 0;transition:.15s}
 .btn:hover{background:#EDE9FE}
 .btn.on{background:#4A3F8A;color:#fff}
+.btn.green{border-color:#2D6A0A;color:#2D6A0A}
+.btn.green:hover{background:#E2F0D9}
+.btn.green.on{background:#2D6A0A;color:#fff}
 .progress{display:flex;align-items:center;gap:8px;margin:10px 0;flex-wrap:wrap}
 .bar{flex:1;height:6px;background:#ddd;border-radius:3px;overflow:hidden;min-width:60px}
 .fill{height:100%;background:#4A3F8A;border-radius:3px;transition:width .3s}
@@ -45,17 +53,17 @@ h2{font-size:19px;color:#4A3F8A;display:flex;align-items:center;gap:6px;margin-b
 .sc-card .lab{font-size:10px;color:#888}
 .sh{font-size:15px;font-weight:600;margin:12px 0 6px;padding:6px 10px;border-radius:6px;background:#EDE9FE;color:#3A2F7A}
 .tip-card{border-left:3px solid #3B6D11;margin:6px 0;padding:8px 12px;background:#F6FFF6;border-radius:8px;font-size:13px;line-height:1.8}
+.extend-box{border:1px dashed #4A3F8A;border-radius:8px;padding:10px;margin-top:8px;background:#F8F6FF}
 </style>
 </head>
 <body>
 <h2>📝 高数A1下 · 期末模拟刷题</h2>
-<div class="sub">基于2023-2024海南大学真题 | 选择题可点选，自动判断正误</div>
+<div class="sub">基于2023-2024海南大学真题 | KaTeX公式渲染 | 每题配深度解析+拓展</div>
 <div class="tabs">
 <div class="tab act" onclick="switchTab(0)">📋 刷题</div>
 <div class="tab" onclick="switchTab(1)">📊 知识图谱</div>
 <div class="tab" onclick="switchTab(2)">🏆 答案速查</div>
 </div>
-
 <div id="panel0" class="panel act">
 <div class="progress">
 <span class="ptext" id="pText">0/19</span>
@@ -65,17 +73,52 @@ h2{font-size:19px;color:#4A3F8A;display:flex;align-items:center;gap:6px;margin-b
 </div>
 <div id="questionList"></div>
 </div>
-
-<div id="panel1" class="panel">
-<div class="card" id="kgContent"></div>
-</div>
-
-<div id="panel2" class="panel">
-<div class="card" id="answerSheet"></div>
-</div>
-
+<div id="panel1" class="panel"><div class="card" id="kgContent"></div></div>
+<div id="panel2" class="panel"><div class="card" id="answerSheet"></div></div>
 <script>
 var Q = [["选择","3分","解析几何","a","与曲面 x2/4+y2/9-z2/16=1 的交线为椭圆的是平面( )",["A.x=0","B.y=0","C.z=0","D.z=4"],"C","z=0截得x2/4+y2/9=1(椭圆)。x=0或y=0截得双曲线。","用z=常数截单叶双曲面→椭圆"],["选择","3分","全微分","g","z=xy在(1,2)处的全微分为( )",["A.2dx+dy","B.4dx+dy","C.4dx+2dy","D.dx+4dy"],"B","∂z/∂x=2xy=4,∂z/∂y=x=1,dz=4dx+dy","全微分必须有dx和dy两项"],["选择","3分","隐函数偏导","g","x2+y2+z2=xyz确定z=f(x,y),∂z/∂x=( )",["A.(yz-2x)/(2z-xy)","B.(2x-yz)/(xy-2z)","C.(yz-2x)/(xy-2z)","D.(2x-yz)/(2z-xy)"],"A","F=x2+y2+z2-xyz,F_x=2x-yz,F_z=2z-xy,∂z/∂x=-F_x/F_z=(yz-2x)/(2z-xy)","隐函数偏导= -F_x/F_z,负号!"],["选择","3分","三重积分","a","Ω: x2+y2+z2≤4, ∭(x2+y2+z2)dV=( )",["A.16π/5","B.32π/5","C.64π/5","D.128π/5"],"D","球坐标:∫dθ∫sinφdφ∫r4dr=2π×2×32/5=128π/5","球域遇x2+y2+z2→球坐标r4积分"],["选择","3分","级数判敛","r","以下级数收敛的是( )",["A.∑1/√n","B.∑n!/2n","C.∑ln(1+1/n2)","D.∑n/(n+1)"],"C","A:p=1/3发散;B:比值发散;C:ln(1+1/n2)~1/n2收敛;D:通项→1≠0发散","ln(1+□)~□→p级数"],["选择","3分","曲面积分","r","Σ:球面x2+y2+z2=R2, ∬(x2+y2)dS=( )",["A.0","B.4πR4/3","C.8πR4/3","D.4πR2"],"C","对称性:三个方向平方积分相等。=(2/3)R2×4πR2=8πR4/3","球面对称→三个平方积分相等"],["选择","3分","极限","a","lim(x→0)(ex-1-x)/x2 =( )",["A.0","B.1/2","C.1","D.2"],"B","ex=1+x+x2/2+O(x3)→(x2/2)/x2→1/2","ex-1-x→泰勒到二次项"],["选择","3分","曲线积分","a","L:y=x2从(0,0)→(1,1), ∫(x2+y)dx+(x-y2)dy=( )",["A.0","B.1/2","C.1","D.3/2"],"C","∂P/∂y=1=∂Q/∂x→与路径无关。原函数代入=1","先检查全微分条件→找原函数"],["填空","4分","解析几何","a","直线(x-1)/2=(y+2)/3=(z-3)/(-1)与(x-2)/1=(y-1)/m=(z-4)/(-2)垂直,m=","","-4/3","s1·s2=2+3m+2=0→m=-4/3","直线垂直→方向向量点积=0"],["填空","4分","微分方程","g","y-4y+4y=0的通解为","","y=(C1+C2x)e(2x)","r2-4r+4=0→(r-2)2=0→r=2重根→y=(C1+C2x)e(2x)","重根→第二个解乘x"],["填空","4分","傅里叶","r","f(x)=x(0<x<1),正弦级数s(x),s(-1/3)=","","-1/3","奇延拓→s(-1/3)=-s(1/3)=-f(1/3)=-1/3","奇延拓求值=s(-a)=-f(a)"],["填空","4分","旋转曲面","a","曲线z=x2绕z轴旋转一周所得曲面方程为","","z=x2+y2","绕z轴旋转→到z轴距离不变→x2+y2替换x2","绕z轴转→x2+y2替换原x2"],["填空","4分","极坐标","a","化∫01dy∫0y f(x2+y2)dx为极坐标形式","","∫0π/4 dθ∫0cscθ f(r2)·r dr","区域y=x下三角形。θ:0→π/4,r:0→cscθ","极坐标→画区域→先定θ→再定r"],["计算","8分","复合偏导","g","z=f(x2-y2,xy),f具二阶连续偏导,求∂z/∂x,∂2z/∂x∂y","","∂z/∂x=2x·fu+y·fv;∂2z/∂x∂y=-4xy·fuu+2(x2-y2)·fuv+xy·fvv+fv","令u=x2-y2,v=xy。链式法则求偏导","画依赖树→每条路径乘→所有路径加"],["计算","8分","一阶线性ODE","g","y-2y=e(2x),y(0)=1,求特解","","y=(x+1)e(2x)","P=-2,Q=e(2x)。μ=e(-2x)。(μy)=1→μy=x+C→代初值得C=1","四步法:①P,Q ②μ ③(μy)=μQ ④积分+代值"],["计算","8分","幂级数","g","∑xn/(n+1)的收敛域及和函数","","收敛域[-1,1);S(x)=-ln(1-x)/x,S(0)=1","R=1。x=1发散,x=-1收敛。xS(x)→求导→积分→-ln(1-x)","分母有n→先求导后积分。验端点!"],["计算","8分","格林公式","g","∫(exsiny-y)dx+(excosy+x)dy,L:上半圆x2+y2=ax(y≥0)从A(a,0)到O(0,0)","","πa2/4","Q_x-P_y=2。补x轴OA积分为0。格林→∬2dxdy=πa2/4","不封闭→补线→格林→减补线"],["计算","8分","曲面积分","r","∬x dydz+y dzdx+z dxdy, Σ:x+y+z=1在第一卦限上侧","","1/2","投影到xOy,z=1-x-y。公式化简得∬1dxdy=三角形面积0.5","一代二投三定向"],["计算","8分","应用","g","容积32m3长方体无盖水箱,长宽高多少时用料最省?","","长=宽=4m,高=2m","V=xyz=32,S=xy+2xz+2yz。拉格朗日→x=y=2z→代入得z=2","无盖→不加顶。找比例关系"]];
+
+var Ext = [
+  {deep:"<b>🔍 核心思想</b><br>二次曲面与坐标平面的交线，代入法：将平面方程代入曲面方程。<br>• 用<b>z=常数</b>截单叶双曲面→椭圆<br>• 用<b>x=常数</b>或<b>y=常数</b>截→双曲线<br><b>💡 口诀</b>『正号出椭圆，负号出双曲』",extend:"<b>拓展：</b>曲面 x²/4 - y²/9 + z²/16 = 1 被平面 x=0 截得的交线？<br><span style='color:#4A3F8A'>答案：-y²/9+z²/16=1（双曲线）</span>"},
+  {deep:"<b>🔍 核心思想</b><br>全微分公式：dz = (∂z/∂x)dx + (∂z/∂y)dy<br>• 先求两个偏导，再代入点，写成 dz=Adx+Bdy<br>• <b>⚠️ 常见坑</b>：只写dx忘写dy、偏导求反、忘记代入坐标",extend:"<b>拓展：</b>z = e^x·ln(1+y)，求 dz|_{(0,1)}<br><span style='color:#4A3F8A'>答案：dz = ln2·dx + (1/2)dy</span>"},
+  {deep:"<b>🔍 核心思想</b><br>隐函数 F(x,y,z)=0：<br>∂z/∂x = <b style='color:#B33030'>-</b>F_x/F_z<br>∂z/∂y = <b style='color:#B33030'>-</b>F_y/F_z<br><b>⚠️ 最坑考点！负号是最大失分点</b>",extend:"<b>拓展：</b>e^z - xyz = 0，求 ∂z/∂x<br><span style='color:#4A3F8A'>答案：yz/(e^z-xy)</span>"},
+  {deep:"<b>🔍 核心思想</b><br>球域遇 x²+y²+z² → 球坐标！<br>• dV = r²sinφ dr dφ dθ<br>• 积分 ∫∫∫ r²·r²sinφ dr dφ dθ<br>θ:0→2π, φ:0→π, r:0→R<br>= 2π·2·R⁵/5<br>本题 R=2 → 128π/5",extend:"<b>拓展：</b>∭(x²+y²)dV，Ω: x²+y²+z² ≤ R²<br><span style='color:#4A3F8A'>答案：8πR⁵/15</span>"},
+  {deep:"<b>🔍 核心思想</b><br>判敛三步：①通项→0? ②正项→比值/p级数/比较 ③交错→莱布尼茨<br><b>常用等价：</b>ln(1+1/n²)~1/n² 收敛；sin(1/n)~1/n 发散",extend:"<b>拓展：</b>判敛 ∑ n·sin(1/n³)<br><span style='color:#4A3F8A'>答案：n·(1/n³)=1/n² → 收敛</span>"},
+  {deep:"<b>🔍 核心思想</b><br>球面曲面积分→对称性！<br>∬x²dS = ∬y²dS = ∬z²dS<br>三者之和 = ∬R²dS = R²·4πR²<br>每个 = 4πR⁴/3<br>x²+y² = (2/3)R²·4πR² = 8πR⁴/3",extend:"<b>拓展：</b>∬(x²+2y²+3z²)dS，Σ: x²+y²+z²=1<br><span style='color:#4A3F8A'>答案：4π(1+2+3)/3 = 8π</span>"},
+  {deep:"<b>🔍 核心思想</b><br>0/0型极限→泰勒展开最通用！<br>e^x = 1 + x + x²/2! + x³/3! + ...<br>本题：e^x-1-x ~ x²/2 → (x²/2)/x² = 1/2",extend:"<b>拓展：</b>lim_{x→0} (e^x-1-x-x²/2)/x³<br><span style='color:#4A3F8A'>答案：1/6</span>"},
+  {deep:"<b>🔍 核心思想</b><br>全微分条件：∂P/∂y = ∂Q/∂x<br>相等→积分与路径无关！<br>找原函数 F，端点相减",extend:"<b>拓展：</b>∫(y²+2x)dx+(2xy)dy，(0,0)→(1,2)<br><span style='color:#4A3F8A'>答案：5</span>"},
+  {deep:"<b>🔍 核心思想</b><br>直线垂直 ⇔ 方向向量点积 = 0<br>s₁·s₂ = 0 → a₁a₂+b₁b₂+c₁c₂=0",extend:"<b>拓展：</b>两直线垂直，L₁方向(2,-1,k)，L₂方向(3,2,-1)，求k<br><span style='color:#4A3F8A'>答案：k=4</span>"},
+  {deep:"<b>🔍 核心思想</b><br>y''+py'+qy=0 → 特征方程 r²+pr+q=0<br>• 两不等实根→y=C₁e^{r₁x}+C₂e^{r₂x}<br>• 重根→y=(C₁+C₂x)e^{rx}<br>• 共轭复根→e^{αx}(C₁cosβx+C₂sinβx)<br><b>⚠️ 重根必乘x！</b>",extend:"<b>拓展：</b>y''+4y'+4y=0 的通解<br><span style='color:#4A3F8A'>答案：y=(C₁+C₂x)e^{-2x}</span>"},
+  {deep:"<b>🔍 核心思想</b><br>正弦级数→奇延拓！<br>s(-a) = -s(a) = -f(a)<br>余弦级数→偶延拓<br>s(-a) = s(a) = f(a)",extend:"<b>拓展：</b>f(x)=x²(0<x<1)余弦级数，求s(-1/2)<br><span style='color:#4A3F8A'>答案：1/4</span>"},
+  {deep:"<b>🔍 核心思想</b><br>绕轴旋转→该轴坐标不变，另一变到轴距离<br>绕z轴：z不变，x²→x²+y²<br><b>💡 口诀</b>『绕谁谁不变，另一变距离』",extend:"<b>拓展：</b>y=x² 绕 y 轴旋转的曲面方程<br><span style='color:#4A3F8A'>答案：y=x²+z²</span>"},
+  {deep:"<b>🔍 核心思想</b><br>直角→极坐标：x=rcosθ, y=rsinθ<br>dxdy = <b style='color:#B33030'>r</b> dr dθ<br>定限：①画区域 ②θ ③r 从内到外",extend:"<b>拓展：</b>∬xy dxdy，D: x²+y²≤1, x≥0, y≥0<br><span style='color:#4A3F8A'>答案：1/8</span>"},
+  {deep:"<b>🔍 核心思想</b><br>复合偏导→画依赖树！<br>∂z/∂x = (∂f/∂u)(∂u/∂x)+(∂f/∂v)(∂v/∂x)<br>二阶偏导继续用链式法则<br>⚠️ f_uv = f_vu（连续时）",extend:"<b>拓展：</b>z=f(xy, x²+y²)，求∂z/∂x<br><span style='color:#4A3F8A'>答案：y·f_u + 2x·f_v</span>"},
+  {deep:"<b>🔍 核心思想<br>四步法：</b><br>① y'+Py=Q<br>② μ=e^{∫Pdx}<br>③ (μy)'=μQ<br>④ μy=∫μQ dx+C",extend:"<b>拓展：</b>y'+y/x=x², y(1)=0<br><span style='color:#4A3F8A'>答案：y=x³/4-1/(4x)</span>"},
+  {deep:"<b>🔍 核心思想</b><br>分母有n→先导后积<br>xS(x)=∑x^{n+1}/(n+1)<br>(xS)'=∑xⁿ=1/(1-x)<br>xS=-ln(1-x)<br>S=-ln(1-x)/x<br><b>⚠️ 验端点！</b>",extend:"<b>拓展：</b>∑nx^{n-1}的和函数<br><span style='color:#4A3F8A'>答案：1/(1-x)²，|x|&lt;1</span>"},
+  {deep:"<b>🔍 核心思想</b><br>格林公式：∮=∬(Q_x-P_y)dxdy<br>不封闭→补线→格林→<b style='color:#B33030'>减</b>补线<br>⚠️ 方向",extend:"<b>拓展：</b>∫(y²dx+x²dy)，y=sinx从(0,0)到(π,0)<br><span style='color:#4A3F8A'>提示：Q_x-P_y=2x-2y</span>"},
+  {deep:"<b>🔍 核心思想</b><br>一投二代三定向<br>①投影到坐标平面<br>②代入曲面方程<br>③确定符号（上侧+，下侧-）",extend:"<b>拓展：</b>∬z dxdy，Σ:z=4-x²-y²上侧<br><span style='color:#4A3F8A'>答案：8π</span>"},
+  {deep:"<b>🔍 核心思想</b><br>拉格朗日五步法：<br>①设f和φ ②L=f+λφ ③偏导=0 ④消λ找比例 ⑤代入条件<br>无盖不加顶",extend:"<b>拓展：</b>椭圆x²/4+y²=1上点到直线x+2y=0最短距离<br><span style='color:#4A3F8A'>提示：距离平方+拉格朗日</span>"}
+];
+
+
+var Ext = '$ext_data'
+
+function math(s){
+  if(!s) return '';
+  var t = s.replace(/x2(?![0-9])/g,'x^{2}').replace(/y2(?![0-9])/g,'y^{2}').replace(/z2(?![0-9])/g,'z^{2}')
+    .replace(/r2(?![0-9])/g,'r^{2}').replace(/R2(?![0-9])/g,'R^{2}').replace(/a2(?![0-9])/g,'a^{2}')
+    .replace(/b2(?![0-9])/g,'b^{2}').replace(/c2(?![0-9])/g,'c^{2}').replace(/n2(?![0-9])/g,'n^{2}')
+    .replace(/π/g,'\\pi ').replace(/∂/g,'\\partial ').replace(/∫/g,'\\int ').replace(/∑/g,'\\sum ')
+    .replace(/∬/g,'\\iint ').replace(/∭/g,'\\iiint ').replace(/√/g,'\\sqrt ').replace(/→/g,'\\to ')
+    .replace(/∞/g,'\\infty ').replace(/≤/g,'\\le ').replace(/≥/g,'\\ge ').replace(/·/g,'\\cdot ').replace(/∼/g,'\\sim ');
+  try{ return katex.renderToString(t, {displayMode:false,throwOnError:false}); }
+  catch(e){ return escHtml(s); }
+}
+
+function escHtml(s){
+  if(!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 function render(){
   var list = document.getElementById('questionList');
@@ -88,151 +131,94 @@ function render(){
         var letter = String.fromCharCode(65+j);
         opts += '<div class="opt" onclick="selectOpt('+i+',\''+letter+'\')">'+
           '<input type="radio" name="r'+i+'" value="'+letter+'" style="display:none">'+
-          '<span class="lbl">'+letter+'. '+escHtml(q[5][j])+'</span></div>';
+          '<span class="lbl">'+letter+'. '+math(q[5][j])+'</span></div>';
       }
     }
-    var ans = escHtml(q[6]||'');
-    var sol = escHtml(q[7]||'').replace(/\\n/g,'<br>');
-    var tip = q[8] ? escHtml(q[8]) : '';
+    var ansHtml = math(q[6]||'');
+    var solHtml = q[7]||'';
+    solHtml = solHtml.replace(/([xyznrabcR])(\d+)/g,'$1^{$2}');
+    solHtml = solHtml.replace(/π/g,'\\\\pi ').replace(/∂/g,'\\\\partial ').replace(/∫/g,'\\\\int ');
+    try{ solHtml = katex.renderToString(solHtml, {displayMode:false,throwOnError:false}); }
+    catch(e){ solHtml = escHtml(q[7]||'').replace(/\\n/g,'<br>'); }
+    var tip = q[8] ? math(q[8]) : '';
+    var ext = (window.Ext && Ext[i]) ? Ext[i] : null;
     html += '<div class="card">'+
       '<div class="qtext"><strong>'+q[0]+' '+(i+1)+'</strong> '+
-      '<span class="badge '+q[3]+'">'+q[2]+'</span>'+
-      '<span class="score">('+q[1]+')</span></div>'+
-      '<div class="qtext">'+escHtml(q[4])+'</div>'+
-      opts+
+      '<span class="badge '+q[3]+'">'+q[2]+'</span><span class="score">('+q[1]+')</span></div>'+
+      '<div class="qtext">'+math(q[4])+'</div>'+opts+
+      '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+
       '<button class="btn" onclick="toggleAns('+i+')" id="b'+i+'">查看答案</button>'+
-      '<div class="ansbox" id="a'+i+'">'+
-        '<b>✅ 答案：</b>'+ans+'<br><br>'+
-        '<b>📖 解析：</b>'+sol+
-        (tip ? '<br><br><span class="tip-bg">💡 '+tip+'</span>' : '')+
-      '</div></div>';
+      (ext ? '<button class="btn green" onclick="toggleDeep('+i+')" id="d'+i+'">📘 深度解析</button>' : '')+
+      '</div>'+
+      '<div class="ansbox" id="a'+i+'"><b>✅ 答案：</b>'+ansHtml+'<br><br><b>📖 解析：</b><br>'+solHtml+
+      (tip ? '<br><br><span class="tip-bg">💡 '+tip+'</span>' : '')+'</div>'+
+      (ext ? '<div class="deepbox" id="dbox'+i+'"><b>📘 深度讲解</b><br>'+ext.deep+'<br><br><div class="extend-box">'+ext.extend+'</div></div>' : '')+
+      '</div>';
   }
   list.innerHTML = html;
   updateProgress();
 }
 
-function escHtml(s){
-  if(!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
 function switchTab(idx){
-  var tabs = document.querySelectorAll('.tab');
-  var panels = [document.getElementById('panel0'),document.getElementById('panel1'),document.getElementById('panel2')];
-  for(var i=0;i<3;i++){
-    tabs[i].classList.toggle('act',i===idx);
-    panels[i].classList.toggle('act',i===idx);
-  }
+  document.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('act',j===idx);});
+  ['panel0','panel1','panel2'].forEach(function(id,j){document.getElementById(id).classList.toggle('act',j===idx);});
   if(idx===1) renderKnowledgeGraph();
   if(idx===2) renderAnswerSheet();
 }
 
 function toggleAns(i){
-  var box = document.getElementById('a'+i);
-  var btn = document.getElementById('b'+i);
-  if(box.style.display==='block'){
-    box.style.display='none';
-    btn.textContent='查看答案';
-    btn.classList.remove('on');
-  } else {
-    box.style.display='block';
-    btn.textContent='收起答案';
-    btn.classList.add('on');
-  }
+  var box = document.getElementById('a'+i), btn = document.getElementById('b'+i);
+  if(box.style.display==='block'){box.style.display='none';btn.textContent='查看答案';btn.classList.remove('on');}
+  else{box.style.display='block';btn.textContent='收起答案';btn.classList.add('on');}
+  updateProgress();
+}
+
+function toggleDeep(i){
+  var box = document.getElementById('dbox'+i), btn = document.getElementById('d'+i);
+  if(box.style.display==='block'){box.style.display='none';btn.textContent='📘 深度解析';btn.classList.remove('on');}
+  else{box.style.display='block';btn.textContent='📘 收起解析';btn.classList.add('on');
+    var abox = document.getElementById('a'+i), abtn = document.getElementById('b'+i);
+    if(abox.style.display!=='block'){abox.style.display='block';abtn.textContent='收起答案';abtn.classList.add('on');}}
   updateProgress();
 }
 
 function selectOpt(i,val){
-  var q = Q[i];
-  if(!q) return;
+  var q = Q[i]; if(!q) return;
   var radios = document.getElementsByName('r'+i);
   for(var j=0;j<radios.length;j++){
-    var opt = radios[j].parentElement;
-    opt.classList.remove('ok','no');
-    if(radios[j].value===val){
-      radios[j].checked=true;
-      if(val===q[6]){
-        opt.classList.add('ok');
-      } else {
-        opt.classList.add('no');
-      }
-    }
+    var opt = radios[j].parentElement; opt.classList.remove('ok','no');
+    if(radios[j].value===val){radios[j].checked=true;
+      if(val===q[6]) opt.classList.add('ok'); else opt.classList.add('no');}
   }
-  var box = document.getElementById('a'+i);
-  var btn = document.getElementById('b'+i);
-  if(box.style.display!=='block'){
-    box.style.display='block';
-    btn.textContent='收起答案';
-    btn.classList.add('on');
-  }
+  var box = document.getElementById('a'+i), btn = document.getElementById('b'+i);
+  if(box.style.display!=='block'){box.style.display='block';btn.textContent='收起答案';btn.classList.add('on');}
   updateProgress();
 }
 
-function expandAll(){
-  for(var i=0;i<Q.length;i++){
-    var box = document.getElementById('a'+i);
-    var btn = document.getElementById('b'+i);
-    if(box){box.style.display='block';}
-    if(btn){btn.textContent='收起答案';btn.classList.add('on');}
-  }
-  updateProgress();
-}
+function expandAll(){for(var i=0;i<Q.length;i++){var b=document.getElementById('a'+i),t=document.getElementById('b'+i);if(b)b.style.display='block';if(t){t.textContent='收起答案';t.classList.add('on');}}updateProgress();}
 
-function collapseAll(){
-  for(var i=0;i<Q.length;i++){
-    var box = document.getElementById('a'+i);
-    var btn = document.getElementById('b'+i);
-    if(box){box.style.display='none';}
-    if(btn){btn.textContent='查看答案';btn.classList.remove('on');}
-  }
-  updateProgress();
-}
+function collapseAll(){for(var i=0;i<Q.length;i++){
+  ['a','dbox'].forEach(function(k){var x=document.getElementById(k+i);if(x)x.style.display='none';});
+  var t=document.getElementById('b'+i);if(t){t.textContent='查看答案';t.classList.remove('on');}
+  var d=document.getElementById('d'+i);if(d){d.textContent='📘 深度解析';d.classList.remove('on');}
+}updateProgress();}
 
-function updateProgress(){
-  var n=0;
-  for(var i=0;i<Q.length;i++){
-    var box = document.getElementById('a'+i);
-    if(box && box.style.display==='block') n++;
-  }
-  var pct = Math.round(n/Q.length*100);
-  document.getElementById('pFill').style.width=pct+'%';
-  document.getElementById('pText').textContent=n+'/'+Q.length;
-}
+function updateProgress(){var n=0;for(var i=0;i<Q.length;i++){var b=document.getElementById('a'+i);if(b&&b.style.display==='block')n++;}document.getElementById('pFill').style.width=Math.round(n/Q.length*100)+'%';document.getElementById('pText').textContent=n+'/'+Q.length;}
 
-function renderKnowledgeGraph(){
-  var html = 
-    '<h2 style="margin-bottom:8px">各模块分值占比</h2>'+
-    '<div class="grid">'+
-    '<div class="sc-card" style="background:#EDE9FE"><div class="num" style="color:#4A3F8A">~29分</div><div class="lab">多元微分</div></div>'+
-    '<div class="sc-card" style="background:#D6F0E6"><div class="num" style="color:#0F6E56">~22分</div><div class="lab">重积分+曲面</div></div>'+
-    '<div class="sc-card" style="background:#FFF1D6"><div class="num" style="color:#9B6A0A">~16分</div><div class="lab">无穷级数</div></div>'+
-    '<div class="sc-card" style="background:#FCE4E4"><div class="num" style="color:#B33030">~12分</div><div class="lab">微分方程</div></div>'+
-    '<div class="sc-card" style="background:#F0F0F0"><div class="num" style="color:#555">~12分</div><div class="lab">解析几何</div></div>'+
-    '<div class="sc-card" style="background:#F0F0F0"><div class="num" style="color:#555">~9分</div><div class="lab">其他</div></div>'+
-    '</div>'+
-    '<div class="sh">⭐⭐⭐⭐⭐ 必考题型（100%出）</div>'+
-    '<div class="tip-card">• <b>一阶线性ODE</b>：y\'+Py=Q → μ=e<sup>∫Pdx</sup> → (μy)\'=μQ → 积分代值<br>• <b>幂级数和函数</b>：求R→验端点→分母有n先导后积→无分母先积后导<br>• <b>格林公式</b>：不封闭→补线→格林→减补线<br>• <b>拉格朗日乘数法</b>：条件极值，找比例关系</div>'+
-    '<div class="sh">⭐⭐⭐⭐ 高频考点</div>'+
-    '<div class="tip-card">• <b>隐函数偏导</b>：∂z/∂x = <span style="color:#B33030;font-weight:bold">-</span>F_x/F_z <span style="color:#B33030">(负号!!)</span><br>• <b>复合偏导</b>：画依赖树→每条路径乘→所有路径加<br>• <b>级数判敛</b>：比值/根值→p级数→比较极限→交错级数<br>• <b>傅里叶</b>：奇延拓s(-a)=-f(a)，偶延拓s(-a)=f(a)</div>'+
-    '<div class="sh">💀 五大失分陷阱</div>'+
-    '<div class="tip-card">1️⃣ 隐函数偏导<span style="color:#B33030">忘负号</span><br>2️⃣ 极坐标<span style="color:#B33030">忘乘r</span> dxdy = r drdθ<br>3️⃣ 收敛域<span style="color:#B33030">忘验端点</span><br>4️⃣ 格林公式<span style="color:#B33030">忘补线/忘减补线</span><br>5️⃣ 重根<span style="color:#B33030">忘乘x</span> y=(C<sub>1</sub>+C<sub>2</sub>x)e<sup>rx</sup></div>';
-  document.getElementById('kgContent').innerHTML = html;
-}
+function renderKnowledgeGraph(){document.getElementById('kgContent').innerHTML=
+'<h2 style="margin-bottom:8px">各模块分值占比</h2>'+
+'<div class="grid"><div class="sc-card" style="background:#EDE9FE"><div class="num" style="color:#4A3F8A">~29分</div><div class="lab">多元微分</div></div>'+
+'<div class="sc-card" style="background:#D6F0E6"><div class="num" style="color:#0F6E56">~22分</div><div class="lab">重积分</div></div>'+
+'<div class="sc-card" style="background:#FFF1D6"><div class="num" style="color:#9B6A0A">~16分</div><div class="lab">无穷级数</div></div>'+
+'<div class="sc-card" style="background:#FCE4E4"><div class="num" style="color:#B33030">~12分</div><div class="lab">微分方程</div></div>'+
+'<div class="sc-card" style="background:#F0F0F0"><div class="num" style="color:#555">~12分</div><div class="lab">解析几何</div></div>'+
+'<div class="sc-card" style="background:#F0F0F0"><div class="num" style="color:#555">~9分</div><div class="lab">其他</div></div></div>'+
+'<div class="sh">⭐⭐⭐⭐⭐ 必考题型</div>'+
+'<div class="tip-card">• 一阶线性ODE：y\\'+Py=Q → μ=e^{∫Pdx} → (μy)\\'=μQ<br>• 幂级数和函数：分母有n先导后积，验端点！<br>• 格林公式：不封闭→补线→格林→减补线<br>• 拉格朗日：条件极值，找比例关系</div>'+
+'<div class="sh">💀 五大失分陷阱</div>'+
+'<div class="tip-card">1️⃣ 隐函数偏导 <span style="color:#B33030">忘负号</span><br>2️⃣ 极坐标 <span style="color:#B33030">忘乘r</span><br>3️⃣ 收敛域 <span style="color:#B33030">忘验端点</span><br>4️⃣ 格林 <span style="color:#B33030">忘补线/减线</span><br>5️⃣ 重根 <span style="color:#B33030">忘乘x</span></div>';}
 
-function renderAnswerSheet(){
-  var html = '<h2 style="margin-bottom:8px">全题答案速查</h2>';
-  for(var i=0;i<Q.length;i++){
-    var q = Q[i];
-    var ans = escHtml(q[6]||'');
-    var diff = {'g':'易','r':'中','a':'难'}[q[3]]||'';
-    html += '<div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;display:flex;gap:6px;align-items:baseline">'+
-      '<span style="color:#999;min-width:35px">'+(i+1)+'.</span>'+
-      '<span style="min-width:45px;font-size:11px;color:#888">'+diff+'</span>'+
-      '<span style="flex:1">'+escHtml(q[4].substring(0,40))+'…</span>'+
-      '<span style="color:#4A3F8A;font-weight:600;min-width:60px;text-align:right">'+ans+'</span></div>';
-  }
-  document.getElementById('answerSheet').innerHTML = html;
-}
+function renderAnswerSheet(){var h='<h2 style="margin-bottom:8px">全题答案速查</h2>';for(var i=0;i<Q.length;i++){var q=Q[i],a=math(q[6]||''),d={g:'易',r:'中',a:'难'}[q[3]]||'';h+='<div style="padding:5px 0;border-bottom:1px solid #eee;font-size:13px;display:flex;gap:6px;align-items:baseline"><span style="color:#999;min-width:35px">'+(i+1)+'.</span><span style="min-width:40px;font-size:11px;color:#888;text-align:center">'+d+'</span><span style="flex:1;font-size:12px;overflow:hidden;white-space:nowrap">'+escHtml(q[4].substring(0,40))+'</span><span style="color:#4A3F8A;font-weight:600;min-width:80px;text-align:right">'+a+'</span></div>';}document.getElementById('answerSheet').innerHTML=h;}
 
 render();
 </script>
