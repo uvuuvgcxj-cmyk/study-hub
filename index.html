@@ -1,40 +1,380 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>孙正田 · 期末复习资料站</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f4f8; color: #1a202c; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
-        .container { max-width: 800px; width: 100%; }
-        h1 { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 8px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { text-align: center; color: #718096; margin-bottom: 40px; font-size: 0.95rem; }
-        .grid { display: grid; gap: 16px; }
-        .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 16px; border: 1px solid #e2e8f0; }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-color: #667eea; }
-        .icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
-        .card-content h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-        .card-content p { font-size: 0.85rem; color: #718096; }
-        .footer { margin-top: 40px; text-align: center; color: #a0aec0; font-size: 0.85rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>高数 Studio · 期末冲刺</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<style>
+:root{--bg:#1e1e2e;--sidebar:#181825;--surface:#1e1e2e;--card:#262637;--border:#313244;--accent:#89b4fa;--accent2:#a6e3a1;--accent3:#f9e2af;--red:#f38ba8;--text:#cdd6f4;--subtext:#a6adc8;--dim:#585b70;--radius:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'JetBrains Mono','Cascadia Code','Microsoft YaHei',monospace,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+body{display:flex;flex-direction:column}
+
+/* ===== TOP BAR ===== */
+.topbar{display:flex;align-items:center;gap:12px;padding:8px 16px;background:var(--sidebar);border-bottom:1px solid var(--border);flex-shrink:0;z-index:100}
+.topbar .logo{font-size:16px;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:6px}
+.topbar .logo span{color:var(--accent2);background:var(--card);padding:0 6px;border-radius:4px;font-size:11px}
+.topbar .tabs{display:flex;gap:2px;margin-left:16px;flex:1}
+.topbar .tabs .tt{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:var(--radius) var(--radius) 0 0;font-size:12px;cursor:pointer;color:var(--subtext);border-bottom:2px solid transparent;transition:.1s}
+.topbar .tabs .tt:hover{color:var(--text);background:var(--card)}
+.topbar .tabs .tt.act{color:var(--accent);border-bottom-color:var(--accent);background:var(--card)}
+.topbar .tools{display:flex;gap:4px}
+.topbar .tools .tb{padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;color:var(--subtext);background:var(--card);border:1px solid var(--border)}
+.topbar .tools .tb:hover{color:var(--text);border-color:var(--accent)}
+
+/* ===== MAIN LAYOUT ===== */
+.main{display:flex;flex:1;overflow:hidden}
+.sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.content{flex:1;overflow-y:auto;padding:0}
+
+/* ===== SIDEBAR ===== */
+.sidebar .sh{display:flex;align-items:center;gap:6px;padding:10px 14px;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.sidebar .tree{flex:1;overflow-y:auto;padding:4px 0}
+.sidebar .item{display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:12px;cursor:pointer;color:var(--subtext);border-left:3px solid transparent;transition:.1s}
+.sidebar .item:hover{background:var(--card);color:var(--text)}
+.sidebar .item.act{color:var(--accent);background:var(--card);border-left-color:var(--accent)}
+.sidebar .item .icon{width:16px;text-align:center;flex-shrink:0}
+.sidebar .item .tag{font-size:9px;padding:0 5px;border-radius:3px;margin-left:auto;background:var(--card);color:var(--dim)}
+.sidebar .item.act .tag{color:var(--accent);background:rgba(137,180,250,.15)}
+.sidebar .divider{height:1px;background:var(--border);margin:6px 14px}
+
+/* ===== CONTENT PANELS ===== */
+.panel{display:none;height:100%}
+.panel.act{display:flex;flex-direction:column}
+
+/* ===== QUESTION PANEL ===== */
+.qheader{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.qheader h2{font-size:15px;font-weight:600;color:var(--text)}
+.qheader .qstats{font-size:11px;color:var(--dim)}
+.qheader .qbar{flex:1;height:4px;background:var(--card);border-radius:2px;overflow:hidden;min-width:40px}
+.qheader .qbar .qf{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.qheader .qbtns{display:flex;gap:4px}
+.qheader .qbtns .qb{padding:3px 10px;border-radius:4px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--subtext)}
+.qheader .qbtns .qb:hover{color:var(--text);border-color:var(--accent)}
+.qlist{flex:1;overflow-y:auto;padding:12px 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--accent)}
+.card .qtext{font-size:13px;line-height:1.8;margin-bottom:6px}
+.card .qtext .katex{font-size:1.05em}
+.badge{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(137,180,250,.15);color:var(--accent);margin-right:4px;font-weight:500}
+.badge.g{background:rgba(166,227,161,.15);color:var(--accent2)}
+.badge.r{background:rgba(243,139,168,.15);color:var(--red)}
+.badge.a{background:rgba(249,226,175,.15);color:var(--accent3)}
+.score{font-size:11px;color:var(--dim);margin-left:2px}
+.opt{padding:2px 0 2px 16px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;border-radius:4px;transition:.1s}
+.opt:hover{background:rgba(137,180,250,.08)}
+.opt .lbl{position:relative}
+.opt.ok .lbl{color:var(--accent2);font-weight:600}
+.opt.ok .lbl::after{content:' ✓';color:var(--accent2)}
+.opt.no .lbl{color:var(--red)}
+.opt.no .lbl::after{content:' ✗';color:var(--red)}
+.ansbox{display:none;margin-top:6px;padding:10px 12px;background:rgba(137,180,250,.06);border-radius:var(--radius);font-size:12px;line-height:1.8;border-left:3px solid var(--accent)}
+.ansbox b{color:var(--accent)}
+.deepbox{display:none;margin-top:6px;padding:10px 12px;background:rgba(166,227,161,.06);border-radius:var(--radius);font-size:12px;line-height:1.8;border-left:3px solid var(--accent2)}
+.deepbox b{color:var(--accent2)}
+.btn{padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--subtext);cursor:pointer;font-size:10px;margin:2px 2px 2px 0;transition:.1s}
+.btn:hover{color:var(--text);border-color:var(--accent)}
+.btn.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.btn.green{border-color:var(--accent2);color:var(--accent2)}
+.btn.green:hover{background:rgba(166,227,161,.15)}
+.btn.green.on{background:var(--accent2);color:var(--bg)}
+.extend-box{border:1px dashed var(--accent2);border-radius:var(--radius);padding:8px;margin-top:6px;background:rgba(166,227,161,.04);font-size:12px;line-height:1.7}
+
+/* ===== SPLASH ===== */
+.splash{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--dim);text-align:center;gap:12px}
+.splash .big{font-size:48px}
+.splash h2{color:var(--subtext);font-size:18px;font-weight:500}
+.splash p{font-size:13px;max-width:320px;line-height:1.7}
+.splash .card-row{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.splash .sc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;width:160px;cursor:pointer;transition:.2s}
+.splash .sc:hover{border-color:var(--accent);transform:translateY(-2px)}
+.splash .sc .icon{font-size:28px;margin-bottom:6px}
+.splash .sc .name{font-size:13px;color:var(--text)}
+.splash .sc .desc{font-size:10px;color:var(--dim);margin-top:2px}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>📚 期末复习资料站</h1>
-        <p class="subtitle">孙正田 · 海南大学 · 通信工程 2025</p>
-        <div class="grid">
-            <a class="card" href="高数下期末冲刺手册.html"><div class="icon" style="background:#ebf4ff;color:#3182ce">∫</div><div class="card-content"><h2>高等数学（下）期末冲刺</h2><p>极限、导数、积分、微分方程 — 80分目标</p></div></a>
-            <a class="card" href="电路原理-期末冲刺复习手册.html"><div class="icon" style="background:#fff5f5;color:#e53e3e">⚡</div><div class="card-content"><h2>电路原理 · 期末冲刺复习</h2><p>基尔霍夫、戴维南、RLC 电路分析</p></div></a>
-            <a class="card" href="概率统计期末冲刺手册.html"><div class="icon" style="background:#fefcbf;color:#d69e2e">📊</div><div class="card-content"><h2>概率统计 · 期末冲刺</h2><p>概率论、随机变量、数理统计、分布</p></div></a>
-            <a class="card" href="大学语文-期末冲刺手册.html"><div class="icon" style="background:#e6fffa;color:#319795">📖</div><div class="card-content"><h2>大学语文 · 期末冲刺</h2><p>文学常识、古文鉴赏、作文技巧</p></div></a>
-            <a class="card" href="中国近代史纲要_期末冲刺复习手册.html"><div class="icon" style="background:#faf5ff;color:#805ad5">🏛️</div><div class="card-content"><h2>中国近代史纲要 · 冲刺复习</h2><p>近代史事件、人物、时间线梳理</p></div></a><a class="card" href="电路原理-达标训练10题.html"><div class="icon" style="background:#fff5f5;color:#e53e3e">📝</div><div class="card-content"><h2>电路原理 · 达标训练10题</h2><p>节点电压法、戴维南、RC/RL、三相电路、运放…附详细解答</p></div></a>                        <a class="card" href="circuit-problems/progressive_learning.html"><div class="icon" style="background:linear-gradient(135deg,#2563EB,#7C3AED);color:#fff">🎯</div><div class="card-content"><h2>⚡ 电路原理 · 渐进式图解</h2><p>渐进揭示 · 节点电压法 · 教材风格配图 · 适合课堂 &amp; 自学</p></div></a><a class="card" href="大学物理B-期末冲刺复习手册.html"><div class="icon" style="background:#ffe5f1;color:#d53f8c">🔭</div><div class="card-content"><h2>大学物理 B · 期末冲刺</h2><p>力学、电磁学、热学、波动光学</p></div></a>
-        </div>
-        <a class="card" href="高数可视化工具.html"><div class="icon" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff">🎨</div><div class="card-content"><h2>📈 高数交互可视化工具</h2><p>ODE斜率场 + 级数展开 · 点击画布追踪解曲线 · 灵感来自 fieldplay + 鸢尾花书 + 3Blue1Brown</p></div></a>
-            <p class="footer">用 ❤️ 和 AI 做的复习资料 · 祝期末顺利！</p>
-    </div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+<div class="logo">📚 高数 Studio <span>v2</span></div>
+<div class="tabs">
+<div class="tt act" onclick="switchMain(0)">📝 刷题</div>
+<div class="tt" onclick="switchMain(1)">📊 知识图谱</div>
+<div class="tt" onclick="switchMain(2)">🏆 速查</div>
+</div>
+<div class="tools">
+<div class="tb" onclick="launchFieldplay()">🌊 fieldplay</div>
+<div class="tb" onclick="launchManim()">🎬 manim</div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<div class="sh">📂 课程导航</div>
+<div class="tree" id="sidebarTree"></div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- Panel 0: 刷题 -->
+<div id="panel0" class="panel act">
+<div class="qheader">
+<h2 id="panelTitle">📝 综合刷题</h2>
+<span class="qstats" id="qStats">0/19</span>
+<div class="qbar"><div class="qf" id="qFill"></div></div>
+<div class="qbtns">
+<button class="qb" onclick="expandAll()">全部展开</button>
+<button class="qb" onclick="collapseAll()">全部收起</button>
+</div>
+</div>
+<div class="qlist" id="questionList"></div>
+</div>
+
+<!-- Panel 1: 知识图谱 -->
+<div id="panel1" class="panel"><div class="qlist" id="kgContent"></div></div>
+
+<!-- Panel 2: 答案速查 -->
+<div id="panel2" class="panel"><div class="qlist" id="answerSheet"></div></div>
+
+</div></div>
+
+<script>var Q = [["选择","3分","解析几何","a","与曲面 x2/4+y2/9-z2/16=1 的交线为椭圆的是平面( )",["A.x=0","B.y=0","C.z=0","D.z=4"],"C","z=0截得x2/4+y2/9=1(椭圆)。x=0或y=0截得双曲线。","用z=常数截单叶双曲面→椭圆"],["选择","3分","全微分","g","z=xy在(1,2)处的全微分为( )",["A.2dx+dy","B.4dx+dy","C.4dx+2dy","D.dx+4dy"],"B","∂z/∂x=2xy=4,∂z/∂y=x=1,dz=4dx+dy","全微分必须有dx和dy两项"],["选择","3分","隐函数偏导","g","x2+y2+z2=xyz确定z=f(x,y),∂z/∂x=( )",["A.(yz-2x)/(2z-xy)","B.(2x-yz)/(xy-2z)","C.(yz-2x)/(xy-2z)","D.(2x-yz)/(2z-xy)"],"A","F=x2+y2+z2-xyz,F_x=2x-yz,F_z=2z-xy,∂z/∂x=-F_x/F_z=(yz-2x)/(2z-xy)","隐函数偏导= -F_x/F_z,负号!"],["选择","3分","三重积分","a","Ω: x2+y2+z2≤4, ∭(x2+y2+z2)dV=( )",["A.16π/5","B.32π/5","C.64π/5","D.128π/5"],"D","球坐标:∫dθ∫sinφdφ∫r4dr=2π×2×32/5=128π/5","球域遇x2+y2+z2→球坐标r4积分"],["选择","3分","级数判敛","r","以下级数收敛的是( )",["A.∑1/√n","B.∑n!/2n","C.∑ln(1+1/n2)","D.∑n/(n+1)"],"C","A:p=1/3发散;B:比值发散;C:ln(1+1/n2)~1/n2收敛;D:通项→1≠0发散","ln(1+□)~□→p级数"],["选择","3分","曲面积分","r","Σ:球面x2+y2+z2=R2, ∬(x2+y2)dS=( )",["A.0","B.4πR4/3","C.8πR4/3","D.4πR2"],"C","对称性:三个方向平方积分相等。=(2/3)R2×4πR2=8πR4/3","球面对称→三个平方积分相等"],["选择","3分","极限","a","lim(x→0)(ex-1-x)/x2 =( )",["A.0","B.1/2","C.1","D.2"],"B","ex=1+x+x2/2+O(x3)→(x2/2)/x2→1/2","ex-1-x→泰勒到二次项"],["选择","3分","曲线积分","a","L:y=x2从(0,0)→(1,1), ∫(x2+y)dx+(x-y2)dy=( )",["A.0","B.1/2","C.1","D.3/2"],"C","∂P/∂y=1=∂Q/∂x→与路径无关。原函数代入=1","先检查全微分条件→找原函数"],["填空","4分","解析几何","a","直线(x-1)/2=(y+2)/3=(z-3)/(-1)与(x-2)/1=(y-1)/m=(z-4)/(-2)垂直,m=","","-4/3","s1·s2=2+3m+2=0→m=-4/3","直线垂直→方向向量点积=0"],["填空","4分","微分方程","g","y-4y+4y=0的通解为","","y=(C1+C2x)e(2x)","r2-4r+4=0→(r-2)2=0→r=2重根→y=(C1+C2x)e(2x)","重根→第二个解乘x"],["填空","4分","傅里叶","r","f(x)=x(0<x<1),正弦级数s(x),s(-1/3)=","","-1/3","奇延拓→s(-1/3)=-s(1/3)=-f(1/3)=-1/3","奇延拓求值=s(-a)=-f(a)"],["填空","4分","旋转曲面","a","曲线z=x2绕z轴旋转一周所得曲面方程为","","z=x2+y2","绕z轴旋转→到z轴距离不变→x2+y2替换x2","绕z轴转→x2+y2替换原x2"],["填空","4分","极坐标","a","化∫01dy∫0y f(x2+y2)dx为极坐标形式","","∫0π/4 dθ∫0cscθ f(r2)·r dr","区域y=x下三角形。θ:0→π/4,r:0→cscθ","极坐标→画区域→先定θ→再定r"],["计算","8分","复合偏导","g","z=f(x2-y2,xy),f具二阶连续偏导,求∂z/∂x,∂2z/∂x∂y","","∂z/∂x=2x·fu+y·fv;∂2z/∂x∂y=-4xy·fuu+2(x2-y2)·fuv+xy·fvv+fv","令u=x2-y2,v=xy。链式法则求偏导","画依赖树→每条路径乘→所有路径加"],["计算","8分","一阶线性ODE","g","y-2y=e(2x),y(0)=1,求特解","","y=(x+1)e(2x)","P=-2,Q=e(2x)。μ=e(-2x)。(μy)=1→μy=x+C→代初值得C=1","四步法:①P,Q ②μ ③(μy)=μQ ④积分+代值"],["计算","8分","幂级数","g","∑xn/(n+1)的收敛域及和函数","","收敛域[-1,1);S(x)=-ln(1-x)/x,S(0)=1","R=1。x=1发散,x=-1收敛。xS(x)→求导→积分→-ln(1-x)","分母有n→先求导后积分。验端点!"],["计算","8分","格林公式","g","∫(exsiny-y)dx+(excosy+x)dy,L:上半圆x2+y2=ax(y≥0)从A(a,0)到O(0,0)","","πa2/4","Q_x-P_y=2。补x轴OA积分为0。格林→∬2dxdy=πa2/4","不封闭→补线→格林→减补线"],["计算","8分","曲面积分","r","∬x dydz+y dzdx+z dxdy, Σ:x+y+z=1在第一卦限上侧","","1/2","投影到xOy,z=1-x-y。公式化简得∬1dxdy=三角形面积0.5","一代二投三定向"],["计算","8分","应用","g","容积32m3长方体无盖水箱,长宽高多少时用料最省?","","长=宽=4m,高=2m","V=xyz=32,S=xy+2xz+2yz。拉格朗日→x=y=2z→代入得z=2","无盖→不加顶。找比例关系"]];
+var Ext = [{deep:"<b>🔍 核心思想</b><br>二次曲面与坐标平面的交线，代入法。<br>• z=常数→椭圆<br>• x/y=常数→双曲线<br><b>💡</b>『正号出椭圆，负号出双曲』",extend:"<b>拓展：</b>曲面 x²/4 - y²/9 + z²/16 = 1 被 x=0 截得？<br><span style=color:#4A3F8A>答案：-y²/9+z²/16=1（双曲线）</span>"},
+{deep:"<b>🔍 全微分</b><br>dz = (∂z/∂x)dx + (∂z/∂y)dy<br>先求偏导→代入点→写成 Adx+Bdy<br><b>⚠️</b> 别只写一项！",extend:"<b>拓展：</b>z=e^x·ln(1+y)，求 dz|_{(0,1)}<br><span style=color:#4A3F8A>答案：ln2·dx + (1/2)dy</span>"},
+{deep:"<b>🔍 隐函数偏导</b><br>F(x,y,z)=0：<br>∂z/∂x = <span style=color:#B33030>−</span>F_x/F_z<br>∂z/∂y = <span style=color:#B33030>−</span>F_y/F_z<br><b>⚠️ 负号是最大坑！</b>",extend:"<b>拓展：</b>e^z - xyz = 0，求 ∂z/∂x<br><span style=color:#4A3F8A>答案：yz/(e^z-xy)</span>"},
+{deep:"<b>🔍 球坐标三重积分</b><br>dV=r²sinφ dr dφ dθ<br>θ:0→2π φ:0→π r:0→R<br>本题 R=2 → 128π/5",extend:"<b>拓展：</b>∭(x²+y²)dV，Ω:x²+y²+z²≤R²<br><span style=color:#4A3F8A>答案：8πR⁵/15</span>"},
+{deep:"<b>🔍 级数判敛</b><br>①通项→0? ②比值/根值 ③p级数 ④比较法<br>ln(1+1/n²)~1/n² 收敛",extend:"<b>拓展：</b>∑ n·sin(1/n³)<br><span style=color:#4A3F8A>答案：收敛（n·1/n³=1/n²）</span>"},
+{deep:"<b>🔍 球面曲面积分</b><br>对称性！<br>∬x²dS = ∬y²dS = ∬z²dS<br>每个 = 4πR⁴/3",extend:"<b>拓展：</b>∬(x²+2y²+3z²)dS，Σ:x²+y²+z²=1<br><span style=color:#4A3F8A>答案：8π</span>"},
+{deep:"<b>🔍 泰勒展开求极限</b><br>e^x=1+x+x²/2!+...<br>本题 e^x-1-x ~ x²/2 → 1/2",extend:"<b>拓展：</b>lim (e^x-1-x-x²/2)/x³<br><span style=color:#4A3F8A>答案：1/6</span>"},
+{deep:"<b>🔍 积分与路径无关</b><br>∂P/∂y=∂Q/∂x？<br>是→找原函数，端点相减",extend:"<b>拓展：</b>∫(y²+2x)dx+(2xy)dy，(0,0)→(1,2)<br><span style=color:#4A3F8A>答案：5</span>"},
+{deep:"<b>🔍 直线垂直</b><br>方向向量点积=0<br>s₁·s₂=0",extend:"<b>拓展：</b>L₁(2,-1,k)⊥L₂(3,2,-1)，求k<br><span style=color:#4A3F8A>答案：k=4</span>"},
+{deep:"<b>🔍 二阶齐次ODE</b><br>r²+pr+q=0<br>重根→y=(C₁+C₂x)e^{rx}<br><b>⚠️ 必乘x！</b>",extend:"<b>拓展：</b>y''+4y'+4y=0<br><span style=color:#4A3F8A>答案：(C₁+C₂x)e^{-2x}</span>"},
+{deep:"<b>🔍 傅里叶奇延拓</b><br>正弦级数→奇延拓<br>s(-a) = -f(a)<br>余弦级数→偶延拓 s(-a)=f(a)",extend:"<b>拓展：</b>f(x)=x²余弦级数，求s(-½)<br><span style=color:#4A3F8A>答案：¼</span>"},
+{deep:"<b>🔍 旋转曲面</b><br>绕谁谁不变，另一变距离<br>绕z轴→z不变，x²→x²+y²",extend:"<b>拓展：</b>y=x²绕y轴旋转<br><span style=color:#4A3F8A>答案：y=x²+z²</span>"},
+{deep:"<b>🔍 极坐标</b><br>dxdy = <span style=color:#B33030>r</span> dr dθ<br>先定θ→再定r",extend:"<b>拓展：</b>∬xy dxdy，圆域第一象限<br><span style=color:#4A3F8A>答案：⅛</span>"},
+{deep:"<b>🔍 复合偏导</b><br>画依赖树！<br>∂z/∂x = f_u·u_x + f_v·v_x",extend:"<b>拓展：</b>z=f(xy, x²+y²)，求∂z/∂x<br><span style=color:#4A3F8A>答案：y·f_u + 2x·f_v</span>"},
+{deep:"<b>🔍 一阶线性ODE</b><br>① y'+Py=Q<br>② μ=e^{∫Pdx}<br>③ (μy)'=μQ<br>④ 积分+代值",extend:"<b>拓展：</b>y'+y/x=x², y(1)=0<br><span style=color:#4A3F8A>答案：y=x³/4-1/(4x)</span>"},
+{deep:"<b>🔍 幂级数和函数</b><br>分母有n→先导后积<br>xS=∑x^{n+1}/(n+1)<br>(xS)'=∑xⁿ=1/(1-x)<br><b>⚠️ 验端点！</b>",extend:"<b>拓展：</b>∑nx^{n-1}的和函数<br><span style=color:#4A3F8A>答案：1/(1-x)²</span>"},
+{deep:"<b>🔍 格林公式</b><br>∮=∬(Q_x-P_y)dxdy<br>不封闭→补线→格林→<span style=color:#B33030>减</span>补线",extend:"<b>拓展：</b>∫(y²dx+x²dy)，y=sinx (0→π)<br><span style=color:#4A3F8A>提示：Q_x-P_y=2x-2y</span>"},
+{deep:"<b>🔍 曲面积分</b><br>一投二代三定向<br>上侧+ 下侧−",extend:"<b>拓展：</b>∬z dxdy，z=4-x²-y²上侧<br><span style=color:#4A3F8A>答案：8π</span>"},
+{deep:"<b>🔍 拉格朗日</b><br>① L=f+λφ<br>② 偏导=0<br>③ 消λ找比例<br>④ 代入条件<br>无盖不加顶",extend:"<b>拓展：</b>椭圆x²/4+y²=1上点到x+2y=0最短距离<br><span style=color:#4A3F8A>提示：距离平方+拉格朗日</span>"}];
+// ====== SIDEBAR DATA ======
+var chapters = [
+  {name:"综合刷题", icon:"📝", id:"all", desc:"19题全练", tag:"19题"},
+  {name:"Day 1 · 解析几何", icon:"📐", id:"geo", filter:["解析几何"], tag:"4题"},
+  {name:"Day 2 · 微分方程", icon:"🧮", id:"ode", filter:["微分方程","一阶线性ODE"], tag:"2题"},
+  {name:"Day 3 · 多元微分", icon:"📊", id:"multivar", filter:["全微分","隐函数偏导","复合偏导"], tag:"3题"},
+  {name:"Day 4 · 重积分", icon:"🔲", id:"integral", filter:["三重积分","极坐标"], tag:"3题"},
+  {name:"Day 5 · 曲线曲面积分", icon:"🌀", id:"curve", filter:["格林公式","曲线积分","曲面积分"], tag:"4题"},
+  {name:"Day 6 · 级数", icon:"∞", id:"series", filter:["级数判敛","幂级数","傅里叶"], tag:"3题"},
+  {name:"Day 7 · 极限与微分", icon:"⚡", id:"misc", filter:["极限","全微分","旋转曲面"], tag:"4题"},
+  {name:"", icon:"", id:"divider"},
+  {name:"打开fieldplay", icon:"🌊", id:"fieldplay", action:"fieldplay"},
+  {name:"运行manim动画", icon:"🎬", id:"manim", action:"manim"}
+];
+
+// ====== MATH RENDERING ======
+function math(s){
+  if(!s) return '';
+  var t = s.replace(/x2(?![0-9])/g,'x^{2}').replace(/y2(?![0-9])/g,'y^{2}').replace(/z2(?![0-9])/g,'z^{2}')
+    .replace(/r2(?![0-9])/g,'r^{2}').replace(/R2(?![0-9])/g,'R^{2}').replace(/a2(?![0-9])/g,'a^{2}')
+    .replace(/b2(?![0-9])/g,'b^{2}').replace(/c2(?![0-9])/g,'c^{2}').replace(/n2(?![0-9])/g,'n^{2}')
+    .replace(/π/g,'\\pi ').replace(/∂/g,'\\partial ').replace(/∫/g,'\\int ').replace(/∑/g,'\\sum ')
+    .replace(/∬/g,'\\iint ').replace(/∭/g,'\\iiint ').replace(/√/g,'\\sqrt ').replace(/→/g,'\\to ')
+    .replace(/∞/g,'\\infty ').replace(/≤/g,'\\le ').replace(/≥/g,'\\ge ').replace(/·/g,'\\cdot ').replace(/∼/g,'\\sim ');
+  try{ return katex.renderToString(t, {displayMode:false,throwOnError:false}); }
+  catch(e){ return escHtml(s); }
+}
+
+function escHtml(s){
+  if(!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ====== SIDEBAR ======
+function renderSidebar(){
+  var h='';
+  for(var i=0;i<chapters.length;i++){
+    var c=chapters[i];
+    if(c.id==='divider'){h+='<div class="divider"></div>';continue;}
+    h+='<div class="item'+(c.id==='all'?' act':'')+'" onclick="selectChapter(\''+c.id+'\')">'+
+      (c.icon?'<span class="icon">'+c.icon+'</span>':'')+
+      c.name+(c.tag?' <span class="tag">'+c.tag+'</span>':'')+'</div>';
+  }
+  document.getElementById('sidebarTree').innerHTML=h;
+}
+
+var currentFilter = null;
+
+function selectChapter(id){
+  // Highlight sidebar
+  document.querySelectorAll('.sidebar .item').forEach(function(el,i){el.classList.toggle('act',chapters[i]&&chapters[i].id===id);});
+  var ch = chapters.find(function(c){return c.id===id;});
+  if(!ch) return;
+  if(ch.action==='fieldplay'){launchFieldplay();return;}
+  if(ch.action==='manim'){launchManim();return;}
+  
+  // Update panel title
+  document.getElementById('panelTitle').textContent = ch.icon+' '+ch.name;
+  
+  // Filter questions
+  if(ch.id==='all'){
+    currentFilter = null;
+  } else if(ch.filter){
+    currentFilter = function(q){ return ch.filter.indexOf(q[2])>=0; };
+  }
+  renderQuestions();
+  switchMain(0);
+}
+
+// ====== RENDER QUESTIONS ======
+function renderQuestions(){
+  var list = document.getElementById('questionList');
+  var filtered = currentFilter ? Q.filter(currentFilter) : Q;
+  var html = '';
+  for(var i=0;i<filtered.length;i++){
+    var qi = currentFilter ? Q.indexOf(filtered[i]) : i;
+    var q = Q[qi];
+    var opts = '';
+    if(q[5] && q[5].length>0 && q[5][0]!==''){
+      for(var j=0;j<q[5].length;j++){
+        var letter = String.fromCharCode(65+j);
+        opts += '<div class="opt" onclick="selectOpt('+qi+',\''+letter+'\')">'+
+          '<input type="radio" name="r'+qi+'" value="'+letter+'" style="display:none">'+
+          '<span class="lbl">'+letter+'. '+math(q[5][j])+'</span></div>';
+      }
+    }
+    var ansHtml = math(q[6]||'');
+    var solHtml = q[7]||'';
+    solHtml = solHtml.replace(/([xyznrabcR])(\d+)/g,'$1^{$2}');
+    solHtml = solHtml.replace(/π/g,'\\\\pi ').replace(/∂/g,'\\\\partial ').replace(/∫/g,'\\\\int ');
+    try{ solHtml = katex.renderToString(solHtml, {displayMode:false,throwOnError:false}); }
+    catch(e){ solHtml = escHtml(q[7]||'').replace(/\\n/g,'<br>'); }
+    var tip = q[8] ? math(q[8]) : '';
+    var ext = Ext[qi] || null;
+    html += '<div class="card">'+
+      '<div class="qtext"><strong>'+(i+1)+'.</strong> '+
+      '<span class="badge '+q[3]+'">'+q[2]+'</span><span class="score">'+q[1]+'</span></div>'+
+      '<div class="qtext">'+math(q[4])+'</div>'+opts+
+      '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+
+      '<button class="btn" onclick="toggleAns('+qi+')" id="b'+qi+'">查看答案</button>'+
+      (ext?'<button class="btn green" onclick="toggleDeep('+qi+')" id="d'+qi+'">📘 深度解析</button>':'')+
+      '</div>'+
+      '<div class="ansbox" id="a'+qi+'"><b>✅ 答案：</b>'+ansHtml+'<br><br><b>📖 解析：</b><br>'+solHtml+
+      (tip?'<br><br><span style="background:rgba(137,180,250,.1);padding:2px 6px;border-radius:3px;font-size:11px">💡 '+tip+'</span>':'')+'</div>'+
+      (ext?'<div class="deepbox" id="dbox'+qi+'"><b>📘 深度讲解</b><br>'+ext.deep+'<br><br><div class="extend-box">'+ext.extend+'</div></div>':'')+
+      '</div>';
+  }
+  if(html==='') html='<div style="text-align:center;padding:40px;color:var(--dim);font-size:14px">📭 该分类暂无题目</div>';
+  list.innerHTML = html;
+  updateProgress();
+}
+
+function switchMain(idx){
+  document.querySelectorAll('.topbar .tt').forEach(function(t,j){t.classList.toggle('act',j===idx);});
+  for(var i=0;i<3;i++){document.getElementById('panel'+i).classList.toggle('act',i===idx);}
+  if(idx===0) renderQuestions();
+  if(idx===1) renderKnowledgeGraph();
+  if(idx===2) renderAnswerSheet();
+}
+
+function toggleAns(i){
+  var b=document.getElementById('a'+i),t=document.getElementById('b'+i);
+  if(!b||!t) return;
+  if(b.style.display==='block'){b.style.display='none';t.textContent='查看答案';t.classList.remove('on');}
+  else{b.style.display='block';t.textContent='收起答案';t.classList.add('on');}
+  updateProgress();
+}
+
+function toggleDeep(i){
+  var b=document.getElementById('dbox'+i),t=document.getElementById('d'+i);
+  if(!b||!t) return;
+  if(b.style.display==='block'){b.style.display='none';t.textContent='📘 深度解析';t.classList.remove('on');}
+  else{b.style.display='block';t.textContent='📘 收起解析';t.classList.add('on');
+    var ab=document.getElementById('a'+i),at=document.getElementById('b'+i);
+    if(ab&&ab.style.display!=='block'){ab.style.display='block';at.textContent='收起答案';at.classList.add('on');}}
+  updateProgress();
+}
+
+function selectOpt(i,val){
+  var q=Q[i];if(!q)return;
+  var r=document.getElementsByName('r'+i);
+  for(var j=0;j<r.length;j++){
+    var o=r[j].parentElement;o.classList.remove('ok','no');
+    if(r[j].value===val){r[j].checked=true;if(val===q[6])o.classList.add('ok');else o.classList.add('no');}
+  }
+  var b=document.getElementById('a'+i),t=document.getElementById('b'+i);
+  if(b&&b.style.display!=='block'){b.style.display='block';t.textContent='收起答案';t.classList.add('on');}
+  updateProgress();
+}
+
+function expandAll(){
+  for(var i=0;i<Q.length;i++){
+    var b=document.getElementById('a'+i),t=document.getElementById('b'+i);
+    if(b)b.style.display='block';if(t){t.textContent='收起答案';t.classList.add('on');}
+  }updateProgress();
+}
+
+function collapseAll(){
+  for(var i=0;i<Q.length;i++){
+    ['a','dbox'].forEach(function(k){var x=document.getElementById(k+i);if(x)x.style.display='none';});
+    var t=document.getElementById('b'+i);if(t){t.textContent='查看答案';t.classList.remove('on');}
+    var d=document.getElementById('d'+i);if(d){d.textContent='📘 深度解析';d.classList.remove('on');}
+  }updateProgress();
+}
+
+function updateProgress(){
+  var n=0;
+  for(var i=0;i<Q.length;i++){var b=document.getElementById('a'+i);if(b&&b.style.display==='block')n++;}
+  document.getElementById('qFill').style.width=Math.round(n/Q.length*100)+'%';
+  document.getElementById('qStats').textContent=n+'/'+Q.length;
+}
+
+function renderKnowledgeGraph(){document.getElementById('kgContent').innerHTML=
+'<div style="padding:20px">'+
+'<h2 style="font-size:16px;margin-bottom:12px;color:var(--accent)">📊 各模块分值占比</h2>'+
+'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--accent)">~29分</div><div style="font-size:10px;color:var(--dim)">多元微分</div></div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--accent2)">~22分</div><div style="font-size:10px;color:var(--dim)">重积分</div></div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--accent3)">~16分</div><div style="font-size:10px;color:var(--dim)">无穷级数</div></div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--red)">~12分</div><div style="font-size:10px;color:var(--dim)">微分方程</div></div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--subtext)">~12分</div><div style="font-size:10px;color:var(--dim)">解析几何</div></div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center">'+
+'<div style="font-size:22px;font-weight:700;color:var(--subtext)">~9分</div><div style="font-size:10px;color:var(--dim)">其他</div></div></div>'+
+'<div style="font-size:14px;font-weight:600;margin:12px 0 8px;padding:6px 10px;border-radius:4px;background:rgba(137,180,250,.12);color:var(--accent)">⭐⭐⭐⭐⭐ 必考</div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;font-size:12px;line-height:2;margin-bottom:10px">'+
+'• 一阶线性ODE：y\\'+Py=Q → μ=e^{∫Pdx} → (μy)\\'=μQ<br>• 幂级数和函数：分母有n先导后积，验端点！<br>• 格林公式：不封闭→补线→格林→减补线<br>• 拉格朗日乘数法：条件极值找比例</div>'+
+'<div style="font-size:14px;font-weight:600;margin:12px 0 8px;padding:6px 10px;border-radius:4px;background:rgba(243,139,168,.12);color:var(--red)">💀 五大失分陷阱</div>'+
+'<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;font-size:12px;line-height:2">'+
+'1️⃣ 隐函数偏导 <span style="color:var(--red)">忘负号</span><br>2️⃣ 极坐标 <span style="color:var(--red)">忘乘r</span><br>3️⃣ 收敛域 <span style="color:var(--red)">忘验端点</span><br>4️⃣ 格林 <span style="color:var(--red)">忘补线/减线</span><br>5️⃣ 重根 <span style="color:var(--red)">忘乘x</span></div></div>';}
+
+function renderAnswerSheet(){
+  var h='<div style="padding:20px"><h2 style="font-size:16px;margin-bottom:12px;color:var(--accent)">🏆 全题答案速查</h2>';
+  for(var i=0;i<Q.length;i++){var q=Q[i],a=math(q[6]||''),d={g:'易',r:'中',a:'难'}[q[3]]||'';
+    h+='<div style="padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;display:flex;gap:8px;align-items:baseline">'+
+    '<span style="color:var(--dim);min-width:30px">'+(i+1)+'.</span>'+
+    '<span style="min-width:36px;font-size:10px;color:var(--dim);text-align:center">'+d+'</span>'+
+    '<span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+escHtml(q[4].substring(0,40))+'</span>'+
+    '<span style="color:var(--accent);font-weight:600;min-width:80px;text-align:right">'+a+'</span></div>';}
+  h+='</div>';document.getElementById('answerSheet').innerHTML=h;
+}
+
+function launchFieldplay(){window.open('file:///C:/Users/31428/fieldplay/index.html','_blank');}
+function launchManim(){alert('🎬 manim 动画引擎已安装，需要运行 Python 脚本生成动画\n路径：C:\\Users\\31428\\study-hub-visual\\manim_scripts');}
+
+renderSidebar();
+renderQuestions();
+</script>
 </body>
 </html>
-
-
-
